@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\admin;
+use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreadminRequest;
 use App\Http\Requests\UpdateadminRequest;
 
+use Google_Client;
+use Google_Service_Oauth2;
+
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function main(){
+        $data['username'] = session('name');
+        $data['email'] = session('email');
+        $data['nrp'] = session('nrp');
+        $data['division_name'] = session('division_name');
+        return view('admin.main', $data);
+    }
+
     public function index()
     {
         //
@@ -63,5 +71,9 @@ class AdminController extends Controller
     public function destroy(admin $admin)
     {
         //
+    }
+
+    public function adminLogin(){
+
     }
 }

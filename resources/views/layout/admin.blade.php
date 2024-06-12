@@ -20,15 +20,18 @@
 </head>
 
 <body class="m-0 p-0 h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
-    <nav class="w-screen h-[5vh] flex-row shadow-xl shadow-[#0000002D]
+    <nav class="w-screen h-[45px] flex-row shadow-xl shadow-[#0000002D]
     bg-gradient-to-r from-[#6b2b52] to-[#311b55]">
-        <div class="max-w-[98%] h-[100%] flex flex-wrap items-center justify-between mx-auto p-4"> <!--isi -->
-            <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
-            <button></button> <!--HP show Menu-->
-            <div class="max-w-[50%] flex h-[100%] justify-between">
-                <a class=" text-[#fff] font-bold text-lg">Home</a>
-                <a class=" text-[#fff]/60 ml-10 mr-10 hover:text-[#fff]/80 text-lg">Rekap Pendaftar</a>
-                <a class=" text-[#fff]/60 hover:text-[#fff]/80 text-lg">Rekap Team</a>
+        <div class="max-w-[98%] h-[100%] flex flex-wrap justify-between mx-auto items-center"> <!--isi -->
+            
+        <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
+           
+        <button></button> <!--HP show Menu-->
+        
+        <div class="max-w-[50%]flex justify-between">
+                <a class=" text-[#fff] font-bold text-lg" href="/admin/main">Home</a>
+                <a class=" text-[#fff]/60 ml-10 mr-10 hover:text-[#fff]/80 text-lg" href="/admin/rekapPendaftar">Rekap Pendaftar</a>
+                <a class=" text-[#fff]/60 hover:text-[#fff]/80 text-lg" href="/admin/rekapTeam">Rekap Team</a>
             </div>
         </div>
     </nav>

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('admin',function(){
-    return view('admin.main');
+Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
+
+Route::get('/admin/',[AuthController::class, 'adminLoginView'])->name('admin.login');
+Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('admin.processLogin');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
+    Route::get('/main', [adminController::class, 'main'])->name('main');
 });

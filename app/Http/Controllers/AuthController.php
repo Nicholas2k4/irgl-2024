@@ -34,16 +34,16 @@ class AuthController extends Controller
     public function adminLogin(Request $request){
         if(!$request->has('code')){
             return redirect()->route('admin.login')->with('error', 'Login Authentication Failed');
-        }
-
-        \Firebase\JWT\JWT::$leeway = 60;
-        do{
-            $attempt = 0;
+            }
+            
+            \Firebase\JWT\JWT::$leeway = 60;
+            do{
+                $attempt = 0;
             try{
                 $token = $this->googleClient->fetchAccessTokenWithAuthCode($request->code);
                 $payload = $this->googleClient->verifyIdToken($token['id_token']);
-
-                if($payload){
+                
+                if($token){
                     // check email mahasiswa petra
                     if(isset($payload['hd']) && str_ends_with($payload['hd'], 'john.petra.ac.id')){
                         $request->session()->put('email', $payload['email']);
@@ -71,7 +71,7 @@ class AuthController extends Controller
                         return redirect()->route('admin.login')->with('error', 'Please Use Your @john.petra.ac.id email');
                     }
                 }else{
-                    // error kallau token tidak valid
+                    // error kalau token tidak valid
                     return redirect()->route('admin.login')->with('error', 'Token is not valid');
                 }
                 $retry = false;
@@ -85,7 +85,7 @@ class AuthController extends Controller
  
     public function logout(Request $request){
         $request->session()->flush();
-        return redirect()->to("/");
+        return redirect()->to("/admin");
     }
 
     function getNameFromNRP(){

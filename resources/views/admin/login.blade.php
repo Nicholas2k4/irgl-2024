@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="m-0 p-0 h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
+<body class="m-0 p-0 bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]"> <!-- h-screen --> 
 <!-- GANTI Ke Background buat user -->
 @if (session('error'))
         <script>
@@ -30,12 +30,12 @@
             });
         </script>
     @endif
-<div class="h-screen w-screen flex justify-center items-center">
+<div class="h-[100vh] flex justify-center items-center">
     <div class="w-[400px] h-[400px] justify-center items-center flex flex-col
-    border-solid border-[2px] border-[#cacaca80] rounded-[20px] backdrop-blur-lg shadow-inner shadow-[#ffffff99] bg-[#ffffff1a]/20">
+    border-solid border-[2px] border-[#cacaca80] rounded-[20px] backdrop-blur-lg shadow-inner shadow-[rgba(221,150,240,0.6)] bg-transparent">
         <div class="text-center">
             <!-- image/icon (?) -->
-             <h1 class="font-bold">IRGL</h1>
+             <h1 class="font-bold">IRGL Logo/Icon</h1>
         </div>
 
         <div class="w-[100%] h-[40%] overflow-hidden translate-y-10">

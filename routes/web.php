@@ -26,4 +26,7 @@ Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('a
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');
+    Route::get('/rekapPendaftar', [adminController::class, 'rekapPendaftar'])->name('rekapPendaftar');
+    Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
 });
+

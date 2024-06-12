@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/register', function () {
+    return view('register');
+});
+
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::get('/admin/',[AuthController::class, 'adminLoginView'])->name('admin.login');

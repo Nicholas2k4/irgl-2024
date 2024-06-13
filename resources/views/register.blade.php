@@ -19,7 +19,17 @@
         
         <div class="mb-2 flex flex-col items-left">
           <label for="no-rekening-ketua-tim" class="text-white text-left ml-4">No rekening ketua tim</label>
-          <input type="text" id="no-rekening-ketua-tim" name="no-rekening-ketua-tim" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+          <div class="flex">
+            <select id="bank-select" name="bank-select" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+              <option value="" disabled selected class="bg-[rgba(0,0,0,0.8)]">Pilih Bank</option>
+              <option value="bca" class="bg-[rgba(0,0,0,0.8)]">BCA</option>
+              <option value="bni" class="bg-[rgba(0,0,0,0.8)]">BNI</option>
+              <option value="bri" class="bg-[rgba(0,0,0,0.8)]">BRI</option>
+              <option value="mandiri" class="bg-[rgba(0,0,0,0.8)]">Mandiri</option>
+              <option value="cimb" class="bg-[rgba(0,0,0,0.8)]">CIMB</option>
+            </select>
+            <input type="text" id="no-rekening-ketua-tim" name="no-rekening-ketua-tim" placeholder="Nomor Rekening" required class="flex-1 ml-2 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+          </div>
         </div>
         
         <div class="mb-2 flex flex-col items-left">
@@ -36,10 +46,18 @@
           <label for="address-id" class="text-white text-left ml-4">Alamat</label>
           <textarea id="address-id" name="address" autocomplete="street-address" class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
         </div>
+
+        <div class="mb-2 flex flex-col items-left">
+          <label for="kode-pos-id" class="text-white text-left ml-4">Kode Pos</label>
+          <input type="text" id="kode-pos-id" name="kode-pos-name" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+        </div>
         
         <div class="mb-2 flex flex-col items-left">
           <label for="phone" class="text-white text-left ml-4">No telp aktif</label>
-          <input type="text" id="phone" name="phone" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+          <div class="flex items-center">
+            <span class="bg-[rgba(255,255,255,0.1)] text-white p-2.5 rounded-l-[5px]">+62</span>
+            <input type="text" id="phone" name="phone" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-r-[5px] border-none">
+          </div>
         </div>
         
         <div class="mb-2 flex flex-col items-left">

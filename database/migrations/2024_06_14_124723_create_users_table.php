@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('no_telp');
             $table->string('id_line');
             $table->string('link_foto');
-            $table->boolean('is_ketua');
+            $table->boolean('is_ketua')->default(false);
             $table->string('bank')->nullable();
             $table->string('no_rek')->nullable();
             $table->unsignedBigInteger('id_tim');

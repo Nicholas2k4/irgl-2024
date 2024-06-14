@@ -11,12 +11,6 @@
     @livewire('register-form')
     @livewireScripts
     <script>
-      function showFileName(id) {
-        var input = document.getElementById('file-' + id + '-id');
-        var fileName = input.files[0] ? input.files[0].name : '';
-        document.getElementById('img-name-' + id).textContent = fileName;
-      }
-
       function validatePasswords() {
         var password = document.getElementById('password-id').value;
         var confirmPassword = document.getElementById('confirm-password-id').value;

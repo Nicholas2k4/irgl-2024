@@ -31,8 +31,20 @@ class RegisterForm extends Component
         $this->step++;
     }
 
+    public function backStep() 
+    {
+        if ($this->step > 1) {
+            $this->step--;
+        }
+    }
+
     public function submit()
     {
+        $this->namaKetua = ucwords(strtolower($this->namaKetua)); // Pascal Case
+        $this->namaAnggota1 = ucwords(strtolower($this->namaAnggota1)); // Pascal Case
+        $this->namaAnggota2 = ucwords(strtolower($this->namaAnggota2)); // Pascal Case
+        $this->namaTeam = strtoupper($this->namaTeam); // UPPER CASE
+
         $validatedData = $this->validate([
             'namaKetua' => 'required',
             'bankKetua' => 'required',
@@ -67,6 +79,12 @@ class RegisterForm extends Component
             'namaTeam' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
         ]);
+
+        // Check if team name already exists
+        if (Team::where('nama', $this->namaTeam)->exists()) {
+            session()->flash('message', 'Team name already exists. Please choose another name.');
+            return;
+        }
 
         // Store uploaded files
         $fileKetuaName = $this->fileKetua->store('public/uploads');
@@ -130,5 +148,6 @@ class RegisterForm extends Component
         ]);
 
         session()->flash('message', 'Team registered successfully!');
+        return redirect()->to('/');
     }
 }

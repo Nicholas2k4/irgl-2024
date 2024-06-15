@@ -1,21 +1,19 @@
-@if($errors->any())
-    <div class="bg-red-200 p-2 mb-4 text-red-800">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
-@if (session()->has('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
-@endif
-
-<div class="bg-[rgba(255,255,255,0.1)] shadow-[0_0_20px_rgba(255,255,255,0.1)] p-10 rounded-[20px] text-center m-8">
+<div class="bg-[rgba(255,255,255,0.1)] shadow-[0_0_20px_rgba(255,255,255,0.1)] p-10 rounded-[20px] text-center m-8 relative">
     @if($step === 1)
+        @if($errors->any())
+            <div class="bg-red-200 p-2 mb-4 text-red-800">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         <h2 class="text-2xl text-white font-bold mb-4">Register</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
@@ -74,7 +72,7 @@
               <div class="mb-2 flex flex-col items-left">
                 <label for="file-ketua-id" class="text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
                 <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-                  <input type="file" id="file-ketua-id" wire:model="fileKetua" accept="image/*" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('ketua')">
+                  <input type="file" id="file-ketua-id" wire:model="fileKetua" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('ketua')">
                   <span class="text-2xl material-icons">cloud_upload</span>
                 </div>
                 @if($fileKetua)
@@ -85,6 +83,21 @@
               <button type="submit" class="bg-[#B026FF] text-black text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
         </form>
     @elseif($step === 2)
+        @if($errors->any())
+            <div class="bg-red-200 p-2 mb-4 text-red-800">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session()->has('message'))
+            <div class="bg-yellow-200 p-2 mb-4 text-yellow-800">
+                {{ session('message') }}
+            </div>
+        @endif
+        <span class="text-2xl text-white absolute top-0 left-0 m-2 cursor-pointer material-icons" wire:click="backStep">arrow_back</span>
         <h2 class="text-2xl text-white font-bold mb-4">Register Anggota 1</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
@@ -128,7 +141,7 @@
             <div class="mb-2 flex flex-col items-left">
                 <label for="file-anggota1-id" class="text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
                 <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-                <input type="file" id="file-anggota1-id" wire:model="fileAnggota1" accept="image/*" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota1')">
+                <input type="file" id="file-anggota1-id" wire:model="fileAnggota1" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota1')">
                 <span class="text-2xl material-icons">cloud_upload</span>
                 </div>
                 @if($fileAnggota1)
@@ -139,6 +152,21 @@
             <button type="submit" class="bg-[#B026FF] text-black text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
         </form>
     @elseif($step === 3)
+        @if($errors->any())
+            <div class="bg-red-200 p-2 mb-4 text-red-800">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session()->has('message'))
+            <div class="bg-yellow-200 p-2 mb-4 text-yellow-800">
+                {{ session('message') }}
+            </div>
+        @endif
+        <span class="text-2xl text-white absolute top-0 left-0 m-2 cursor-pointer material-icons" wire:click="backStep">arrow_back</span>
         <h2 class="text-2xl text-white font-bold mb-4">Register Anggota 2</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
@@ -182,7 +210,7 @@
             <div class="mb-2 flex flex-col items-left">
                 <label for="file-anggota2-id" class="text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
                 <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-                <input type="file" id="file-anggota2-id" wire:model="fileAnggota2" accept="image/*" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota2')">
+                <input type="file" id="file-anggota2-id" wire:model="fileAnggota2" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota2')">
                 <span class="text-2xl material-icons">cloud_upload</span>
                 </div>
                 @if($fileAnggota2)
@@ -193,12 +221,27 @@
             <button type="submit" class="bg-[#B026FF] text-black text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
         </form>
     @elseif($step === 4)
+        @if($errors->any())
+            <div class="bg-red-200 p-2 mb-4 text-red-800">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session()->has('message'))
+            <div class="bg-yellow-200 p-2 mb-4 text-yellow-800">
+                {{ session('message') }}
+            </div>
+        @endif
+        <span class="text-2xl text-white absolute top-0 left-0 m-2 cursor-pointer material-icons" wire:click="backStep">arrow_back</span>
         <h2 class="text-2xl text-white font-bold mb-4">Register team</h2>
-        <form wire:submit.prevent="submit" onsubmit="return validatePasswords()">
+        <form wire:submit.prevent="submit">
             <div class="mb-2 flex flex-col items-left">
                 <label for="file-team-id" class="text-white block text-left mb-2">Bukti transfer</label>
                 <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-                <input type="file" id="file-team-id" wire:model="fileTeam" accept="image/*" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('team')">
+                <input type="file" id="file-team-id" wire:model="fileTeam" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('team')">
                 <span class="text-2xl material-icons">cloud_upload</span>
                 </div>
                 @if($fileTeam)
@@ -218,7 +261,7 @@
 
             <div class="mb-2 flex flex-col items-left">
                 <label for="confirm-password-id" class="text-white text-left ml-4">Confirm Password</label>
-                <input type="password" id="confirm-password-id" wire:model="password_confirmation" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+                <input type="password" id="confirm-password-id" wire:model="password_confirmation" class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
 
             <button type="submit" class="bg-[#B026FF] text-black text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Register</button>

@@ -10,16 +10,5 @@
   <body class="bg-black flex justify-center items-center h-full">
     @livewire('register-form')
     @livewireScripts
-    <script>
-      function validatePasswords() {
-        var password = document.getElementById('password-id').value;
-        var confirmPassword = document.getElementById('confirm-password-id').value;
-        if (password !== confirmPassword) {
-            alert("Passwords do not match. Please try again.");
-            return false;
-        }
-        return true;
-    }
-    </script>
   </body>
 </html>

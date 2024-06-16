@@ -23,6 +23,10 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::get('/admin/',[AuthController::class, 'adminLoginView'])->name('admin.login');

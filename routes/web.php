@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use Google\Service\Adsense\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,10 @@ Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('a
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');
-    Route::get('/rekapPendaftar', [adminController::class, 'rekapPendaftar'])->name('rekapPendaftar');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
 });
+// env :
+// GOOGLE_REDIRECT = http://localhost:8000/admin/processLogin
+// GOOGLE_CLIENT_ID = 253099323815-3c7jhdmos6qtve5l3js6frj73v6umq8j.apps.googleusercontent.com
+// GOOGLE_CLIENT_SECRET = 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
 

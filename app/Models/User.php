@@ -23,4 +23,8 @@ class User extends Model
         'no_rek',
         'id_tim'
     ];
+    public function team()
+    {
+        return $this->belongsToMany(Team::class, 'kelompok_user', 'user_id', 'id_tim');
+    }
 }

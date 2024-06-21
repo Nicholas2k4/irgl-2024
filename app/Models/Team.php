@@ -15,4 +15,9 @@ class Team extends Model
         'link_bukti_tf',
         'is_validated'
     ];
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'kelompok_user', 'id_tim', 'user_id');
+    }
 }

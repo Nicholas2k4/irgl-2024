@@ -19,9 +19,9 @@
 
 </head>
 
-<body class="m-0 p-0 h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
+<body class="m-0 p-0 w-screen overflow-x-hidden h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
     <nav class="w-screen h-[45px] flex-row shadow-xl shadow-[#0000002D]
-    bg-gradient-to-r from-[#6b2b52] to-[#311b55]">
+    bg-gradient-to-r from-[#6b2b52] to-[#311b55] absolute top-0 right-0">
         <div class="max-w-[98%] h-[100%] flex flex-wrap justify-between mx-auto items-center"> <!--isi -->
             
         <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>

@@ -36,6 +36,7 @@ Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('a
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
+    Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 });
 // env :
 // GOOGLE_REDIRECT = http://localhost:8000/admin/processLogin

@@ -26,4 +26,14 @@ class AdminController extends Controller
         $users = User::with('team')->get();
         return view('admin.rekapTeam',compact('teams','users'));
     }
+    public function validasiBuktiTransfer($id){
+        $team = Team::find($id);
+        if($team){
+            $team->is_validated = true;
+            $team->save();
+            return redirect()->back()->with(['success' => 'Bukti transfer kelompok berhasil divalidasi']);
+        }
+        
+        return redirect()->back()->with(['error' => 'Kelompok tidak ditemukan']);
+    }
 }

@@ -44,7 +44,9 @@
                 <td id="anggotas">
                     <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
                 </td>
-                <td>{{ $data->link_bukti_tf }}</td>
+                <td>
+                <a href="{{ strpos($data->link_bukti_tf, 'http') === 0 ? $data->link_bukti_tf : 'https://' . $data->link_bukti_tf }}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
+                </td>
 
                 @if ($data->is_validated == false)
                 <td>
@@ -176,5 +178,5 @@
             {{ session()->forget('error') }}
         </script>
     @endif
-    
+
 @endsection

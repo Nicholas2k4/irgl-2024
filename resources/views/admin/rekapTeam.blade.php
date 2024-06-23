@@ -228,16 +228,18 @@
                     let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
                     temuTeam.push(temp);
                 }
-                // if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('notvalid')) {
-                //     // let temp = [dataTeams[i]['nama'],dataTeams[i]['id']];
-                //     // temuTeam.push(temp);
-                // }
-                // for(let k = 0; k<dataUsers.length;k++){
+                if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('notvalid')) {
+                   if(!dataTeams[i]['is_valid']){
+                    let temp = [dataTeams[i]['nama'],dataTeams[i]['id']];
+                    temuTeam.push(temp);
+                   }
+                 }
+                for(let k = 0; k<dataUsers.length;k++){
                 //     if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input)||dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) && dataUsers[k]['is_ketua']) {
                 //     let temp = [dataTeams[k]['nama'], dataTeams[k]['id']]; //SALAHHHHHHHHHHHHHHHHHHH
                 //     temuTeam.push(temp);
                 // }
-                // }
+                }
             }
             for (let i = 0; i < dataUsers.length; i++) {
                 for (let j = 0; j < temuTeam.length; j++) {

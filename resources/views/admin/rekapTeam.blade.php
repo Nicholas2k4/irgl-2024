@@ -7,7 +7,7 @@
             <label for="inputCari">Search:</label>
             <input id="inputCari" oninput="search()" class="w-40 h-7 border-gray-400 border-[1px] ml-2 rounded-[3px]">
         </div>
-        <table class="w-[90vw] justify-center items-center mt-10">
+        <table class="w-[90vw] justify-center items-center mt-10 mb-1">
             <thead>
                 <tr class="min-w-full">
                     <th>No</th>
@@ -228,31 +228,80 @@
                     let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
                     temuTeam.push(temp);
                 }
-                if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('notvalid')) {
-                   if(!dataTeams[i]['is_valid']){
-                    let temp = [dataTeams[i]['nama'],dataTeams[i]['id']];
-                    temuTeam.push(temp);
-                   }
-                 }
-                for(let k = 0; k<dataUsers.length;k++){
-                //     if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input)||dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) && dataUsers[k]['is_ketua']) {
-                //     let temp = [dataTeams[k]['nama'], dataTeams[k]['id']]; //SALAHHHHHHHHHHHHHHHHHHH
-                //     temuTeam.push(temp);
-                // }
+                if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('belumvalid')||input.includes('belomvalid') || input.includes('notvalid')) {
+                    if (!dataTeams[i]['is_validated']) {
+                        let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
+                        temuTeam.push(temp);
+                    }
+                }
+
+                for (let k = 0; k < dataUsers.length; k++) {
+                    if (dataUsers[k]['id_tim'] === dataTeams[i]['id']) {
+                        if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input) || dataUsers[k]['no_telp'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) && dataUsers[k]['is_ketua']) {
+                            let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
+                            temuTeam.push(temp);
+                        }
+                    }
                 }
             }
             for (let i = 0; i < dataUsers.length; i++) {
                 for (let j = 0; j < temuTeam.length; j++) {
-                    if (temuTeam[j][1] == dataUsers[i]['id_tim'] && dataUsers[i]['is_ketua']) {
-                        let tempAnggota = [dataUsers[i]['id_line'], dataUsers[i]['no_telp']]
+                    if (temuTeam[j][1] == dataUsers[i]['id_tim']) {
+                        let tempAnggota = [dataUsers[i]['is_ketua'], dataUsers[i]['id_line'], dataUsers[i]['no_telp']]
                         temuAnggotaTeam.push(tempAnggota);
                     }
                 }
             }
+            // Buat Tabelnya dari temuTeam dan temuAnggotaTeam
+
+            let recordsHtml = '';
+            for (let i = 0; i < temuTeam.length; i++) {
+                let team = temuTeam[i];
+                let teamId = team[1];
+                let ketua = temuAnggotaTeam.find(anggota => anggota[0] == teamId) || ['', ''];
+                let ketuaLine = ketua[0];
+                let ketuaTelp = ketua[1];
+                let teamData = dataTeams.find(team => team['id'] == teamId);
+                let isValidated = teamData.is_validated;
+                let updatedAt = teamData.updated_at ? teamData.updated_at : 'null';
+                let createdAt = teamData.created_at ? teamData.created_at : 'null';
+
+                recordsHtml += `
+        <tr class="${i % 2 == 0 ? 'bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full' : 'bg-white text-center'}">
+            <td>${i + 1}</td>
+            <td>${teamData.nama}</td>
+            <td>${ketuaLine}</td>
+            <td>${ketuaTelp}</td>
+            <td>
+                <button onclick="togglePopup(${teamId})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+            </td>
+            <td>
+                <a href="${teamData.link_bukti_tf.startsWith('http') ? teamData.link_bukti_tf : 'https://' + teamData.link_bukti_tf}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
+            </td>
+            <td>
+                ${isValidated ? 'Validated' : `
+                    <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                    <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                `}
+            </td>
+            <td>${updatedAt}</td>
+            <td>${createdAt}</td>
+        </tr>
+    `;
+            }
+            records.innerHTML = recordsHtml;
         }
-        console.log(temuTeam)
-        console.log(temuAnggotaTeam)
     }
+
+    window.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            document.getElementById(`displayAnggota`).innerHTML = ``;
+            popup.classList.add('hidden');
+        }
+    });
 </script>
 
 @if (session('success'))

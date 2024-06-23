@@ -21,14 +21,14 @@
 
 <body class="m-0 p-0 w-screen overflow-x-hidden h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
     <nav class="w-screen h-[45px] flex-row shadow-xl shadow-[#0000002D]
-    bg-gradient-to-r from-[#6b2b52] to-[#311b55] absolute top-0 right-0">
-        <div class="max-w-[98%] h-[100%] flex flex-wrap justify-between mx-auto items-center"> <!--isi -->
+    bg-gradient-to-r from-[#6b2b52] to-[#311b55] top-0 right-0 absolute">
+        <div class="max-w-[98%] h-[100%] pl-10 flex flex-wrap justify-between mx-auto items-center">
             
         <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
            
         <button></button> <!--HP show Menu-->
         
-        <div class="max-w-[50%]flex justify-between">
+        <div class="max-w-[50%]flex justify-between mr-1">
                 <a class=" text-[#fff] p-1 font-bold text-lg" href="/admin/main">Home</a>
                 <!-- <a class=" text-[#fff]/60 p-1  hover:text-[#fff]/80 text-lg" href="/admin/rekapPendaftar">Rekap Pendaftar</a> -->
                 <a class=" text-[#fff]/60 ml-7 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/rekapTeam">Rekap Team</a>

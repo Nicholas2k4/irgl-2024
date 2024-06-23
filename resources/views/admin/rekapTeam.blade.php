@@ -22,7 +22,7 @@
                 </tr>
             </thead>
 
-            <tbody id="bodyTable">
+            <tbody id="bodyTable" class="text-center">
                 @foreach($teams as $team => $data)
                 @if($team % 2 == 0)
                 <tr class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">
@@ -225,12 +225,12 @@
         } else {
             for (let i = 0; i < dataTeams.length; i++) {
                 if (dataTeams[i]['nama'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) {
-                    let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
+                    let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                     temuTeam.push(temp);
                 }
                 if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('belumvalid')||input.includes('belomvalid') || input.includes('notvalid')) {
                     if (!dataTeams[i]['is_validated']) {
-                        let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
+                        let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                         temuTeam.push(temp);
                     }
                 }
@@ -238,7 +238,7 @@
                 for (let k = 0; k < dataUsers.length; k++) {
                     if (dataUsers[k]['id_tim'] === dataTeams[i]['id']) {
                         if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input) || dataUsers[k]['no_telp'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) && dataUsers[k]['is_ketua']) {
-                            let temp = [dataTeams[i]['nama'], dataTeams[i]['id']];
+                            let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                             temuTeam.push(temp);
                         }
                     }
@@ -247,7 +247,7 @@
             for (let i = 0; i < dataUsers.length; i++) {
                 for (let j = 0; j < temuTeam.length; j++) {
                     if (temuTeam[j][1] == dataUsers[i]['id_tim']) {
-                        let tempAnggota = [dataUsers[i]['is_ketua'], dataUsers[i]['id_line'], dataUsers[i]['no_telp']]
+                        let tempAnggota = [dataUsers[i]['is_ketua'], dataUsers[i]['id_line'], dataUsers[i]['no_telp'],dataUsers[i]['id_tim'],dataUsers[i]['nama']]
                         temuAnggotaTeam.push(tempAnggota);
                     }
                 }
@@ -256,27 +256,39 @@
 
             let recordsHtml = '';
             for (let i = 0; i < temuTeam.length; i++) {
-                let team = temuTeam[i];
-                let teamId = team[1];
-                let ketua = temuAnggotaTeam.find(anggota => anggota[0] == teamId) || ['', ''];
-                let ketuaLine = ketua[0];
-                let ketuaTelp = ketua[1];
-                let teamData = dataTeams.find(team => team['id'] == teamId);
-                let isValidated = teamData.is_validated;
-                let updatedAt = teamData.updated_at ? teamData.updated_at : 'null';
-                let createdAt = teamData.created_at ? teamData.created_at : 'null';
+                let teamId = temuTeam[i][1];
+                let tempAnggota = [];
+                for(j=0;j<temuAnggotaTeam.length;j++){
+                    if(temuAnggotaTeam[j][3] == teamId && temuAnggotaTeam[j][0]){
+                        tempAnggota.push(temuAnggotaTeam[j][1],temuAnggotaTeam[j][2],temuAnggotaTeam[j][4])
+                    }
+                }
+                let ketua = tempAnggota[2];
+                let ketuaLine = tempAnggota[0];
+                let ketuaTelp = tempAnggota[1];
+
+                let isValidated = temuTeam[i][3];
+
+                let createdAt = 'null' ;
+                let updatedAt = 'null' ;
+
+                if (temuTeam[i][5] != null && temuTeam[i][4] != null) {
+                    let createdAt = temuTeam[i][4] ;
+                    let updatedAt = temuTeam[i][5] ;
+                }
+
 
                 recordsHtml += `
         <tr class="${i % 2 == 0 ? 'bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full' : 'bg-white text-center'}">
             <td>${i + 1}</td>
-            <td>${teamData.nama}</td>
+            <td>${temuTeam[i][0]}</td>
             <td>${ketuaLine}</td>
             <td>${ketuaTelp}</td>
             <td>
                 <button onclick="togglePopup(${teamId})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
             </td>
             <td>
-                <a href="${teamData.link_bukti_tf.startsWith('http') ? teamData.link_bukti_tf : 'https://' + teamData.link_bukti_tf}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
+                <a href="${temuTeam[i][2].startsWith('http') ? temuTeam[i][2] : 'https://' + temuTeam[i][2]}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
             </td>
             <td>
                 ${isValidated ? 'Validated' : `

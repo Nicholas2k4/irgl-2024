@@ -47,10 +47,10 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 });
 
 Route::get('/admin/jadwal', [JadwalController::class, 'main'])->name('admin.jadwal.main');
-Route::post('/admin/jadwal/save', [JadwalController::class, 'main'])->name('jadwal.save');
-Route::get('/admin/jadwal/input', [JadwalController::class, 'main'])->name('mahasiswa.input');
-Route::get('/admin/jadwal/view/{id?}', [JadwalController::class, 'viewJadwal'])->name('admin.jadwal.view');
-Route::get('/admin/jadwal/remove/{id}', [JadwalController::class, 'removeJadwal'])->name('mahasiswa.remove');
+Route::get('/admin/jadwal/input', [JadwalController::class, 'input'])->name('admin.jadwal.input');
+Route::post('/admin/jadwal/save', [JadwalController::class, 'adminStore'])->name('admin.jadwal.save');
+Route::get('/admin/jadwal/view/{id?}', [JadwalController::class, 'view'])->name('admin.jadwal.view');
+Route::get('/admin/jadwal/delete/{id}', [JadwalController::class, 'delete'])->name('admin.jadwal.delete');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');

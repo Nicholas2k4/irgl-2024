@@ -83,4 +83,53 @@ class JadwalController extends Controller
 
         return redirect()->intended('/jadwal')->with('success', 'Jadwal berhasil di-reschedule.');
     }
+
+    // ADMIN SIDE
+    public function main()
+    {
+        $jadwal = Jadwal::all();
+        return view('admin.jadwal-crud.main', compact('jadwal'));
+    }
+    public function delete(Request $r)
+    {
+        $jadwal = Jadwal::where('id', $r->id)->first();
+        $temp_id = $jadwal->id;
+        $jadwal->delete();
+
+        return redirect()->route('admin.jadwal.main')
+            ->with('success', "Jadwal with id: {$temp_id} deleted successfully.");
+    }
+
+    public function view(Request $r){
+        
+        $jadwal = Jadwal::where('id', $r->id)->first();
+        return view('admin.jadwal-crud.view')
+            ->with('jadwal', $jadwal);
+    }
+    public function adminStore(Request $r)
+    {
+        if(isset($r->id))
+        {
+            $jadwal = Jadwal::where('id', $r->id)->first();
+            $route = 'admin.jadwal.input';
+        }
+        else
+        {
+            $jadwal = new Jadwal;
+            $route = 'admin.jadwal.main';
+            
+        }
+        $jadwal->tanggal = $r->tanggal;
+        $jadwal->start_time = $r->start_time;
+        $jadwal->end_time = $r->end_time;
+        $jadwal->save();
+
+        return redirect()->route($route);
+    }
+    public function input()
+    {
+        return view('admin.jadwal-crud.input');
+    }
+
+
 }

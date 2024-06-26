@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('link_bukti_tf');
             $table->boolean('is_validated')->default(false);
+            $table->unsignedBigInteger('id_jadwal')->nullable();
+            $table->foreign('id_jadwal')->references('id')->on('jadwal')->onDelete('set null');
+            $table->string('alasan_resched')->nullable()->default(null);
+            $table->string('link_bukti_resched')->nullable()->default(null);
             $table->timestamps();
         });
     }

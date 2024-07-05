@@ -317,32 +317,26 @@
 </script>
 
 @if (session('success'))
-<script>
-    SweetAlert.fire({
-        icon: 'success',
-        title: '{{ session('
-        success ') }}',
-    });
-</script>
+        <script>
+            SweetAlert.fire({
+                icon: 'success',
+                title: '{{ session('success') }}',
+            });
+        </script>
 
-{{ session()->forget('success') }}
-@endif
+        {{ session()->forget('success') }}
+    @endif
 
-@if (session('error'))
-<script>
-    SweetAlert.fire({
-        icon: 'error',
-        title: '{{ session('
-        error ') }}',
-    });
+    @if (session('error'))
+        <script>
+            SweetAlert.fire({
+                icon: 'error',
+                title: '{{ session('error') }}',
+            });
 
 
-    {
-        {
-            session() - > forget('error')
-        }
-    }
-</script>
-@endif
+            {{ session()->forget('error') }}
+        </script>
+    @endif
 
 @endsection

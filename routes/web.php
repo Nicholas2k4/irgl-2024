@@ -32,12 +32,10 @@ Route::get('/login', function () {
 
 
 
-
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::get('/admin/',[AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('admin.processLogin');
-
 
 
 Route::middleware([AuthMiddleware::class])->group(function () {

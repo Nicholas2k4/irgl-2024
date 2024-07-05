@@ -33,7 +33,7 @@
                 <a class=" text-[#fff] p-1 font-bold text-lg" href="/admin/main">Home</a>
                 <!-- <a class=" text-[#fff]/60 p-1  hover:text-[#fff]/80 text-lg" href="/admin/rekapPendaftar">Rekap Pendaftar</a> -->
                 <a class=" text-[#fff]/60 ml-7 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/rekapTeam">Rekap Team</a>
-                <a class=" text-[#fff]/60 ml-7 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/jadwal">Edit Jadwal</a>
+                <a class=" text-[#fff]/60 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/jadwal">Edit Jadwal</a>
                 <a class=" rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 text-lg hover:bg-red-800/80" href="/logout">Log Out</a>
             </div>
         </div>

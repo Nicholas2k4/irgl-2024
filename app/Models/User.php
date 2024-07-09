@@ -25,6 +25,6 @@ class User extends Model
     ];
     public function team()
     {
-        return $this->belongsToMany(Team::class, 'kelompok_user', 'user_id', 'id_tim');
+        return $this->belongsTo(Team::class);
     }
 }

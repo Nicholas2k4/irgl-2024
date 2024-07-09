@@ -23,7 +23,7 @@ class Team extends Model implements AuthenticatableContract
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'kelompok_user', 'id_tim', 'user_id');
+        return $this->hasMany(User::class);
     }
     public function getAuthPassword()
     {

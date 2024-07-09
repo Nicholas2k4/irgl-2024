@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('kelompok_user', function (Blueprint $table) {
-            $table->foreignid('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignid('id_tim')->references('id')->on('teams')->onDelete('cascade');
+        Schema::create('elim_games', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('game_name');
+            $table->string('game_link');
             $table->timestamps();
         });
     }
@@ -24,5 +24,6 @@ return new class extends Migration
     public function down(): void
     {
         //
+        Schema::dropIfExists('elim_games');
     }
 };

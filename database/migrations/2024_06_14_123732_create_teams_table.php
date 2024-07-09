@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nama')->unique();
             $table->string('password');
             $table->string('link_bukti_tf');
@@ -21,6 +21,12 @@ return new class extends Migration
             $table->foreign('id_jadwal')->references('id')->on('jadwal')->onDelete('set null');
             $table->string('alasan_resched')->nullable()->default(null);
             $table->string('link_bukti_resched')->nullable()->default(null);
+            $table->boolean('can_spin_roulette')->nullable();
+            $table->integer('game_id_allowed_play')->nullable();
+            $table->string('game_pass')->nullable();
+            $table->string('curr_streak')->default('0');
+            $table->string('curr_gp_streak')->default('0');
+            $table->string('curr_game_rotation')->default('0');
             $table->timestamps();
         });
     }

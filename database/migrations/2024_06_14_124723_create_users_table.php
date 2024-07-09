@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->uuid('id_tim');
             $table->string('nama');
             $table->date('tanggal_lahir');
             $table->string('tempat_lahir');
@@ -24,10 +25,9 @@ return new class extends Migration
             $table->boolean('is_ketua')->default(false);
             $table->string('bank')->nullable();
             $table->string('no_rek')->nullable();
-            $table->unsignedBigInteger('id_tim');
-            $table->timestamps();
-
             $table->foreign('id_tim')->references('id')->on('teams')->onDelete('cascade');
+            $table->timestamps();
+            
         });
     }
 

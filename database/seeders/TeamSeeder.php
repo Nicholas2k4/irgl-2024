@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Team;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class TeamSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class TeamSeeder extends Seeder
         $teams = [
             [
                 'nama' => 'Team A',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamA.jpg',
                 'is_validated' => true,
                 'id_jadwal' => 1,
@@ -27,7 +28,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team B',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamB.jpg',
                 'is_validated' => false,
                 'id_jadwal' => null,
@@ -36,7 +37,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team C',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamC.jpg',
                 'is_validated' => true,
                 'id_jadwal' => 2,
@@ -45,7 +46,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team D',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamD.jpg',
                 'is_validated' => false,
                 'id_jadwal' => 3,
@@ -54,7 +55,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team E',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamE.jpg',
                 'is_validated' => true,
                 'id_jadwal' => null,
@@ -63,7 +64,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team F',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamF.jpg',
                 'is_validated' => true,
                 'id_jadwal' => 4,
@@ -72,7 +73,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team G',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamG.jpg',
                 'is_validated' => false,
                 'id_jadwal' => 5,
@@ -81,7 +82,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'nama' => 'Team H',
-                'password' => 'password', // Plain text password
+                'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
                 'is_validated' => true,
                 'id_jadwal' => 6,
@@ -90,7 +91,6 @@ class TeamSeeder extends Seeder
             ],
         ];
 
-        // Insert data into the database
         foreach ($teams as $team) {
             Team::create($team);
         }

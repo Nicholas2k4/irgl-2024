@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Team;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
                 'is_ketua' => true,
                 'bank' => 'BCA',
                 'no_rek' => '1234567890',
-                'id_tim' => 1, // Replace with existing team_id
+                'id_tim' => Team::where('nama', 'Team A')->first()->id,
             ],
             [
                 'nama' => 'Jane Doe',
@@ -43,7 +44,7 @@ class UserSeeder extends Seeder
                 'is_ketua' => false,
                 'bank' => 'BNI',
                 'no_rek' => '0987654321',
-                'id_tim' => 2, // Replace with existing team_id
+                'id_tim' => Team::where('nama', 'Team A')->first()->id,
             ],
             // Add more users as needed
         ];

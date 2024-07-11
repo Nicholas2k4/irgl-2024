@@ -271,6 +271,11 @@ class TeamController extends BaseController
         }
         $gamepass = Str::random(50);
         try {
+            ElimGamesHistory::create([
+                'game_id' => $creds['game_id_allowed_play'],
+                'team_id' => $team->id,
+                'rotation' => $team->curr_game_rotation,
+            ]);
             if ($alreadyPlayed == $totalgames) {
                 $team->update([
                     'can_spin_roulette' => 0,
@@ -285,11 +290,6 @@ class TeamController extends BaseController
                     'game_pass' => $gamepass,
                 ]);
             }
-            ElimGamesHistory::create([
-                'game_id' => $creds['game_id_allowed_play'],
-                'team_id' => $team->id,
-                'rotation' => $team->curr_game_rotation,
-            ]);
         } catch (\Exception $e) {
             return $this->error('SQL errror', HttpResponseCode::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -319,4 +319,33 @@ class TeamController extends BaseController
         return $this->success(['game_name' => $game->game_name, 'game_link' => $game->game_link]);
     }
 
+    public function getGameByRoulette(Request $request)
+    {
+        $creds = $request->only('team_id');
+        $validate = Validator::make(
+            $creds,
+            [
+                'team_id' => 'required|exists:teams,id',
+            ],
+            [
+                'team_id.required' => 'team_id is required',
+                'team_id.exists' => 'team_id not found',
+            ],
+        );
+        foreach ($validate->errors()->all() as $error) {
+            return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $team = Team::find($creds['team_id']);
+        $playedGameIds = ElimGamesHistory::where('team_id', $creds['team_id'])
+            ->where('rotation', $team->curr_game_rotation)
+            ->pluck('game_id')
+            ->toArray();
+
+        $availableGames = ElimGames::whereNotIn('id', $playedGameIds)->get();
+        if ($availableGames->isEmpty()) {
+            return $this->error('No available games left for the current rotation', HttpResponseCode::HTTP_NOT_FOUND);
+        }
+        return $this->success($availableGames);
+    }
 }

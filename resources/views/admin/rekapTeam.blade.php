@@ -47,19 +47,25 @@
                         @endforeach
                     </td>
                     <td id="anggotas">
-                        <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+                        <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})"
+                            class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
                     </td>
                     <td>
-                        <a href="{{ strpos($data->link_bukti_tf, 'http') === 0 ? $data->link_bukti_tf : 'https://' . $data->link_bukti_tf }}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
+                        <a href="{{ strpos($data->link_bukti_tf, 'http') === 0 ? $data->link_bukti_tf : 'https://' . $data->link_bukti_tf }}"
+                            target="_blank"
+                            class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
                     </td>
 
                     @if ($data->is_validated == false)
                     <td>
-                        <form id="formValidasiBayar" action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}" method="POST" class="hidden">
+                        <form id="formValidasiBayar"
+                            action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}" method="POST"
+                            class="hidden">
                             @csrf
                         </form>
 
-                        <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                        <button id="validasiBuktiTransfer"
+                            class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
                     </td>
                     @else
                     <td>Validated</td>
@@ -80,13 +86,15 @@
 </div>
 
 <!-- Popup Section -->
-<div id="popup" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
+<div id="popup"
+    class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
     <div class="w-[50vw] h-[94%] bg-white px-4 py-[10px] rounded-lg">
         <div class="w-full border-b-[1px] border-gray-400/30 flex flex-row justify-between">
             <h1 class="text-lg text-black">Detail Anggota</h1>
             <button onclick="togglePopup()" class="text-gray-500 hover:text-gray-800 focus:outline-none">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
                 </svg>
             </button>
         </div>
@@ -102,7 +110,8 @@
         </div>
 
         <div class="w-full flex justify-end mt-2">
-            <button onclick="togglePopup()" class="w-12 h-8 rounded-[4px] bg-gray-600 text-gray-200 text-center hover:bg-gray-800">Close</button>
+            <button onclick="togglePopup()"
+                class="w-12 h-8 rounded-[4px] bg-gray-600 text-gray-200 text-center hover:bg-gray-800">Close</button>
         </div>
     </div>
 </div>
@@ -317,26 +326,26 @@
 </script>
 
 @if (session('success'))
-        <script>
-            SweetAlert.fire({
+<script>
+    SweetAlert.fire({
                 icon: 'success',
                 title: '{{ session('success') }}',
             });
-        </script>
+</script>
 
-        {{ session()->forget('success') }}
-    @endif
+{{ session()->forget('success') }}
+@endif
 
-    @if (session('error'))
-        <script>
-            SweetAlert.fire({
+@if (session('error'))
+<script>
+    SweetAlert.fire({
                 icon: 'error',
                 title: '{{ session('error') }}',
             });
 
 
             {{ session()->forget('error') }}
-        </script>
-    @endif
+</script>
+@endif
 
 @endsection

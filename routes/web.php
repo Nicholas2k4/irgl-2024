@@ -56,7 +56,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], fun
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 });
 // env :
-// GOOGLE_REDIRECT = http://localhost:8000/admin/processLogin
-// GOOGLE_CLIENT_ID = 253099323815-3c7jhdmos6qtve5l3js6frj73v6umq8j.apps.googleusercontent.com
-// GOOGLE_CLIENT_SECRET = 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
+
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         //
         Schema::create('elim_scores', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->uuid('id_team');
-            $table->uuid('id_game');
+            $table->unsignedBigInteger('id_game');
             $table->integer('score');
             $table->dateTime('time')->nullable();
             $table->foreign('id_team')->references('id')->on('teams')->onDelete('cascade');

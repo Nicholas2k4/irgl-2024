@@ -12,12 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         //
-        Schema::create('elim_question_histories', function (Blueprint $table) {
+        Schema::create('elim_statistics', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('id_team');
-            $table->uuid('id_question');
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
+            $table->boolean('won_grand_prize')->default('0');
+            $table->integer('highest_gp_streak')->default('0');
+            $table->integer('highest_streak')->default('0');
+            $table->integer('total_score')->default('0');
+            $table->integer('total_game_finished')->default('0');
             $table->foreign('id_team')->references('id')->on('teams')->onDelete('cascade');
-            $table->foreign('id_question')->references('id')->on('elim_questions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ return new class extends Migration
     public function down(): void
     {
         //
-        Schema::dropIfExists('elim_question_histories');
+        Schema::dropIfExists('elim_statistics');
     }
 };

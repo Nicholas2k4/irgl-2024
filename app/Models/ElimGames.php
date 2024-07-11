@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 class ElimGames extends Model
 {
     use HasFactory;
-    use HasUuids;
     /**
      * The attributes that are mass assignable.
      *

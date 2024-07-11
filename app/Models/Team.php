@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Team extends Model implements AuthenticatableContract
 {
     use HasFactory;
     use Authenticatable;
     use HasUuids;
+    use HasApiTokens;
     protected $fillable = [
         'nama',
         'password',
@@ -32,7 +34,7 @@ class Team extends Model implements AuthenticatableContract
 
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'id_tim');
     }
     public function getAuthPassword()
     {

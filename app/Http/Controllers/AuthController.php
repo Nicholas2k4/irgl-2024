@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
 use App\Models\Admin;
 use Firebase\JWT\JWT;
+use App\Utils\HttpResponse;
 use Illuminate\Http\Request;
+use App\Utils\HttpResponseCode;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\BaseController;
+use Laravel\Sanctum\Exceptions\MissingAbilityException;
+use Illuminate\Support\Facades\Validator;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
+    use HttpResponse;
     private $googleClient;
 
     public function __construct(){
@@ -99,5 +106,44 @@ class AuthController extends Controller
             return "";
         }
         // tambahhkan pengecekan error
+    }
+
+
+    //login for team
+    public function login(Request $request)
+    {
+        // dd($request->all());
+        $creds = $request->only('team_name', 'password');
+        $validate = Validator::make(
+            $creds,
+            [
+                'team_name' => 'required',
+                'password' => 'required',
+            ],
+            [
+                'team_name.required' => 'team_name is required',
+                'password.required' => 'Password is required',
+            ],
+        );
+        foreach ($validate->errors()->all() as $error) {
+            return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $team = Team::where('nama', $creds['team_name'])->first();
+        // dd($team);
+        if (!$team) {
+            return $this->error('You are not a participant of IRGL 2024!', HttpResponseCode::HTTP_UNAUTHORIZED);
+        }
+        if (!Hash::check($creds['password'], $team->password)) {
+            return $this->error('Invalid credentials', HttpResponseCode::HTTP_UNAUTHORIZED);
+        }
+        $team->tokens()->delete();
+        $applicantToken = $team->createToken('hydra-api-token', ['applicant'])->plainTextToken;
+        
+        return $this->success([
+            'token' => $applicantToken,
+            'id' => $team->id,
+            'team_name' => $team->nama,
+        ]);
     }
 }

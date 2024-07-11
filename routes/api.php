@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/coba', function () {
+    return response()->json(['message' => 'Hello, World!']);
 });
+
+
+
+
+Route::post('login', [AuthController::class, 'login']);
+
+Route::post('getUserData',[TeamController::class, 'getUserData'])->middleware('auth:sanctum');
+Route::post('getUserDataByGamePass',[TeamController::class, 'getUserDataByGamePass']);
+Route::post('uploadScoreWin',[TeamController::class, 'uploadScoreWin'])->middleware('auth:sanctum');
+Route::post('uploadScoreLose',[TeamController::class, 'uploadScoreLose'])->middleware('auth:sanctum');
+Route::post('getUserStreak',[TeamController::class, 'getUserStreak']);
+Route::post('getUserGrandPrizeStreak',[TeamController::class, 'getUserGrandPrizeStreak']);
+Route::post('updateResultOfRoulette',[TeamController::class, 'updateResultOfRoulette']);
+Route::post('getGameLinkById',[TeamController::class, 'getGameLinkById']);

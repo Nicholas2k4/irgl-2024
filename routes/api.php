@@ -34,3 +34,4 @@ Route::post('getUserStreak',[TeamController::class, 'getUserStreak']);
 Route::post('getUserGrandPrizeStreak',[TeamController::class, 'getUserGrandPrizeStreak']);
 Route::post('updateResultOfRoulette',[TeamController::class, 'updateResultOfRoulette']);
 Route::post('getGameLinkById',[TeamController::class, 'getGameLinkById']);
+Route::post('getGameByRoulette',[TeamController::class, 'getGameByRoulette']);

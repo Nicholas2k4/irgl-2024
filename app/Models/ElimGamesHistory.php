@@ -8,17 +8,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class ElimGames extends Model
+class ElimGamesHistory extends Model
 {
     use HasFactory;
+    use HasUuids;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'game_name',
-        'game_link'
+    protected $fillable =[
+
+        'game_id',
+        'team_id',
+        'rotation'
+    
     ]; 
 
     /**
@@ -29,8 +34,9 @@ class ElimGames extends Model
     public static function validationRules()
     {
         return [
-            'game_name' => 'required|string',
-            'game_link' => 'required|string'
+            'game_id' => 'required|exists:elim_games,id',
+            'team_id' => 'required|uuid|exists:teams,id',
+            'rotation' => 'required'
         ];
     }
 
@@ -42,10 +48,12 @@ class ElimGames extends Model
     public static function validationMessages()
     {
         return [
-            'game_name.required' => 'Nama game harus diisi',
-            'game_name.string' => 'Nama game harus berupa string',
-            'game_link.required' => 'Link game harus diisi',
-            'game_link.string' => 'Link game harus berupa string'
+            'game_id.required' => 'Game id harus diisi',
+            'game_id.exists' => 'Game id tidak ditemukan',
+            'team_id.required' => 'Team id harus diisi',
+            'team_id.uuid' => 'Team id harus berupa UUID',
+            'team_id.exists' => 'Team id tidak ditemukan',
+            'rotation.required' => 'Rotation harus diisi'
         ];
     }
 
@@ -68,7 +76,7 @@ class ElimGames extends Model
 
     public function controller()
     {
-        return 'App\Http\Controllers\ElimGamesController';
+        return 'App\Http\Controllers\ElimGamesHistoryController';
     }
 
     /**
@@ -78,7 +86,7 @@ class ElimGames extends Model
     */
     public function relations()
     {
-        return ['teams'];
+        return [];
     }
 
     /**
@@ -86,13 +94,13 @@ class ElimGames extends Model
     *
     *
     */
-
-    public function teams(){
-        return $this->belongsToMany(Team::class,'elim_scores', 'id_game', 'id_team')->withPivot('score','time');
+    public function teams()
+    {
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
-    public function histories(){
-        return $this->hasMany(ElimGamesHistory::class, 'game_id', 'id');
+    public function games()
+    {
+        return $this->belongsTo(ElimGames::class, 'game_id', 'id');
     }
-
 }

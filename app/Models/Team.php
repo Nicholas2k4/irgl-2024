@@ -53,4 +53,8 @@ class Team extends Model implements AuthenticatableContract
     {
         return $this->hasMany(ElimQuestionHistory::class);
     }
+    public function historyGame()
+    {
+        return $this->hasMany(ElimGamesHistory::class);
+    }
 }

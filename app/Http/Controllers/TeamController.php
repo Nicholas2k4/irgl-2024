@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ElimGamesHistory;
 use App\Models\Team;
 use App\Models\Admin;
 use Firebase\JWT\JWT;
@@ -77,12 +78,13 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $result = Team::where('game_pass', $creds['username'])->where('game_id_allowed_play', $creds['game_id'])->first();
+        $result = Team::where('game_pass', $creds['username'])
+            ->where('game_id_allowed_play', $creds['game_id'])
+            ->first();
         // dd($result);
         if (!$result) {
             return $this->error('No data found for the provided username and game_id', HttpResponseCode::HTTP_FORBIDDEN);
-        }
-        else{
+        } else {
             return $this->success([
                 'id' => $result->id,
                 'username' => $result->nama,
@@ -116,7 +118,6 @@ class TeamController extends BaseController
         // dd($team);
         try {
             $team->games()->attach($creds['game_id'], ['score' => $creds['score']]);
-
             $team->update([
                 'curr_streak' => $team->curr_streak + 1,
                 'can_spin_roulette' => 1,
@@ -261,28 +262,42 @@ class TeamController extends BaseController
         }
 
         $team = Team::where('nama', $creds['team_name'])->first();
-        if (!$team) {
-            return $this->error('You are not a participant of IRGL 2024!', HttpResponseCode::HTTP_UNAUTHORIZED);
-        }
+        $totalgames = ElimGames::count();
+        $alreadyPlayed = ElimGamesHistory::where('team_id', $team->id)
+            ->where('rotation', $team->curr_game_rotation)
+            ->count();
         if (!Hash::check($creds['password'], $team->password)) {
             return $this->error('Invalid credentials', HttpResponseCode::HTTP_UNAUTHORIZED);
         }
         $gamepass = Str::random(50);
         try {
-            $team->update([
-                'can_spin_roulette' => 0,
-                'game_id_allowed_play' => $creds['game_id_allowed_play'],
-                'game_pass' => $gamepass,
+            if ($alreadyPlayed == $totalgames) {
+                $team->update([
+                    'can_spin_roulette' => 0,
+                    'game_id_allowed_play' => $creds['game_id_allowed_play'],
+                    'game_pass' => $gamepass,
+                    'curr_game_rotation' => $team->curr_game_rotation + 1,
+                ]);
+            } else {
+                $team->update([
+                    'can_spin_roulette' => 0,
+                    'game_id_allowed_play' => $creds['game_id_allowed_play'],
+                    'game_pass' => $gamepass,
+                ]);
+            }
+            ElimGamesHistory::create([
+                'game_id' => $creds['game_id_allowed_play'],
+                'team_id' => $team->id,
+                'rotation' => $team->curr_game_rotation,
             ]);
         } catch (\Exception $e) {
             return $this->error('SQL errror', HttpResponseCode::HTTP_INTERNAL_SERVER_ERROR);
         }
         return $this->success([
             'game_id_allowed_play' => $creds['game_id_allowed_play'],
-            'gamepass' => $gamepass
+            'gamepass' => $gamepass,
         ]);
     }
-
 
     public function getGameLinkById(Request $request)
     {
@@ -303,4 +318,5 @@ class TeamController extends BaseController
         $game = ElimGames::find($creds['game_id']);
         return $this->success(['game_name' => $game->game_name, 'game_link' => $game->game_link]);
     }
+
 }

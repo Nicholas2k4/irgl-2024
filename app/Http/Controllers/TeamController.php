@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ElimGamesHistory;
 use App\Models\Team;
 use App\Models\Admin;
 use Firebase\JWT\JWT;
@@ -10,8 +9,11 @@ use App\Models\ElimGames;
 use App\Utils\HttpResponse;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\ElimQuestions;
 use App\Models\ElimStatistics;
 use App\Utils\HttpResponseCode;
+use App\Models\ElimGamesHistory;
+use App\Models\ElimQuestionHistory;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -347,5 +349,92 @@ class TeamController extends BaseController
             return $this->error('No available games left for the current rotation', HttpResponseCode::HTTP_NOT_FOUND);
         }
         return $this->success($availableGames);
+    }
+
+    function getQuestion(Request $request)
+    {
+        $creds = $request->only('team_id');
+        $validate = Validator::make(
+            $creds,
+            [
+                'team_id' => 'required|exists:teams,id',
+            ],
+            [
+                'team_id.required' => 'team_id is required',
+                'team_id.exists' => 'team_id not found',
+            ],
+        );
+        foreach ($validate->errors()->all() as $error) {
+            return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])->pluck('id_question')->toArray();
+        $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
+
+        if (empty($questionsAvailforTeam)) {
+            return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+        }
+        $randomIndex = array_rand($questionsAvailforTeam);
+        $randomQuestionId = $questionsAvailforTeam[$randomIndex];
+
+        return $this->success($randomQuestionId);
+    }
+
+    function uploadQuestion(Request $request)
+    {
+        $creds = $request->only('team_id', 'question_id', 'answer');
+        $validate = Validator::make(
+            $creds,
+            [
+                'team_id' => 'required|exists:teams,id',
+                'question_id' => 'required|exists:elim_questions,id',
+                'answer' => 'required',
+            ],
+            [
+                'team_id.required' => 'team_id is required',
+                'question_id.required' => 'question_id is required',
+                'answer.required' => 'Answer is required',
+                'question_id.exists' => 'question_id not found',
+            ],
+        );
+        foreach ($validate->errors()->all() as $error) {
+            return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $team = Team::find($creds['team_id']);
+        $statistic = ElimStatistics::where('id_team', $creds['team_id'])->first();
+
+        $answerBenardariQuestion = ElimQuestions::where('id', $creds['question_id'])->pluck('answer')->first();
+        if ($creds['answer'] == $answerBenardariQuestion) {
+            $team->increment('curr_gp_streak');
+            if ($team->curr_gp_streak > $statistic->highest_gp_streak) {
+                $statistic->update(['highest_gp_streak' => $team->curr_gp_streak]);
+            }
+            $addToElimQuestionhistory = ElimQuestionHistory::create([
+                'id_team' => $creds['team_id'],
+                'id_question' => $creds['question_id']
+            ]);
+            $addToElimQuestionhistory->save();
+            return $this->success([
+                'message' => 'Answer is Correct',
+                'nama' => $team->nama,
+                'gp now' => $team->curr_gp_streak,
+                $statistic
+            ]);
+        } else {
+            $team->update([
+                'curr_gp_streak' => 0
+            ]);
+            $addToElimQuestionhistory = ElimQuestionHistory::create([
+                'id_team' => $creds['team_id'],
+                'id_question' => $creds['question_id']
+            ]);
+            $addToElimQuestionhistory->save();
+            return $this->success([
+                'message' => 'Answer is Incorrect',
+                'nama' => $team->nama,
+                'gp now' => $team->curr_gp_streak,
+                $statistic
+            ]);
+        }
     }
 }

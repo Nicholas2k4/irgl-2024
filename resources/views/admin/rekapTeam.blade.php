@@ -23,8 +23,8 @@
             </thead>
 
             <tbody id="bodyTable" class="text-center">
-                @foreach($teams as $team => $data)
-                @if($team % 2 == 0)
+                @foreach ($teams as $team => $data)
+                @if ($team % 2 == 0)
                 <tr class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">
                     @else
                 <tr class="bg-white text-center">
@@ -33,21 +33,21 @@
                     <td>{{ $data->nama }}</td>
 
                     <td id="lineKetua">
-                        @foreach($users as $user => $userData)
-                        @if($userData->is_ketua && $userData->id_tim == $data->id)
+                        @foreach ($users as $user => $userData)
+                        @if ($userData->is_ketua && $userData->id_tim == $data->id)
                         {{ $userData->id_line }}
                         @endif
                         @endforeach
                     </td>
                     <td id="telpKetua">
-                        @foreach($users as $user => $userData)
-                        @if($userData->is_ketua && $userData->id_tim == $data->id)
+                        @foreach ($users as $user => $userData)
+                        @if ($userData->is_ketua && $userData->id_tim == $data->id)
                         {{ $userData->no_telp }}
                         @endif
                         @endforeach
                     </td>
                     <td id="anggotas">
-                        <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})"
+                        <button id="anggotaView{{ $team }}" onclick="togglePopup({{ $data->id }})"
                             class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
                     </td>
                     <td>
@@ -71,7 +71,7 @@
                     <td>Validated</td>
                     @endif
 
-                    @if($data->updated_at != null && $data->created_at != null)
+                    @if ($data->updated_at != null && $data->created_at != null)
                     <td>{{ $data->updated_at }}</td>
                     <td>{{ $data->created_at }}</td>
                     @else
@@ -120,20 +120,20 @@
 @section('script')
 <script>
     var dataUsers = <?php echo json_encode($users); ?>;
-    var dataTeams = <?php echo json_encode($teams); ?>;
+        var dataTeams = <?php echo json_encode($teams); ?>;
 
-    function togglePopup(teamId) {
-        const popup = document.getElementById('popup');
-        let anggotaDiv = document.getElementById('displayAnggota')
+        function togglePopup(teamId) {
+            const popup = document.getElementById('popup');
+            let anggotaDiv = document.getElementById('displayAnggota')
 
-        if (popup.classList.contains('hidden')) {
-            // Display popup
-            popup.classList.remove('hidden');
+            if (popup.classList.contains('hidden')) {
+                // Display popup
+                popup.classList.remove('hidden');
 
-            let counter = 1;
-            for (let i = 0; i < dataUsers.length; i++) {
-                if (dataUsers[i]['id_tim'] == teamId) {
-                    anggotaDiv.innerHTML += `
+                let counter = 1;
+                for (let i = 0; i < dataUsers.length; i++) {
+                    if (dataUsers[i]['id_tim'] == teamId) {
+                        anggotaDiv.innerHTML += `
              <div class="w-full h-1/3 flex items-center text-center box-border border-b-[1px] border-gray-400/60">
     <h2 class="w-1/6 text-center">${counter}</h2>
     <h2 class="w-2/6 text-center">${dataUsers[i]['nama']}</h2>
@@ -143,45 +143,45 @@
     </div>
   </div>
   `;
-                    counter++;
+                        counter++;
+                    }
+
                 }
 
+            } else {
+                anggotaDiv.innerHTML = ``;
+                popup.classList.add('hidden');
+
             }
-
-        } else {
-            anggotaDiv.innerHTML = ``;
-            popup.classList.add('hidden');
-
         }
-    }
-    $(document).on("click", "#validasiBuktiTransfer", function() {
-        Swal.fire({
-            title: 'Apakah anda yakin validasi bukti transfer?',
-            text: "Anda tidak dapat mengembalikan tindakan ini!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Validasi!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var form = $(this).siblings('#formValidasiBayar');
-                form.submit();
-            }
+        $(document).on("click", "#validasiBuktiTransfer", function() {
+            Swal.fire({
+                title: 'Apakah anda yakin validasi bukti transfer?',
+                text: "Anda tidak dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Validasi!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $(this).siblings('#formValidasiBayar');
+                    form.submit();
+                }
+            });
         });
-    });
 
-    function search() {
-        let records = document.getElementById('bodyTable')
-        let input = document.getElementById('inputCari').value
-        input = input.toLowerCase().trim().replace(/\s+/g, '')
+        function search() {
+            let records = document.getElementById('bodyTable')
+            let input = document.getElementById('inputCari').value
+            input = input.toLowerCase().trim().replace(/\s+/g, '')
 
-        let temuTeam = [];
-        let temuAnggotaTeam = [];
+            let temuTeam = [];
+            let temuAnggotaTeam = [];
 
-        if (input.value === '' || input.value === null) {
-            records.innerHTML = `@foreach($teams as $team => $data)
-            @if($team % 2 == 0)
+            if (input.value === '' || input.value === null) {
+                records.innerHTML = `@foreach ($teams as $team => $data)
+            @if ($team % 2 == 0)
             <tr class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">
                 @else
             <tr class="bg-white text-center">
@@ -190,21 +190,21 @@
                 <td>{{ $data->nama }}</td>
 
                 <td id="lineKetua">
-                    @foreach($users as $user => $userData)
-                    @if($userData->is_ketua && $userData->id_tim == $data->id)
+                    @foreach ($users as $user => $userData)
+                    @if ($userData->is_ketua && $userData->id_tim == $data->id)
                     {{ $userData->id_line }}
                     @endif
                     @endforeach
                 </td>
                 <td id="telpKetua">
-                    @foreach($users as $user => $userData)
-                    @if($userData->is_ketua && $userData->id_tim == $data->id)
+                    @foreach ($users as $user => $userData)
+                    @if ($userData->is_ketua && $userData->id_tim == $data->id)
                     {{ $userData->no_telp }}
                     @endif
                     @endforeach
                 </td>
                 <td id="anggotas">
-                    <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+                    <button id="anggotaView{{ $team }}" onclick="togglePopup({{ $data->id }})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
                 </td>
                 <td>
                 <a href="{{ strpos($data->link_bukti_tf, 'http') === 0 ? $data->link_bukti_tf : 'https://' . $data->link_bukti_tf }}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
@@ -222,7 +222,7 @@
                 <td>Validated</td>
                 @endif
 
-                @if($data->updated_at != null && $data->created_at != null)
+                @if ($data->updated_at != null && $data->created_at != null)
                 <td>{{ $data->updated_at }}</td>
                 <td>{{ $data->created_at }}</td>
                 @else
@@ -231,63 +231,73 @@
                 @endif
             </tr>
             @endforeach`;
-        } else {
-            for (let i = 0; i < dataTeams.length; i++) {
-                if (dataTeams[i]['nama'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) {
-                    let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
-                    temuTeam.push(temp);
-                }
-                if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes('belumvalid')||input.includes('belomvalid') || input.includes('notvalid')) {
-                    if (!dataTeams[i]['is_validated']) {
-                        let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
+            } else {
+                for (let i = 0; i < dataTeams.length; i++) {
+                    if (dataTeams[i]['nama'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) {
+                        let temp = [dataTeams[i]['nama'], dataTeams[i]['id'], dataTeams[i]['link_bukti_tf'], dataTeams[i][
+                            'is_validated'
+                        ], dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                         temuTeam.push(temp);
                     }
-                }
-
-                for (let k = 0; k < dataUsers.length; k++) {
-                    if (dataUsers[k]['id_tim'] === dataTeams[i]['id']) {
-                        if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input) || dataUsers[k]['no_telp'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) && dataUsers[k]['is_ketua']) {
-                            let temp = [dataTeams[i]['nama'], dataTeams[i]['id'],dataTeams[i]['link_bukti_tf'], dataTeams[i]['is_validated'] , dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
+                    if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes(
+                            'belumvalid') || input.includes('belomvalid') || input.includes('notvalid')) {
+                        if (!dataTeams[i]['is_validated']) {
+                            let temp = [dataTeams[i]['nama'], dataTeams[i]['id'], dataTeams[i]['link_bukti_tf'], dataTeams[
+                                i]['is_validated'], dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                             temuTeam.push(temp);
                         }
                     }
-                }
-            }
-            for (let i = 0; i < dataUsers.length; i++) {
-                for (let j = 0; j < temuTeam.length; j++) {
-                    if (temuTeam[j][1] == dataUsers[i]['id_tim']) {
-                        let tempAnggota = [dataUsers[i]['is_ketua'], dataUsers[i]['id_line'], dataUsers[i]['no_telp'],dataUsers[i]['id_tim'],dataUsers[i]['nama']]
-                        temuAnggotaTeam.push(tempAnggota);
+
+                    for (let k = 0; k < dataUsers.length; k++) {
+                        if (dataUsers[k]['id_tim'] === dataTeams[i]['id']) {
+                            if ((dataUsers[k]['id_line'].toLowerCase().trim().replace(/\s+/g, '').includes(input) ||
+                                    dataUsers[k]['no_telp'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) &&
+                                dataUsers[k]['is_ketua']) {
+                                let temp = [dataTeams[i]['nama'], dataTeams[i]['id'], dataTeams[i]['link_bukti_tf'],
+                                    dataTeams[i]['is_validated'], dataTeams[i]['created_at'], dataTeams[i]['updated_at']
+                                ];
+                                temuTeam.push(temp);
+                            }
+                        }
                     }
                 }
-            }
-            // Buat Tabelnya dari temuTeam dan temuAnggotaTeam
-
-            let recordsHtml = '';
-            for (let i = 0; i < temuTeam.length; i++) {
-                let teamId = temuTeam[i][1];
-                let tempAnggota = [];
-                for(j=0;j<temuAnggotaTeam.length;j++){
-                    if(temuAnggotaTeam[j][3] == teamId && temuAnggotaTeam[j][0]){
-                        tempAnggota.push(temuAnggotaTeam[j][1],temuAnggotaTeam[j][2],temuAnggotaTeam[j][4])
+                for (let i = 0; i < dataUsers.length; i++) {
+                    for (let j = 0; j < temuTeam.length; j++) {
+                        if (temuTeam[j][1] == dataUsers[i]['id_tim']) {
+                            let tempAnggota = [dataUsers[i]['is_ketua'], dataUsers[i]['id_line'], dataUsers[i]['no_telp'],
+                                dataUsers[i]['id_tim'], dataUsers[i]['nama']
+                            ]
+                            temuAnggotaTeam.push(tempAnggota);
+                        }
                     }
                 }
-                let ketua = tempAnggota[2];
-                let ketuaLine = tempAnggota[0];
-                let ketuaTelp = tempAnggota[1];
+                // Buat Tabelnya dari temuTeam dan temuAnggotaTeam
 
-                let isValidated = temuTeam[i][3];
+                let recordsHtml = '';
+                for (let i = 0; i < temuTeam.length; i++) {
+                    let teamId = temuTeam[i][1];
+                    let tempAnggota = [];
+                    for (j = 0; j < temuAnggotaTeam.length; j++) {
+                        if (temuAnggotaTeam[j][3] == teamId && temuAnggotaTeam[j][0]) {
+                            tempAnggota.push(temuAnggotaTeam[j][1], temuAnggotaTeam[j][2], temuAnggotaTeam[j][4])
+                        }
+                    }
+                    let ketua = tempAnggota[2];
+                    let ketuaLine = tempAnggota[0];
+                    let ketuaTelp = tempAnggota[1];
 
-                let createdAt = 'null' ;
-                let updatedAt = 'null' ;
+                    let isValidated = temuTeam[i][3];
 
-                if (temuTeam[i][5] != null && temuTeam[i][4] != null) {
-                    let createdAt = temuTeam[i][4] ;
-                    let updatedAt = temuTeam[i][5] ;
-                }
+                    let createdAt = 'null';
+                    let updatedAt = 'null';
+
+                    if (temuTeam[i][5] != null && temuTeam[i][4] != null) {
+                        let createdAt = temuTeam[i][4];
+                        let updatedAt = temuTeam[i][5];
+                    }
 
 
-                recordsHtml += `
+                    recordsHtml += `
         <tr class="${i % 2 == 0 ? 'bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full' : 'bg-white text-center'}">
             <td>${i + 1}</td>
             <td>${temuTeam[i][0]}</td>
@@ -301,28 +311,28 @@
             </td>
             <td>
                 ${isValidated ? 'Validated' : `
-                    <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
-                        @csrf
-                    </form>
-                    <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
-                `}
+                        <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
+                            @csrf
+                        </form>
+                        <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                    `}
             </td>
             <td>${updatedAt}</td>
             <td>${createdAt}</td>
         </tr>
     `;
+                }
+                records.innerHTML = recordsHtml;
             }
-            records.innerHTML = recordsHtml;
         }
-    }
 
-    window.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            event.preventDefault();
-            document.getElementById(`displayAnggota`).innerHTML = ``;
-            popup.classList.add('hidden');
-        }
-    });
+        window.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                document.getElementById(`displayAnggota`).innerHTML = ``;
+                popup.classList.add('hidden');
+            }
+        });
 </script>
 
 @if (session('success'))
@@ -347,5 +357,4 @@
             {{ session()->forget('error') }}
 </script>
 @endif
-
 @endsection

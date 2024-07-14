@@ -25,6 +25,7 @@ class User extends Model
     ];
     public function team()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class, 'id_tim');
     }
+    
 }

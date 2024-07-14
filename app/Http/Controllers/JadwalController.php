@@ -107,25 +107,27 @@ class JadwalController extends Controller
             ->with('jadwal', $jadwal);
     }
     public function adminStore(Request $r)
-    {
-        if(isset($r->id))
-        {
-            $jadwal = Jadwal::where('id', $r->id)->first();
-            $route = 'admin.jadwal.input';
-        }
-        else
-        {
-            $jadwal = new Jadwal;
-            $route = 'admin.jadwal.main';
-            
-        }
-        $jadwal->tanggal = $r->tanggal;
-        $jadwal->start_time = $r->start_time;
-        $jadwal->end_time = $r->end_time;
-        $jadwal->save();
+{
+    $r->validate([
+        'tanggal' => 'required|date',
+        'start_time' => 'required|date_format:H:i',
+        'end_time' => 'required|date_format:H:i'
+    ]);
 
-        return redirect()->route($route);
+    if($r->has('id')) {
+        $jadwal = Jadwal::find($r->id);
+    } else {
+        $jadwal = new Jadwal;
     }
+
+    $jadwal->tanggal = $r->tanggal;
+    $jadwal->start_time = $r->start_time;
+    $jadwal->end_time = $r->end_time;
+    $jadwal->save();
+
+    return redirect()->route('admin.jadwal.main')->with('success', 'Jadwal saved successfully.');
+}
+
     public function input()
     {
         return view('admin.jadwal-crud.input');

@@ -29,7 +29,7 @@
                     <div class="mb-4">
                     <p class="text-2xl font-bold pb-5">{{ auth()->user()->nama }}</p>
                         <label for="jadwal" class="block text-sm font-medium text-gray-700">Jadwal Saat Ini</label>
-                        <p>{{ \Carbon\Carbon::parse(auth()->user()->jadwal->tanggal)->isoFormat('ddd, DD MM YYYY') }}
+                        <p>{{ \Carbon\Carbon::parse(auth()->user()->jadwal->tanggal)->isoFormat('ddd, DD MMMM YYYY') }}
                         - {{ auth()->user()->jadwal->start_time }} s/d {{ auth()->user()->jadwal->end_time }}</p>
                     </div>
                     <div class="mb-4">
@@ -45,12 +45,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="alasan" class="block text-sm font-medium text-gray-700">Alasan Reschedule</label>
-                        <textarea name="alasan" id="alasan" rows="3" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        </textarea>
+                        <textarea name="alasan" id="alasan" rows="3" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required></textarea>
                     </div>
                     <div class="mb-4">
                         <label for="bukti" class="block text-sm font-medium text-gray-700">Bukti Pendukung (Foto)</label>
-                        <input type="file" name="bukti" id="bukti" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        <input type="file" accept="image/*" name="bukti" id="bukti" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                     </div>
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Reschedule Jadwal

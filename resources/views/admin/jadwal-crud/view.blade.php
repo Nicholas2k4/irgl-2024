@@ -6,16 +6,18 @@
             <h1 class="text-2xl font-bold mb-4 dark:text-white">Edit Jadwal</h1>
             <form id="jadwalForm" action="{{ route('admin.jadwal.save') }}" method="POST">
                 @csrf
+                <input type="hidden" name="id" value="{{ $jadwal->id }}">
                 <div class="">
                 <div class="relative max-w-sm pt-2">
                 <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date:</label>
-                    <div class="relative">
-                        <select id="tanggal" value="Select date" name="tanggal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                            <option value="2024-10-21">Mon, 21 October 2024</option>
-                            <option value="2024-10-22">Tue, 22 October 2024</option>
-                            <option value="2024-10-23">Wed, 23 October 2024</option>
-                        </select>
-                    </div>
+                <div class="relative">
+                    <select id="tanggal" name="tanggal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option value="2024-10-21" {{ $jadwal->tanggal == '2024-10-21' ? 'selected' : '' }}>Mon, 21 October 2024</option>
+                        <option value="2024-10-22" {{ $jadwal->tanggal == '2024-10-22' ? 'selected' : '' }}>Tue, 22 October 2024</option>
+                        <option value="2024-10-23" {{ $jadwal->tanggal == '2024-10-23' ? 'selected' : '' }}>Wed, 23 October 2024</option>
+                    </select>
+                </div>
+
                     <!-- <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none mt-7">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
@@ -33,7 +35,7 @@
                                     <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <input type="time" name="start_time" id="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="00:00" required />
+                            <input type="time" name="start_time" id="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={{ $jadwal->start_time }} required />
                         </div>
                     </div>
                     <div>
@@ -44,7 +46,7 @@
                                     <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <input type="time" name="end_time" id="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="00:00" required />
+                            <input type="time" name="end_time" id="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={{ $jadwal->end_time }} required />
                         </div>
                     </div>
                 </div>
@@ -62,7 +64,7 @@
 <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('jadwalForm').addEventListener('submit', function(event) {
-                
+                event.preventDefault();
                 Swal.fire({
   title: "Do you want to save the changes?",
   showDenyButton: true,
@@ -73,6 +75,7 @@
   /* Read more about isConfirmed, isDenied below */
   if (result.isConfirmed) {
     Swal.fire("Saved!", "", "success");
+    event.target.submit();
   } else if (result.isDenied) {
     Swal.fire("Changes are not saved", "", "info");
   }

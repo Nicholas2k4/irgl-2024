@@ -1,4 +1,4 @@
-<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] w-fit p-10 rounded-[20px] text-center m-8 relative">
+<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] w-[400px] p-10 rounded-[20px] text-center m-8 relative">
     @if($errors->any())
         <div class="bg-red-200 p-2 mb-4 text-red-800">
             <ul>

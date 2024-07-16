@@ -6,6 +6,7 @@ use App\Models\Team;
 use Livewire\Component;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginForm extends Component
 {
@@ -26,13 +27,13 @@ class LoginForm extends Component
 
         $team = Team::where('nama', $this->nama)->first();
 
-        if ($team && $team->password === $this->password) {
+        if ($team && Hash::check($this->password, $team->password)) {
             Session::put('team_id', $team->id);
             Auth::loginUsingId($team->id); // Use Laravel's auth system
 
             session()->flash('message', 'Login successful!');
             return redirect()->intended('/'); // Adjust the route as needed
-        } else {    
+        } else {
             session()->flash('message', 'The provided credentials do not match our records.');
         }
     }

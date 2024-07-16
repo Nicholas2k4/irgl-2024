@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -95,7 +96,7 @@ class RegisterForm extends Component
         // Insert team into Teams database
         $newTeam = Team::create([
             'nama' => $this->namaTeam,
-            'password' => $this->password,
+            'password' => Hash::make($this->password),
             'link_bukti_tf' => $fileTeamName,
             'is_validated' => false
         ]);

@@ -1,4 +1,4 @@
-<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] md:w-fit w-5/6 p-10 rounded-[20px] text-center m-8 relative">
+<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] md:w-fit md:min-w-[400px] w-5/6 p-10 rounded-[20px] text-center m-8 relative">
     @if($step === 1)
         @if($errors->any())
             <div class="bg-red-200 p-2 mb-4 text-red-800">
@@ -17,12 +17,12 @@
         <h2 class="text-xl md:text-2xl text-white font-bold mb-4">Register</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
-                <label for="nama-ketua-id" class="text-sm md:text-base text-white text-left ml-4">Nama Ketua Tim</label>
+                <label for="nama-ketua-id" class="text-sm md:text-base text-white text-left">Nama Ketua Tim</label>
                 <input type="text" id="nama-ketua-id" wire:model="namaKetua" placeholder="Contoh: Christopher Joshua" required autocomplete="name" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
               
             <div class="mb-2 flex flex-col items-left">
-                <label for="no-rekening-ketua-tim-id" class="text-sm md:text-base text-white text-left ml-4">No rekening ketua tim</label>
+                <label for="no-rekening-ketua-tim-id" class="text-sm md:text-base text-white text-left">No rekening ketua tim</label>
                 <div class="flex">
                     <select id="bank-select-id" wire:model="bankKetua" required class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-1/2 md:w-1/4 lg:w-min">
                         <option value="" selected class="bg-[rgba(0,0,0,0.8)]">Pilih Bank</option>
@@ -32,32 +32,32 @@
                         <option value="mandiri" class="bg-[rgba(0,0,0,0.8)]">Mandiri</option>
                         <option value="cimb" class="bg-[rgba(0,0,0,0.8)]">CIMB</option>
                     </select>
-                    <input type="text" id="no-rekening-ketua-tim-id" wire:model="noRekeningKetuaTim" placeholder="Nomor Rekening" required class="ml-2 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-full md:w-3/4 lg:w-min">
+                    <input type="text" id="no-rekening-ketua-tim-id" wire:model="noRekeningKetuaTim" placeholder="Nomor Rekening" required class="ml-2 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-full md:w-3/4 lg:w-5/6">
                 </div>
             </div>
               
             <div class="mb-2 flex flex-col items-left">
-                <label for="tanggal-lahir-ketua-id" class="text-sm md:text-base text-white text-sm md:text-base text-left ml-4">Tanggal lahir</label>
+                <label for="tanggal-lahir-ketua-id" class="text-sm md:text-base text-white text-sm md:text-base text-left">Tanggal lahir</label>
                 <input type="date" id="tanggal-lahir-ketua-id" wire:model="tanggalLahirKetua" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
       
             <div class="mb-2 flex flex-col items-left">
-                <label for="tempat-lahir-ketua-id" class="text-sm md:text-base text-white text-left ml-4">Tempat kota lahir</label>
+                <label for="tempat-lahir-ketua-id" class="text-sm md:text-base text-white text-left">Tempat kota lahir</label>
                 <input type="text" id="tempat-lahir-ketua-id" wire:model="tempatLahirKetua" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
               
             <div class="mb-2 flex flex-col items-left">
-                <label for="alamat-ketua-id" class="text-sm md:text-base text-white text-left ml-4">Alamat</label>
+                <label for="alamat-ketua-id" class="text-sm md:text-base text-white text-left">Alamat</label>
                 <textarea id="alamat-ketua-id" wire:model="alamatKetua" autocomplete="street-address" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
             </div>
       
             <div class="mb-2 flex flex-col items-left">
-                <label for="kode-pos-ketua-id" class="text-sm md:text-base text-white text-left ml-4">Kode Pos</label>
+                <label for="kode-pos-ketua-id" class="text-sm md:text-base text-white text-left">Kode Pos</label>
                 <input type="text" id="kode-pos-ketua-id" wire:model="kodePosKetua" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
               
             <div class="mb-2 flex flex-col items-left">
-                <label for="phone-ketua-id" class="text-sm md:text-base text-white text-left ml-4">No telp aktif</label>
+                <label for="phone-ketua-id" class="text-sm md:text-base text-white text-left">No telp aktif</label>
                 <div class="flex items-center">
                     <span class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white p-2.5 rounded-l-[5px]">+62</span>
                     <input type="text" id="phone-ketua-id" wire:model="phoneKetua" autocomplete="tel" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-r-[5px] border-none">
@@ -65,7 +65,7 @@
             </div>
               
             <div class="mb-2 flex flex-col items-left">
-                <label for="ketua-idline-id" class="text-sm md:text-base text-white text-left ml-4">ID Line</label>
+                <label for="ketua-idline-id" class="text-sm md:text-base text-white text-left">ID Line</label>
                 <input type="text" id="ketua-idline-id" wire:model="idlineKetua" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
               
@@ -101,32 +101,32 @@
         <h2 class="text-xl md:text-2xl text-white font-bold mb-4">Register Anggota 1</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
-                <label for="nama-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">Nama Anggota 1</label>
+                <label for="nama-anggota1-id" class="text-sm md:text-base text-white text-left">Nama Anggota 1</label>
                 <input type="text" id="nama-anggota1-id" wire:model="namaAnggota1" placeholder="Contoh: Christopher Joshua" required autocomplete="name" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="tanggal-lahir-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">Tanggal lahir</label>
+                <label for="tanggal-lahir-anggota1-id" class="text-sm md:text-base text-white text-left">Tanggal lahir</label>
                 <input type="date" id="tanggal-lahir-anggota1-id" wire:model="tanggalLahirAnggota1" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
     
             <div class="mb-2 flex flex-col items-left">
-                <label for="tempat-lahir-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">Tempat kota lahir</label>
+                <label for="tempat-lahir-anggota1-id" class="text-sm md:text-base text-white text-left">Tempat kota lahir</label>
                 <input type="text" id="tempat-lahir-anggota1-id" wire:model="tempatLahirAnggota1" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="alamat-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">Alamat</label>
+                <label for="alamat-anggota1-id" class="text-sm md:text-base text-white text-left">Alamat</label>
                 <textarea id="alamat-anggota1-id" wire:model="alamatAnggota1" autocomplete="street-address" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
             </div>
     
             <div class="mb-2 flex flex-col items-left">
-                <label for="kode-pos-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">Kode Pos</label>
+                <label for="kode-pos-anggota1-id" class="text-sm md:text-base text-white text-left">Kode Pos</label>
                 <input type="text" id="kode-pos-anggota1-id" wire:model="kodePosAnggota1" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="phone-anggota1-id" class="text-sm md:text-base text-white text-left ml-4">No telp aktif</label>
+                <label for="phone-anggota1-id" class="text-sm md:text-base text-white text-left">No telp aktif</label>
                 <div class="flex items-center">
                 <span class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white p-2.5 rounded-l-[5px]">+62</span>
                 <input type="text" id="phone-anggota1-id" wire:model="phoneAnggota1" autocomplete="tel" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-r-[5px] border-none">
@@ -134,7 +134,7 @@
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="anggota1-idline-id" class="text-sm md:text-base text-white text-left ml-4">ID Line</label>
+                <label for="anggota1-idline-id" class="text-sm md:text-base text-white text-left">ID Line</label>
                 <input type="text" id="anggota1-idline-id" wire:model="idlineAnggota1" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
@@ -170,32 +170,32 @@
         <h2 class="text-xl md:text-2xl text-white font-bold mb-4">Register Anggota 2</h2>
         <form wire:submit.prevent="nextStep">
             <div class="mb-2 flex flex-col items-left">
-                <label for="nama-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">Nama Anggota 2</label>
+                <label for="nama-anggota2-id" class="text-sm md:text-base text-white text-left">Nama Anggota 2</label>
                 <input type="text" id="nama-anggota2-id" wire:model="namaAnggota2" placeholder="Contoh: Christopher Joshua" required autocomplete="name" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="tanggal-lahir-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">Tanggal lahir</label>
+                <label for="tanggal-lahir-anggota2-id" class="text-sm md:text-base text-white text-left">Tanggal lahir</label>
                 <input type="date" id="tanggal-lahir-anggota2-id" wire:model="tanggalLahirAnggota2" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
 
             <div class="mb-2 flex flex-col items-left">
-                <label for="tempat-lahir-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">Tempat kota lahir</label>
+                <label for="tempat-lahir-anggota2-id" class="text-sm md:text-base text-white text-left">Tempat kota lahir</label>
                 <input type="text" id="tempat-lahir-anggota2-id" wire:model="tempatLahirAnggota2" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="alamat-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">Alamat</label>
+                <label for="alamat-anggota2-id" class="text-sm md:text-base text-white text-left">Alamat</label>
                 <textarea id="alamat-anggota2-id" wire:model="alamatAnggota2" autocomplete="street-address" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
             </div>
 
             <div class="mb-2 flex flex-col items-left">
-                <label for="kode-pos-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">Kode Pos</label>
+                <label for="kode-pos-anggota2-id" class="text-sm md:text-base text-white text-left">Kode Pos</label>
                 <input type="text" id="kode-pos-anggota2-id" wire:model="kodePosAnggota2" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="phone-anggota2-id" class="text-sm md:text-base text-white text-left ml-4">No telp aktif</label>
+                <label for="phone-anggota2-id" class="text-sm md:text-base text-white text-left">No telp aktif</label>
                 <div class="flex items-center">
                 <span class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white p-2.5 rounded-l-[5px]">+62</span>
                 <input type="text" id="phone-anggota2-id" wire:model="phoneAnggota2" autocomplete="tel" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-r-[5px] border-none">
@@ -203,12 +203,12 @@
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="anggota2-idline-id" class="text-sm md:text-base text-white text-left ml-4">ID Line</label>
+                <label for="anggota2-idline-id" class="text-sm md:text-base text-white text-left">ID Line</label>
                 <input type="text" id="anggota2-idline-id" wire:model="idlineAnggota2" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
             
             <div class="mb-2 flex flex-col items-left">
-                <label for="file-anggota2-id" class="text-sm md:text-base text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
+                <label for="file-anggota2-id" class="text-sm md:text-base text-white block text-left">Foto kartu siswa & surat pernyataan siswa aktif</label>
                 <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
                 <input type="file" id="file-anggota2-id" wire:model="fileAnggota2" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota2')">
                 <span class="text-2xl material-icons">cloud_upload</span>
@@ -250,17 +250,17 @@
             </div>
 
             <div class="mb-2 flex flex-col items-left">
-                <label for="nama-team-id" class="text-sm md:text-base text-white text-left ml-4">Nama Tim</label>
+                <label for="nama-team-id" class="text-sm md:text-base text-white text-left">Nama Tim</label>
                 <input type="text" id="nama-team-id" wire:model="namaTeam" placeholder="Contoh: NATUS VINCERE" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
 
             <div class="mb-2 flex flex-col items-left">
-                <label for="password-id" class="text-sm md:text-base text-white text-left ml-4">Password</label>
+                <label for="password-id" class="text-sm md:text-base text-white text-left">Password</label>
                 <input type="password" id="password-id" wire:model="password" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
 
             <div class="mb-2 flex flex-col items-left">
-                <label for="confirm-password-id" class="text-sm md:text-base text-white text-left ml-4">Confirm Password</label>
+                <label for="confirm-password-id" class="text-sm md:text-base text-white text-left">Confirm Password</label>
                 <input type="password" id="confirm-password-id" wire:model="password_confirmation" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
             </div>
 

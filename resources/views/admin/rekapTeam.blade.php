@@ -33,86 +33,99 @@
                         <td>{{ ++$team }}</td>
                         <td>{{ $data->nama }}</td>
 
-                    <td id="lineKetua">
-                        @foreach($users as $user => $userData)
-                        @if($userData->is_ketua && $userData->id_tim == $data->id)
-                        {{ $userData->id_line }}
+                        <td id="lineKetua">
+                            @foreach ($users as $user => $userData)
+                                @if ($userData->is_ketua && $userData->id_tim == $data->id)
+                                    {{ $userData->id_line }}
+                                @endif
+                            @endforeach
+                        </td>
+                        <td id="telpKetua">
+                            @foreach ($users as $user => $userData)
+                                @if ($userData->is_ketua && $userData->id_tim == $data->id)
+                                    {{ $userData->no_telp }}
+                                @endif
+                            @endforeach
+                        </td>
+                        <td id="anggotas">
+                            <button id="anggotaView{{ $team }}" onclick="togglePopup('{{ $data->id }}')"
+                                class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+                        </td>
+                        <td>
+                            <a href="{{ asset('storage/uploads/' . basename($data->link_bukti_tf)) }}" target="_blank"
+                                class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
+                        </td>
+
+                        @if ($data->is_validated == false)
+                            <td>
+                                <form id="formValidasiBayar"
+                                    action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}" method="POST"
+                                    class="hidden">
+                                    @csrf
+                                </form>
+
+                                <button id="validasiBuktiTransfer"
+                                    class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                            </td>
+                        @else
+                            <td>Validated</td>
                         @endif
-                        @endforeach
-                    </td>
-                    <td id="telpKetua">
-                        @foreach($users as $user => $userData)
-                        @if($userData->is_ketua && $userData->id_tim == $data->id)
-                        {{ $userData->no_telp }}
+
+                        @if ($data->updated_at != null && $data->created_at != null)
+                            <td>{{ $data->updated_at }}</td>
+                            <td>{{ $data->created_at }}</td>
+                        @else
+                            <td>null</td>
+                            <td>null</td>
                         @endif
-                        @endforeach
-                    </td>
-                    <td id="anggotas">
-                        <button id="anggotaView{{$team}}" onclick="togglePopup({{$data->id}})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
-                    </td>
-                    <td>
-                        <a href="{{ strpos($data->link_bukti_tf, 'http') === 0 ? $data->link_bukti_tf : 'https://' . $data->link_bukti_tf }}" target="_blank" class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 flex text-center items-center justify-center">View</a>
-                    </td>
-
-                    @if ($data->is_validated == false)
-                    <td>
-                        <form id="formValidasiBayar" action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}" method="POST" class="hidden">
-                            @csrf
-                        </form>
-
-                        <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
-                    </td>
-                    @else
-                    <td>Validated</td>
-                    @endif
-
-                    @if($data->updated_at != null && $data->created_at != null)
-                    <td>{{ $data->updated_at }}</td>
-                    <td>{{ $data->created_at }}</td>
-                    @else
-                    <td>null</td>
-                    <td>null</td>
-                    @endif
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<!-- Popup Section -->
-<div id="popup" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
-    <div class="w-[50vw] h-[94%] bg-white px-4 py-[10px] rounded-lg">
-        <div class="w-full border-b-[1px] border-gray-400/30 flex flex-row justify-between">
-            <h1 class="text-lg text-black">Detail Anggota</h1>
-            <button onclick="togglePopup()" class="text-gray-500 hover:text-gray-800 focus:outline-none">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        <div class="w-full flex flex-row items-center border-b-[2px] border-black pt-4 pb-1 text-center">
-            <h2 class="w-1/6">No</h2>
-            <h2 class="w-2/6">Nama</h2>
-            <h2 class="w-2/6">Line</h2>
-            <h2 class="w-1/6">Foto</h2>
-        </div>
+    <!-- Popup Section -->
+    <div id="popup"
+        class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
+        <div class="w-[50vw] h-[94%] bg-white px-4 py-[10px] rounded-lg">
+            <div class="w-full border-b-[1px] border-gray-400/30 flex flex-row justify-between">
+                <h1 class="text-lg text-black">Detail Anggota</h1>
+                <button onclick="togglePopup()" class="text-gray-500 hover:text-gray-800 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="w-full flex flex-row items-center border-b-[2px] border-black pt-4 pb-1 text-center">
+                <h2 class="w-1/6">No</h2>
+                <h2 class="w-2/6">Nama</h2>
+                <h2 class="w-2/6">Line</h2>
+                <h2 class="w-1/6">Foto</h2>
+            </div>
 
             <div id="displayAnggota" class="w-full h-4/5 flex flex-col">
                 <!-- border-t-[1px] border-b-[1px] border-gray-400/60 -->
             </div>
 
-        <div class="w-full flex justify-end mt-2">
-            <button onclick="togglePopup()" class="w-12 h-8 rounded-[4px] bg-gray-600 text-gray-200 text-center hover:bg-gray-800">Close</button>
+            <div class="w-full flex justify-end mt-2">
+                <button onclick="togglePopup()"
+                    class="w-12 h-8 rounded-[4px] bg-gray-600 text-gray-200 text-center hover:bg-gray-800">Close</button>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('script')
-<script>
-    var dataUsers = <?php echo json_encode($users); ?>;
-    var dataTeams = <?php echo json_encode($teams); ?>;
+    <script>
+        var dataUsers = <?php echo json_encode($users); ?>;
+        var dataTeams = <?php echo json_encode($teams); ?>;
+
+        function asset(path) {
+            const baseUrl = '{{ url('/') }}'; // Base URL of your Laravel application
+            return baseUrl + '/' + path;
+        }
 
         function togglePopup(teamId) {
             const popup = document.getElementById('popup');
@@ -122,10 +135,11 @@
                 // Display popup
                 popup.classList.remove('hidden');
 
-            let counter = 1;
-            for (let i = 0; i < dataUsers.length; i++) {
-                if (dataUsers[i]['id_tim'] == teamId) {
-                    anggotaDiv.innerHTML += `
+                let counter = 1;
+                for (let i = 0; i < dataUsers.length; i++) {
+                    if (dataUsers[i]['id_tim'] == teamId) {
+                        const linkFoto = dataUsers[i]['link_foto'].replace('public/', '');
+                        anggotaDiv.innerHTML += `
              <div class="w-full h-1/3 flex items-center text-center box-border border-b-[1px] border-gray-400/60">
     <h2 class="w-1/6 text-center">${counter}</h2>
     <h2 class="w-2/6 text-center">${dataUsers[i]['nama']}</h2>
@@ -303,11 +317,11 @@
             </td>
             <td>
                 ${isValidated ? 'Validated' : `
-                    <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
-                        @csrf
-                    </form>
-                    <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
-                `}
+                            <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                            <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                        `}
             </td>
             <td>${updatedAt}</td>
             <td>${createdAt}</td>
@@ -318,29 +332,29 @@
             }
         }
 
-    window.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            event.preventDefault();
-            document.getElementById(`displayAnggota`).innerHTML = ``;
-            popup.classList.add('hidden');
-        }
-    });
-</script>
+        window.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                document.getElementById(`displayAnggota`).innerHTML = ``;
+                popup.classList.add('hidden');
+            }
+        });
+    </script>
 
-@if (session('success'))
+    @if (session('success'))
         <script>
             SweetAlert.fire({
                 icon: 'success',
                 title: '{{ session('success') }}',
             });
-</script>
+        </script>
 
-{{ session()->forget('success') }}
-@endif
+        {{ session()->forget('success') }}
+    @endif
 
-@if (session('error'))
-<script>
-    SweetAlert.fire({
+    @if (session('error'))
+        <script>
+            SweetAlert.fire({
                 icon: 'error',
                 title: '{{ session('error') }}',
             });
@@ -349,5 +363,4 @@
             {{ session()->forget('error') }}
         </script>
     @endif
-
 @endsection

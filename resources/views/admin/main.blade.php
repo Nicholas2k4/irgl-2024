@@ -14,3 +14,10 @@
         </h1>    </div>
 </div>
 @endsection
+
+@section('script')
+<script>
+let bold = document.getElementById('home');
+bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
+</script>
+@endsection

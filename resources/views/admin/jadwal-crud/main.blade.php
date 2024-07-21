@@ -49,6 +49,9 @@
 
 @section('script')
 <script>
+let bold = document.getElementById('jadwal');
+bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
+
     function sortTable(columnIndex) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("jadwalTable");

@@ -21,26 +21,56 @@
 </head>
 
 <body class="m-0 p-0 w-screen overflow-x-hidden h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
-    <nav class="w-screen h-[45px] flex-row shadow-xl shadow-[#0000002D]
-    bg-gradient-to-r from-[#6b2b52] to-[#311b55] top-0 right-0 absolute">
-        <div class="max-w-[98%] h-[100%] pl-10 flex flex-wrap justify-between mx-auto items-center">
-            
-        <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
-           
-        <button></button> <!--HP show Menu-->
-        
-        <div class="max-w-[50%]flex justify-between mr-1">
-                <a class=" text-[#fff] p-1 font-bold text-lg" href="/admin/main">Home</a>
-                <!-- <a class=" text-[#fff]/60 p-1  hover:text-[#fff]/80 text-lg" href="/admin/rekapPendaftar">Rekap Pendaftar</a> -->
-                <a class=" text-[#fff]/60 ml-7 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/rekapTeam">Rekap Team</a>
-                <a class=" text-[#fff]/60 mr-7 p-1 hover:text-[#fff]/80 text-lg" href="/admin/jadwal">Edit Jadwal</a>
-                <a class=" rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 text-lg hover:bg-red-800/80" href="/logout">Log Out</a>
-            </div>
-        </div>
-    </nav>
-@yield('body')
+    <header class="sm:shadow-xl sm:shadow-[#0000002D] bg-gradient-to-r from-[#6b2b52] to-[#311b55]">
+        <nav class="w-[96%] h-[9vh] flex mx-auto justify-between items-center">
 
-@yield('script')
+            <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
+
+            <div id="ull" class="hidden absolute bg-gradient-to-r from-[#6b2b52] to-[#311b55] sm:bg-none sm:shadow-none shadow-xl shadow-[#0000002D] sm:static sm:justify-end sm:max-w-[71.6vw] min-h-[35vh] left-0 top-[9%] w-full sm:flex justify-center items-center">
+                <ul class="flex flex-col sm:flex-row sm:gap-[1.4vw] gap-[5vh] h-full w-[97vw] sm:max-w-[100%] sm:justify-end">
+                    <li class="flex">
+                        <a id="home" class=" text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="/admin/main">Home</a>
+                    </li>
+                    <li class="flex">
+                        <a id="rekapTeam" class=" text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="/admin/rekapTeam">Rekap Team</a>
+                    </li>
+                    <li class="flex">
+                        <a id="jadwal" class=" text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="/admin/jadwal">Edit Jadwal</a>
+                    </li>
+                    <li class="flex">
+                        <a class=" rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 text-lg w-full h-full hover:bg-red-800/80" href="/logout">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex items-center sm:hidden py-[0.25rem] px-[0.75rem] rounded-md border-[0.5px] border-[#bcabeb77]">
+                <button onclick="displayMenu()" class="cursor-pointer">
+                    <svg id="menuBurger" class="hover:stroke-slate-50" width="30px" height="30px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 18L20 18" stroke="#7d70b8" stroke-width="2" stroke-linecap="round" />
+                        <path d="M4 12L20 12" stroke="#7d70b8" stroke-width="2" stroke-linecap="round" />
+                        <path d="M4 6L20 6" stroke="#7d70b8" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <script>
+        function displayMenu() {
+            const ull = document.getElementById("ull");
+            if(ull.classList.contains('hidden')){
+                ull.classList.remove('hidden');
+                ull.classList.add('flex');
+                ull.classList.add('z-10');
+            }else{
+                ull.classList.add('hidden');
+            }
+        }
+
+
+    </script>
+
+    @yield('body')
+
+    @yield('script')
 </body>
 
 </html>

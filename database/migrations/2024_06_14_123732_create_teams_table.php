@@ -19,8 +19,12 @@ return new class extends Migration
             $table->boolean('is_validated')->default(false);
             $table->unsignedBigInteger('id_jadwal')->nullable();
             $table->foreign('id_jadwal')->references('id')->on('jadwal')->onDelete('set null');
+            $table->unsignedBigInteger('id_jadwal_resched')->nullable();
+            $table->foreign('id_jadwal_resched')->references('id')->on('jadwal')->onDelete('set null');
             $table->string('alasan_resched')->nullable()->default(null);
             $table->string('link_bukti_resched')->nullable()->default(null);
+            $table->unsignedBigInteger('resched_approval')->nullable()->default(3);
+            // 0 = rejected, 1 = approved, 2 = pending
             $table->boolean('can_spin_roulette')->default('1');
             $table->unsignedBigInteger('game_id_allowed_play')->nullable();
             $table->string('game_pass')->nullable();

@@ -62,6 +62,16 @@ class TeamController extends BaseController
             'team_name' => $team->nama,
         ]);
     }
+    public function getTeamById($id_kelompok)
+    {
+        $team = Team::where('id', $id_kelompok)->first();
+
+        if ($team) {
+            return response()->json($team);
+        } else {
+            return response()->json(['error' => 'Team not found'], 404);
+        }
+    }
     public function getUserDataByGamePass(Request $request)
     {
         $creds = $request->only('username', 'game_id');

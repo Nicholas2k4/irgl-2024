@@ -23,6 +23,8 @@ class Team extends Model implements AuthenticatableContract
         'id_jadwal',
         'alasan_resched',
         'link_bukti_resched',
+        'id_jadwal_resched',
+        'resched_approval',
         'can_spin_roulette',
         'game_id_allowed_play',
         'game_pass',
@@ -45,6 +47,10 @@ class Team extends Model implements AuthenticatableContract
     {
         return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
+    public function jadwalResched()
+{
+    return $this->belongsTo(Jadwal::class, 'id_jadwal_resched');
+}
 
     public function games()
     {
@@ -57,5 +63,9 @@ class Team extends Model implements AuthenticatableContract
     public function historyGame()
     {
         return $this->hasMany(ElimGamesHistory::class);
+    }
+    public function reschedules()
+    {
+        return $this->hasMany(Reschedule::class, 'id_kelompok');
     }
 }

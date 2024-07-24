@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
@@ -52,11 +53,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], fun
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 
 
+    Route::get('/team/{id}', [TeamController::class, 'getTeamById']);
     Route::get('/jadwal', [JadwalController::class, 'main'])->name('jadwal.main');
     Route::get('/jadwal/input', [JadwalController::class, 'input'])->name('jadwal.input');
     Route::post('/jadwal/save', [JadwalController::class, 'adminStore'])->name('jadwal.save');
     Route::get('/jadwal/view/{id?}', [JadwalController::class, 'view'])->name('jadwal.view');
     Route::get('/jadwal/delete/{id}', [JadwalController::class, 'delete'])->name('jadwal.delete');
+    Route::get('/jadwal/{jadwal_id}/teams', [JadwalController::class, 'getTeams'])->name('jadwal.teams');
+    Route::post('/jadwal/approve/{id}', [JadwalController::class, 'approve'])->name('jadwal.approve');
+    Route::post('/jadwal/reject/{id}', [JadwalController::class, 'reject'])->name('jadwal.reject');
+    Route::get('/jadwal/reschedule-log', [JadwalController::class, 'rescheduleLog'])->name('jadwal.reschedLog');
+    
+
+
 });
 // env :
 // GOOGLE_REDIRECT = http://localhost:8000/admin/processLogin

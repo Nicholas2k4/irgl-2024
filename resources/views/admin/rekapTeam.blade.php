@@ -1,8 +1,8 @@
 @extends('layout.admin')
 
 @section('body')
-<div class="w-[100vw] justify-center items-center flex min-h-screen">
-    <div class="w-[96.6vw] justify-center items-center flex flex-col rounded-2xl bg-white">
+<div class="justify-center items-center flex max-w-[100vw] min-h-screen">
+    <div class="w-[96.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
         
         <!-- <div class="w-full h-[15%] flex items-center justify-center mt-6">
             <label for="inputCari">Search:</label>

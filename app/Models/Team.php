@@ -48,7 +48,7 @@ class Team extends Model implements AuthenticatableContract
 
     public function games()
     {
-        return $this->belongsToMany(ElimGames::class,'elim_scores','id_team','id_game')->withPivot('score','time');
+        return $this->belongsToMany(ElimGames::class,'elim_scores','id_team','id_game')->withPivot('score','time','created_at','updated_at');
     }
     public function history()
     {

@@ -38,7 +38,7 @@
                         <a id="rekapTeam" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.rekapTeam') }}">Rekap Team</a>
                     </li>
                     <li class="flex">
-                        <a id="jadwal" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.jadwal') }}">Edit Jadwal</a>
+                        <a id="jadwal" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.jadwal.main') }}">Edit Jadwal</a>
                     </li>
                     <li class="flex">
                         

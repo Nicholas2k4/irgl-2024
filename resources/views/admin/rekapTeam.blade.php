@@ -5,9 +5,9 @@
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
             <!-- <div class="w-full h-[15%] flex items-center justify-center mt-6">
-                <label for="inputCari">Search:</label>
-                <input id="inputCari" oninput="search()" class="w-40 h-7 border-gray-400 border-[1px] ml-2 rounded-[3px]">
-            </div> -->
+                    <label for="inputCari">Search:</label>
+                    <input id="inputCari" oninput="search()" class="w-40 h-7 border-gray-400 border-[1px] ml-2 rounded-[3px]">
+                </div> -->
 
             <div class="overflow-auto sm:overflow-x-scroll w-[98%] relative mb-2 px-4">
                 <table class="justify-center items-center mt-10 mb-1 w-[150vw]">
@@ -135,7 +135,7 @@
 
         function asset(path) {
             const baseUrl = '{{ url('/') }}'; // Base URL of your Laravel application
-            return baseUrl + path;
+            return baseUrl + '/' + path;
         }
 
         function togglePopup(teamId) {
@@ -332,11 +332,11 @@
             </td>
             <td>
                 ${isValidated ? 'Validated' : `
-                                <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
-                                    @csrf
-                                </form>
-                                <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
-                            `}
+                                    <form id="formValidasiBayar" action="/admin/validasiBuktiTransfer/${teamId}" method="POST" class="hidden">
+                                        @csrf
+                                    </form>
+                                    <button id="validasiBuktiTransfer" class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center">Validasi</button>
+                                `}
             </td>
             <td>${updatedAt}</td>
             <td>${createdAt}</td>

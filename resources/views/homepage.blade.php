@@ -8,9 +8,9 @@
     <title>Homepage</title>
 </head>
 <body class="p-5">
-    @include('layout.navbar')
-    @include('layout.about')
-    @include('layout.timeline')
-    @include('layout.faq')
+    @include('components.navbar')
+    @include('components.about')
+    @include('components.timeline')
+    @include('components.faq')
 </body>
 </html>

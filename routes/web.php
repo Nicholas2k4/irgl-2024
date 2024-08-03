@@ -20,7 +20,7 @@ use Google\Service\Adsense\Row;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 Route::get('/register', function () {

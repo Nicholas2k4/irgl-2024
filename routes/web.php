@@ -5,6 +5,7 @@ use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 use App\Http\Middleware\AuthMiddleware;
 use Google\Service\Adsense\Row;
 
@@ -27,11 +28,8 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 

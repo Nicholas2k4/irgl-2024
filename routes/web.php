@@ -22,7 +22,10 @@ use Google\Service\Adsense\Row;
 
 Route::get('/', function () {
     return view('homepage');
-});
+})->name('homepage');
+Route::get('/homepage-pc', function () {
+    return view('homepage-pc');
+})->name('homepage.pc');
 
 Route::get('/register', function () {
     return view('register');
@@ -31,10 +34,10 @@ Route::get('/register', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin/',[AuthController::class, 'adminLoginView'])->name('admin.login');
-Route::get('/admin/processLogin',[AuthController::class, 'adminLogin'])->name('admin.processLogin');
+Route::get('/admin/', [AuthController::class, 'adminLoginView'])->name('admin.login');
+Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
 
 
 Route::middleware([AuthMiddleware::class])->group(function () {
@@ -45,7 +48,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
@@ -61,13 +64,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>'admin'], fun
     Route::post('/jadwal/approve/{id}', [JadwalController::class, 'approve'])->name('jadwal.approve');
     Route::post('/jadwal/reject/{id}', [JadwalController::class, 'reject'])->name('jadwal.reject');
     Route::get('/jadwal/reschedule-log', [JadwalController::class, 'rescheduleLog'])->name('jadwal.reschedLog');
-    
-
-
 });
 // env :
 // GOOGLE_REDIRECT = http://localhost:8000/admin/processLogin
 // GOOGLE_CLIENT_ID = 253099323815-3c7jhdmos6qtve5l3js6frj73v6umq8j.apps.googleusercontent.com
 // GOOGLE_CLIENT_SECRET = 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
-
-

@@ -133,6 +133,8 @@ class TeamController extends BaseController
             $team->update([
                 'curr_streak' => $team->curr_streak + 1,
                 'can_spin_roulette' => 1,
+                'game_id_allowed_play' => null,
+                'game_pass' => null,
             ]);
             if ($team->curr_streak > $statistic->highest_streak) {
                 if ($statistic) {
@@ -193,6 +195,8 @@ class TeamController extends BaseController
             $team->update([
                 'curr_streak' => 0,
                 'can_spin_roulette' => 1,
+                'game_id_allowed_play' => null,
+                'game_pass' => null,
             ]);
             if ($statistic) {
                 $statistic->update([
@@ -229,7 +233,7 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
-        return $this->success(['curr_streak' => $team->curr_streak, 'can_spin_roulette' => $team->can_spin_roulette]);
+        return $this->success(['curr_streak' => $team->curr_streak, 'can_spin_roulette' => $team->can_spin_roulette, 'game_id_allowed_play' => $team->game_id_allowed_play]);
     }
 
     public function getUserGrandPrizeStreak(Request $request)

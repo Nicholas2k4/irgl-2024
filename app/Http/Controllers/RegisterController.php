@@ -61,6 +61,9 @@ class RegisterController extends Controller
 
     public function showStepTwo()
     {
+        if (!session()->has('step1')) {
+            return redirect()->route('register.show.step.one')->withErrors('Cannot access this yet.');
+        }
         return view('registration.registration-step-two');
     }
 
@@ -109,6 +112,9 @@ class RegisterController extends Controller
 
     public function showStepThree()
     {
+        if (!session()->has('step2')) {
+            return redirect()->route('register.show.step.two')->withErrors('Cannot access this yet.');
+        }
         return view('registration.registration-step-three');
     }
 
@@ -156,6 +162,9 @@ class RegisterController extends Controller
 
     public function showStepFour()
     {
+        if (!session()->has('step3')) {
+            return redirect()->route('register.show.step.three')->withErrors('Cannot access this yet.');
+        }
         return view('registration.registration-step-four');
     }
 

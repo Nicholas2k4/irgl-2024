@@ -25,10 +25,6 @@ Route::get('/', function () {
     return view('homepage');
 });
 
-Route::get('/register2', function () {
-    return view('register');
-});
-
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', function() {
         return redirect('register/step-one');

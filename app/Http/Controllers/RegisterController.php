@@ -140,7 +140,7 @@ class RegisterController extends Controller
             'namaTeam' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
         ]);
-        $validatedData['namaTeam'] = strtoupper(strtolower($validatedData['namaTeam'])); // UPPER CASE
+        $validatedData['namaTeam'] = strtoupper($validatedData['namaTeam']); // UPPER CASE
 
         // Store the uploaded file temporarily
         if ($request->hasFile('fileTeam')) {
@@ -170,21 +170,21 @@ class RegisterController extends Controller
         $step4 = $request->session()->get('step4');
 
         // Check if team name already exists
-        if (Team::where('nama', $step4->namaTeam)->exists()) {
+        if (Team::where('nama', $step4['namaTeam'])->exists()) {
             session()->flash('message', 'Team name already exists. Please choose another name.');
             return;
         }
 
         // Store uploaded files
-        $fileKetuaName = $step1->fileKetua->store('public/uploads');
-        $fileAnggota1Name = $step2->fileAnggota1->store('public/uploads');
-        $fileAnggota2Name = $step3->fileAnggota2->store('public/uploads');
-        $fileTeamName = $step4->fileTeam->store('public/uploads');
+        $fileKetuaName = $step1['fileKetua']->store('public/uploads');
+        $fileAnggota1Name = $step2['fileAnggota1']->store('public/uploads');
+        $fileAnggota2Name = $step3['fileAnggota2']->store('public/uploads');
+        $fileTeamName = $step4['fileTeam']->store('public/uploads');
 
         // Insert team into Teams database
         $newTeam = Team::create([
-            'nama' => $step4->namaTeam,
-            'password' => Hash::make($step4->password),
+            'nama' => $step4['namaTeam'],
+            'password' => Hash::make($step4['password']),
             'link_bukti_tf' => $fileTeamName,
             'is_validated' => false
         ]);

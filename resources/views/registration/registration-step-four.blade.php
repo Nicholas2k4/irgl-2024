@@ -10,10 +10,14 @@
         <div class="mb-2 flex flex-col items-left">
             <label for="file-team-id" class="text-sm md:text-base text-white block text-left mb-2">Bukti transfer</label>
             <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-            <input type="file" id="file-team-id" name="fileTeam" accept="image/*" value="{{ old('fileTeam', session('step4.fileTeam')) }}" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('team')">
-            <span class="text-2xl material-icons">cloud_upload</span>
+                <input type="file" id="file-team-id" name="fileTeam" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('team')">
+                <span class="text-2xl material-icons">cloud_upload</span>
             </div>
-            <div class="text-sm md:text-base text-white mt-2 text-left"></div>
+            <div id="img-name-team" class="text-sm md:text-base text-white mt-2 text-left">
+                @if (session('step4.fileTeam'))
+                    {{ basename(session('step4.fileTeam')) }}
+                @endif
+            </div>
         </div>
 
         <div class="mb-2 flex flex-col items-left">

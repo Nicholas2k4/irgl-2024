@@ -25,7 +25,8 @@
         
         <div class="mb-2 flex flex-col items-left">
             <label for="alamat-anggota1-id" class="text-sm md:text-base text-white text-left">Alamat</label>
-            <textarea id="alamat-anggota1-id" name="alamatAnggota1" autocomplete="street-address" value="{{ old('alamatAnggota1', session('step2.alamatAnggota1')) }}" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
+            <textarea id="alamat-anggota1-id" name="alamatAnggota1" autocomplete="street-address" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">{{ old('alamatAnggota1', session('step2.alamatAnggota1')) }}
+            </textarea>
         </div>
 
         <div class="mb-2 flex flex-col items-left">
@@ -49,11 +50,15 @@
         <div class="mb-2 flex flex-col items-left">
             <label for="file-anggota1-id" class="text-sm md:text-base text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
             <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-            <input type="file" id="file-anggota1-id" name="fileAnggota1" accept="image/*" value="{{ old('fileAnggota1', session('step2.fileAnggota1')) }}" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota1')">
-            <span class="text-2xl material-icons">cloud_upload</span>
+                <input type="file" id="file-anggota1-id" name="fileAnggota1" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota1')">
+                <span class="text-2xl material-icons">cloud_upload</span>
             </div>
-            <div class="text-sm md:text-base text-white mt-2 text-left"></div>
+            <div id="img-name-anggota1" class="text-sm md:text-base text-white mt-2 text-left">
+                @if (session('step2.fileAnggota1'))
+                    {{ basename(session('step2.fileAnggota1')) }}
+                @endif
             </div>
+        </div>
         
         <button type="submit" class="bg-[#B026FF] text-sm md:text-base text-white text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
     </form>

@@ -13,13 +13,13 @@
         <div class="mb-2 flex flex-col items-left">
             <label for="no-rekening-ketua-tim-id" class="text-sm md:text-base text-white text-left">No rekening ketua tim</label>
             <div class="flex">
-                <select id="bank-select-id" name="bankKetua" value="{{ old('bankKetua', session('step1.bankKetua')) }}" required class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-1/2 md:w-1/4 lg:w-min">
+                <select id="bank-select-id" name="bankKetua" required class="bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-1/2 md:w-1/4 lg:w-min">
                     <option value="" selected class="bg-[rgba(0,0,0,0.8)]">Pilih Bank</option>
-                    <option value="bca" class="bg-[rgba(0,0,0,0.8)]">BCA</option>
-                    <option value="bni" class="bg-[rgba(0,0,0,0.8)]">BNI</option>
-                    <option value="bri" class="bg-[rgba(0,0,0,0.8)]">BRI</option>
-                    <option value="mandiri" class="bg-[rgba(0,0,0,0.8)]">Mandiri</option>
-                    <option value="cimb" class="bg-[rgba(0,0,0,0.8)]">CIMB</option>
+                    <option value="bca" {{ old('bankKetua', session('step1.bankKetua')) == 'bca' ? 'selected' : '' }}  class="bg-[rgba(0,0,0,0.8)]">BCA</option>
+                    <option value="bni" {{ old('bankKetua', session('step1.bankKetua')) == 'bni' ? 'selected' : '' }}  class="bg-[rgba(0,0,0,0.8)]">BNI</option>
+                    <option value="bri" {{ old('bankKetua', session('step1.bankKetua')) == 'bri' ? 'selected' : '' }}  class="bg-[rgba(0,0,0,0.8)]">BRI</option>
+                    <option value="mandiri" {{ old('bankKetua', session('step1.bankKetua')) == 'mandiri' ? 'selected' : '' }}  class="bg-[rgba(0,0,0,0.8)]">Mandiri</option>
+                    <option value="cimb" {{ old('bankKetua', session('step1.bankKetua')) == 'cimb' ? 'selected' : '' }}  class="bg-[rgba(0,0,0,0.8)]">CIMB</option>
                 </select>
                 <input type="text" id="no-rekening-ketua-tim-id" name="noRekeningKetuaTim" placeholder="Nomor Rekening" value="{{ old('noRekeningKetuaTim', session('step1.noRekeningKetuaTim')) }}" required class="ml-2 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none w-full md:w-3/4 lg:w-5/6">
             </div>
@@ -37,7 +37,8 @@
           
         <div class="mb-2 flex flex-col items-left">
             <label for="alamat-ketua-id" class="text-sm md:text-base text-white text-left">Alamat</label>
-            <textarea id="alamat-ketua-id" name="alamatKetua" autocomplete="street-address" value="{{ old('alamatKetua', session('step1.alamatKetua')) }}" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none"></textarea>
+            <textarea id="alamat-ketua-id" name="alamatKetua" autocomplete="street-address" class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">{{ old('alamatKetua', session('step1.alamatKetua')) }}
+            </textarea>
         </div>
   
         <div class="mb-2 flex flex-col items-left">
@@ -61,13 +62,17 @@
         <div class="mb-2 flex flex-col items-left">
             <label for="file-ketua-id" class="text-sm md:text-base text-white block text-left mb-2">Foto kartu siswa & surat pernyataan siswa aktif</label>
             <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
-                <input type="file" id="file-ketua-id" name="fileKetua" accept="image/*" required class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('ketua')">
+                <input type="file" id="file-ketua-id" name="fileKetua" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('ketua')">
                 <span class="text-2xl material-icons">cloud_upload</span>
             </div>
-            <div class="text-sm md:text-base text-white mt-2 text-left"></div>
+            <div id="img-name-ketua" class="text-sm md:text-base text-white mt-2 text-left break-words max-w-[300px]">
+                @if (session('step1.fileKetua'))
+                    {{ basename(session('step1.orginalFileName')) }}
+                @endif
+            </div>
         </div>
           
-          <button type="submit" class="bg-[#B026FF] text-sm md:text-base text-white text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
+        <button type="submit" class="bg-[#B026FF] text-sm md:text-base text-white text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Next</button>
     </form>
 </div>
 @endsection

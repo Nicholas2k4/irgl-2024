@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function showStepOne() {
+    public function showStepOne()
+    {
         return view('registration.registration-step-one');
     }
 
-    public function postStepOne(Request $request) {
+    public function postStepOne(Request $request)
+    {
         $validatedData = $request->validate([
             'namaKetua' => 'required',
             'bankKetua' => 'required',
@@ -24,14 +26,23 @@ class RegisterController extends Controller
             'kodePosKetua' => 'required|numeric',
             'phoneKetua' => 'required',
             'idlineKetua' => 'required',
-            'fileKetua' => 'required|image|max:8192', // Max 8MB
+            'fileKetua' => 'nullable|image|max:8192', // Max 8MB
         ]);
         $validatedData['namaKetua'] = ucwords(strtolower($validatedData['namaKetua'])); // Pascal Case
 
         // Store the uploaded file temporarily
         if ($request->hasFile('fileKetua')) {
-            $path = $request->file('fileKetua')->store('tmp', 'local');
+            $file = $request->file('fileKetua');
+            $originalName = $file->getClientOriginalName(); // Get the original file name
+            $validatedData['orginalFileName'] = $originalName;
+            $path = $file->store('tmp', 'local'); // Temporary store image file
             $validatedData['fileKetua'] = $path; // Save the path instead of the file instance
+        } elseif ($request->session()->has('step1.fileKetua')) {
+            // Keep existing file if not re-uploaded
+            $validatedData['fileKetua'] = $request->session()->get('step1.fileKetua');
+        } else {
+            session()->flash('message', 'Please upload the required file!');
+            return redirect()->route('register.show.step.one');
         }
 
         $request->session()->put('step1', $validatedData);
@@ -39,11 +50,13 @@ class RegisterController extends Controller
         return redirect()->route('register.show.step.two');
     }
 
-    public function showStepTwo() {
+    public function showStepTwo()
+    {
         return view('registration.registration-step-two');
     }
 
-    public function postStepTwo(Request $request) {
+    public function postStepTwo(Request $request)
+    {
         $validatedData = $request->validate([
             'namaAnggota1' => 'required',
             'tanggalLahirAnggota1' => 'required|date',
@@ -56,16 +69,33 @@ class RegisterController extends Controller
         ]);
         $validatedData['namaAnggota1'] = ucwords(strtolower($validatedData['namaAnggota1'])); // Pascal Case
 
+        // Store the uploaded file temporarily
+        if ($request->hasFile('fileAnggota1')) {
+            $file = $request->file('fileAnggota1');
+            $originalName = $file->getClientOriginalName(); // Get the original file name
+            $validatedData['orginalFileName'] = $originalName;
+            $path = $file->store('tmp', 'local'); // Temporary store image file
+            $validatedData['fileAnggota1'] = $path; // Save the path instead of the file instance
+        } elseif ($request->session()->has('step2.fileAnggota1')) {
+            // Keep existing file if not re-uploaded
+            $validatedData['fileAnggota1'] = $request->session()->get('step2.fileAnggota1');
+        } else {
+            session()->flash('message', 'Please upload the required file!');
+            return redirect()->route('register.show.step.two');
+        }
+
         $request->session()->put('step2', $validatedData);
 
         return redirect()->route('register.show.step.three');
     }
 
-    public function showStepThree() {
+    public function showStepThree()
+    {
         return view('registration.registration-step-three');
     }
 
-    public function postStepThree(Request $request) {
+    public function postStepThree(Request $request)
+    {
         $validatedData = $request->validate([
             'namaAnggota2' => 'required',
             'tanggalLahirAnggota2' => 'required|date',
@@ -74,34 +104,66 @@ class RegisterController extends Controller
             'kodePosAnggota2' => 'required|numeric',
             'phoneAnggota2' => 'required',
             'idlineAnggota2' => 'required',
-            'fileAnggota2' => 'required|image|max:8192', // Max 8MB
+            'fileAnggota2' => 'nullable|image|max:8192', // Max 8MB
         ]);
         $validatedData['namaAnggota2'] = ucwords(strtolower($validatedData['namaAnggota2'])); // Pascal Case
+
+        // Store the uploaded file temporarily
+        if ($request->hasFile('fileAnggota2')) {
+            $file = $request->file('fileAnggota2');
+            $originalName = $file->getClientOriginalName(); // Get the original file name
+            $validatedData['orginalFileName'] = $originalName;
+            $path = $file->store('tmp', 'local'); // Temporary store image file
+            $validatedData['fileAnggota2'] = $path; // Save the path instead of the file instance
+        } elseif ($request->session()->has('step3.fileAnggota2')) {
+            // Keep existing file if not re-uploaded
+            $validatedData['fileAnggota2'] = $request->session()->get('step3.fileAnggota2');
+        } else {
+            $this->session()->flash('message', 'Please upload the required file!');
+            return redirect()->route('register.show.step.three');
+        }
 
         $request->session()->put('step3', $validatedData);
 
         return redirect()->route('register.show.step.four');
     }
 
-    public function showStepFour() {
+    public function showStepFour()
+    {
         return view('registration.registration-step-four');
     }
 
-    public function postStepFour(Request $request) {
+    public function postStepFour(Request $request)
+    {
         $validatedData = $request->validate([
-            'fileTeam' => 'required|image|max:8192', // Max 8MB
+            'fileTeam' => 'nullable|image|max:8192', // Max 8MB
             'namaTeam' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
         ]);
         $validatedData['namaTeam'] = strtoupper(strtolower($validatedData['namaTeam'])); // UPPER CASE
 
+        // Store the uploaded file temporarily
+        if ($request->hasFile('fileTeam')) {
+            $file = $request->file('fileTeam');
+            $originalName = $file->getClientOriginalName(); // Get the original file name
+            $validatedData['orginalFileName'] = $originalName;
+            $path = $file->store('tmp', 'local'); // Temporary store image file
+            $validatedData['fileTeam'] = $path; // Save the path instead of the file instance
+        } elseif ($request->session()->has('step4.fileTeam')) {
+            // Keep existing file if not re-uploaded
+            $validatedData['fileTeam'] = $request->session()->get('step4.fileTeam');
+        } else {
+            session()->flash('message', 'Please upload the required file!');
+            return redirect()->route('register.show.step.four');
+        }
 
         $request->session()->put('step4', $validatedData);
 
         return redirect()->route('register.complete');
     }
 
-    public function completeRegistration(Request $request) {
+    public function completeRegistration(Request $request)
+    {
         $step1 = $request->session()->get('step1');
         $step2 = $request->session()->get('step2');
         $step3 = $request->session()->get('step3');
@@ -180,5 +242,4 @@ class RegisterController extends Controller
 
         return redirect()->route('home')->with('success', 'Registration completed successfully!');
     }
-
 }

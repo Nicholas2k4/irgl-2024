@@ -41,7 +41,7 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register/step-three','postStepthree')->name('register.post.step.three');
     Route::get('/register/step-four','showStepfour')->name('register.show.step.four');
     Route::post('/register/step-four','postStepfour')->name('register.post.step.four');
-    Route::get('/registration/complete', 'completeRegistration')->name('register.complete');
+    Route::get('/register/complete', 'completeRegistration')->name('register.complete');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');

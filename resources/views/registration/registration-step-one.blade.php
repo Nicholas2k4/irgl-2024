@@ -67,7 +67,7 @@
             </div>
             <div id="img-name-ketua" class="text-sm md:text-base text-white mt-2 text-left break-words max-w-[300px]">
                 @if (session('step1.fileKetua'))
-                    {{ basename(session('step1.orginalFileName')) }}
+                    {{ basename(session('step1.fileKetua')) }}
                 @endif
             </div>
         </div>

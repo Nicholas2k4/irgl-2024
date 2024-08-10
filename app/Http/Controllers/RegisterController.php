@@ -6,6 +6,7 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
 {
@@ -33,15 +34,23 @@ class RegisterController extends Controller
         // Store the uploaded file temporarily
         if ($request->hasFile('fileKetua')) {
             $file = $request->file('fileKetua');
-            $originalName = $file->getClientOriginalName(); // Get the original file name
-            $validatedData['orginalFileName'] = $originalName;
-            $path = $file->store('tmp', 'local'); // Temporary store image file
-            $validatedData['fileKetua'] = $path; // Save the path instead of the file instance
+            // Generate a custom file name
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $customFileName = 'fileKetua_' . $originalName . '.' . $extension;
+
+            // Store the file with the custom name in the 'tmp' directory
+            $path = $file->storeAs('tmp', $customFileName, 'local');
+
+            // Save the path instead of the file instance
+            $validatedData['fileKetua'] = $path;
         } elseif ($request->session()->has('step1.fileKetua')) {
             // Keep existing file if not re-uploaded
             $validatedData['fileKetua'] = $request->session()->get('step1.fileKetua');
         } else {
-            session()->flash('message', 'Please upload the required file!');
+            session()->put('step1', $request->except('fileKetua'));
+
+            session()->flash('message', 'Please upload the required file.');
             return redirect()->route('register.show.step.one');
         }
 
@@ -65,22 +74,31 @@ class RegisterController extends Controller
             'kodePosAnggota1' => 'required|numeric',
             'phoneAnggota1' => 'required',
             'idlineAnggota1' => 'required',
-            'fileAnggota1' => 'required|image|max:8192', // Max 8MB
+            'fileAnggota1' => 'nullable|image|max:8192', // Max 8MB
         ]);
         $validatedData['namaAnggota1'] = ucwords(strtolower($validatedData['namaAnggota1'])); // Pascal Case
 
         // Store the uploaded file temporarily
         if ($request->hasFile('fileAnggota1')) {
             $file = $request->file('fileAnggota1');
-            $originalName = $file->getClientOriginalName(); // Get the original file name
-            $validatedData['orginalFileName'] = $originalName;
-            $path = $file->store('tmp', 'local'); // Temporary store image file
-            $validatedData['fileAnggota1'] = $path; // Save the path instead of the file instance
+            // Generate a custom file name
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $customFileName = 'fileAnggota1_' . $originalName . '.' . $extension;
+
+            // Store the file with the custom name in the 'tmp' directory
+            $path = $file->storeAs('tmp', $customFileName, 'local');
+
+            // Save the path instead of the file instance
+            $validatedData['fileAnggota1'] = $path;
         } elseif ($request->session()->has('step2.fileAnggota1')) {
             // Keep existing file if not re-uploaded
             $validatedData['fileAnggota1'] = $request->session()->get('step2.fileAnggota1');
         } else {
-            session()->flash('message', 'Please upload the required file!');
+            // Store the current input data in session
+            session()->put('step2', $request->except('fileAnggota1'));
+
+            session()->flash('message', 'Please upload the required file.');
             return redirect()->route('register.show.step.two');
         }
 
@@ -111,15 +129,23 @@ class RegisterController extends Controller
         // Store the uploaded file temporarily
         if ($request->hasFile('fileAnggota2')) {
             $file = $request->file('fileAnggota2');
-            $originalName = $file->getClientOriginalName(); // Get the original file name
-            $validatedData['orginalFileName'] = $originalName;
-            $path = $file->store('tmp', 'local'); // Temporary store image file
-            $validatedData['fileAnggota2'] = $path; // Save the path instead of the file instance
+            // Generate a custom file name
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $customFileName = 'fileAnggota2_' . $originalName . '.' . $extension;
+
+            // Store the file with the custom name in the 'tmp' directory
+            $path = $file->storeAs('tmp', $customFileName, 'local');
+
+            // Save the path instead of the file instance
+            $validatedData['fileAnggota2'] = $path;
         } elseif ($request->session()->has('step3.fileAnggota2')) {
             // Keep existing file if not re-uploaded
             $validatedData['fileAnggota2'] = $request->session()->get('step3.fileAnggota2');
         } else {
-            $this->session()->flash('message', 'Please upload the required file!');
+            session()->put('step3', $request->except('fileAnggota2'));
+
+            session()->flash('message', 'Please upload the required file.');
             return redirect()->route('register.show.step.three');
         }
 
@@ -137,7 +163,7 @@ class RegisterController extends Controller
     {
         $validatedData = $request->validate([
             'fileTeam' => 'nullable|image|max:8192', // Max 8MB
-            'namaTeam' => 'required|string|max:255',
+            'namaTeam' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9]+$/'],
             'password' => 'required|string|min:8|confirmed',
         ]);
         $validatedData['namaTeam'] = strtoupper($validatedData['namaTeam']); // UPPER CASE
@@ -145,15 +171,23 @@ class RegisterController extends Controller
         // Store the uploaded file temporarily
         if ($request->hasFile('fileTeam')) {
             $file = $request->file('fileTeam');
-            $originalName = $file->getClientOriginalName(); // Get the original file name
-            $validatedData['orginalFileName'] = $originalName;
-            $path = $file->store('tmp', 'local'); // Temporary store image file
-            $validatedData['fileTeam'] = $path; // Save the path instead of the file instance
+            // Generate a custom file name
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $customFileName = 'buktiTf_' . $originalName . '.' . $extension;
+
+            // Store the file with the custom name in the 'tmp' directory
+            $path = $file->storeAs('tmp', $customFileName, 'local');
+
+            // Save the path instead of the file instance
+            $validatedData['fileTeam'] = $path;
         } elseif ($request->session()->has('step4.fileTeam')) {
             // Keep existing file if not re-uploaded
             $validatedData['fileTeam'] = $request->session()->get('step4.fileTeam');
         } else {
-            session()->flash('message', 'Please upload the required file!');
+            session()->put('step4', $request->except('fileTeam'));
+
+            session()->flash('message', 'Please upload the required file.');
             return redirect()->route('register.show.step.four');
         }
 
@@ -164,28 +198,29 @@ class RegisterController extends Controller
 
     public function completeRegistration(Request $request)
     {
-        $step1 = $request->session()->get('step1');
-        $step2 = $request->session()->get('step2');
-        $step3 = $request->session()->get('step3');
-        $step4 = $request->session()->get('step4');
-
         // Check if team name already exists
-        if (Team::where('nama', $step4['namaTeam'])->exists()) {
+        if (Team::where('nama', session('step4.namaTeam'))->exists()) {
             session()->flash('message', 'Team name already exists. Please choose another name.');
-            return;
+            return redirect()->route('register.show.step.four');
         }
 
         // Store uploaded files
-        $fileKetuaName = $step1['fileKetua']->store('public/uploads');
-        $fileAnggota1Name = $step2['fileAnggota1']->store('public/uploads');
-        $fileAnggota2Name = $step3['fileAnggota2']->store('public/uploads');
-        $fileTeamName = $step4['fileTeam']->store('public/uploads');
+        $fileKetuaPath = $this->moveFileToPermanentStorage(session('step1.fileKetua'), 'public/uploads/'.session('step4.namaTeam'));
+        $fileAnggota1Path = $this->moveFileToPermanentStorage(session('step2.fileAnggota1'), 'public/uploads/'.session('step4.namaTeam'));
+        $fileAnggota2Path = $this->moveFileToPermanentStorage(session('step3.fileAnggota2'), 'public/uploads/'.session('step4.namaTeam'));
+        $fileTeamPath = $this->moveFileToPermanentStorage(session('step4.fileTeam'), 'public/uploads/'.session('step4.namaTeam'));
+
+        // Update session data with new file path
+        session()->put('step1.fileKetua', $fileKetuaPath);
+        session()->put('step2.fileAnggota1', $fileAnggota1Path);
+        session()->put('step3.fileAnggota2', $fileAnggota2Path);
+        session()->put('step4.fileTeam', $fileTeamPath);
 
         // Insert team into Teams database
         $newTeam = Team::create([
-            'nama' => $step4['namaTeam'],
-            'password' => Hash::make($step4['password']),
-            'link_bukti_tf' => $fileTeamName,
+            'nama' => session('step4.namaTeam'),
+            'password' => Hash::make(session('step4.password')),
+            'link_bukti_tf' => session('step4.fileTeam'), // Use the file path from session
             'is_validated' => false
         ]);
 
@@ -194,52 +229,62 @@ class RegisterController extends Controller
 
         // Insert ketua into Users database
         User::create([
-            'nama' => $step1->namaKetua,
-            'tanggal_lahir' => $step1->tanggalLahirKetua,
-            'tempat_lahir' => $step1->tempatLahirKetua,
-            'alamat' => $step1->alamatKetua,
-            'kode_pos' => $step1->kodePosKetua,
-            'no_telp' => $step1->phoneKetua,
-            'id_line' => $step1->idlineKetua,
-            'link_foto' => $fileKetuaName,
+            'nama' => session('step1.namaKetua'),
+            'tanggal_lahir' => session('step1.tanggalLahirKetua'),
+            'tempat_lahir' => session('step1.tempatLahirKetua'),
+            'alamat' => session('step1.alamatKetua'),
+            'kode_pos' => session('step1.kodePosKetua'),
+            'no_telp' => session('step1.phoneKetua'),
+            'id_line' => session('step1.idlineKetua'),
+            'link_foto' => session('step1.fileKetua'), // Use the file path from session
             'is_ketua' => true,
-            'bank' => $step1->bankKetua,
-            'no_rek' => $step1->noRekeningKetuaTim,
+            'bank' => session('step1.bankKetua'),
+            'no_rek' => session('step1.noRekeningKetuaTim'),
             'id_tim' => $team_id
         ]);
 
         // Insert anggota1 into Users database
         User::create([
-            'nama' => $step2->namaAnggota1,
-            'tanggal_lahir' => $step2->tanggalLahirAnggota1,
-            'tempat_lahir' => $step2->tempatLahirAnggota1,
-            'alamat' => $step2->alamatAnggota1,
-            'kode_pos' => $step2->kodePosAnggota1,
-            'no_telp' => $step2->phoneAnggota1,
-            'id_line' => $step2->idlineAnggota1,
-            'link_foto' => $fileAnggota1Name,
+            'nama' => session('step2.namaAnggota1'),
+            'tanggal_lahir' => session('step2.tanggalLahirAnggota1'),
+            'tempat_lahir' => session('step2.tempatLahirAnggota1'),
+            'alamat' => session('step2.alamatAnggota1'),
+            'kode_pos' => session('step2.kodePosAnggota1'),
+            'no_telp' => session('step2.phoneAnggota1'),
+            'id_line' => session('step2.idlineAnggota1'),
+            'link_foto' => session('step2.fileAnggota1'), // Use the file path from session
             'is_ketua' => false,
             'id_tim' => $team_id
         ]);
 
         // Insert anggota2 into Users database
         User::create([
-            'nama' => $step3->namaAnggota2,
-            'tanggal_lahir' => $step3->tanggalLahirAnggota2,
-            'tempat_lahir' => $step3->tempatLahirAnggota2,
-            'alamat' => $step3->alamatAnggota2,
-            'kode_pos' => $step3->kodePosAnggota2,
-            'no_telp' => $step3->phoneAnggota2,
-            'id_line' => $step3->idlineAnggota2,
-            'link_foto' => $fileAnggota2Name,
+            'nama' => session('step3.namaAnggota2'),
+            'tanggal_lahir' => session('step3.tanggalLahirAnggota2'),
+            'tempat_lahir' => session('step3.tempatLahirAnggota2'),
+            'alamat' => session('step3.alamatAnggota2'),
+            'kode_pos' => session('step3.kodePosAnggota2'),
+            'no_telp' => session('step3.phoneAnggota2'),
+            'id_line' => session('step3.idlineAnggota2'),
+            'link_foto' => session('step3.fileAnggota2'), // Use the file path from session
             'is_ketua' => false,
             'id_tim' => $team_id
         ]);
 
         session()->flash('message', 'Team registered successfully!');
 
-        $request->session()->forget(['step1', 'step2', 'step3', 'step4']);
+        $request->session()->flush();
 
-        return redirect()->route('home')->with('success', 'Registration completed successfully!');
+        return redirect('/')->with('success', 'Registration completed successfully!');
+    }
+
+    private function moveFileToPermanentStorage($file, $directory)
+    {
+        // Move file to permanent storage with a custom file name
+        $filename = basename($file);
+        $newPath = "$directory/$filename";
+        Storage::move($file, $newPath);
+    
+        return $newPath;
     }
 }

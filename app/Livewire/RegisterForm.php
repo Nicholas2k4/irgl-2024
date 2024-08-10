@@ -32,7 +32,7 @@ class RegisterForm extends Component
         $this->step++;
     }
 
-    public function backStep() 
+    public function backStep()
     {
         if ($this->step > 1) {
             $this->step--;
@@ -47,6 +47,7 @@ class RegisterForm extends Component
         $this->namaTeam = strtoupper($this->namaTeam); // UPPER CASE
 
         $validatedData = $this->validate([
+            // Page 1
             'namaKetua' => 'required',
             'bankKetua' => 'required',
             'noRekeningKetuaTim' => 'required',
@@ -58,6 +59,7 @@ class RegisterForm extends Component
             'idlineKetua' => 'required',
             'fileKetua' => 'required|image|max:8192', // Max 8MB
 
+            // Page 2
             'namaAnggota1' => 'required',
             'tanggalLahirAnggota1' => 'required|date',
             'tempatLahirAnggota1' => 'required',
@@ -67,6 +69,7 @@ class RegisterForm extends Component
             'idlineAnggota1' => 'required',
             'fileAnggota1' => 'required|image|max:8192', // Max 8MB
 
+            // Page 3
             'namaAnggota2' => 'required',
             'tanggalLahirAnggota2' => 'required|date',
             'tempatLahirAnggota2' => 'required',
@@ -76,6 +79,7 @@ class RegisterForm extends Component
             'idlineAnggota2' => 'required',
             'fileAnggota2' => 'required|image|max:8192', // Max 8MB
 
+            // Page 4
             'fileTeam' => 'required|image|max:8192', // Max 8MB
             'namaTeam' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
@@ -119,7 +123,7 @@ class RegisterForm extends Component
             'no_rek' => $this->noRekeningKetuaTim,
             'id_tim' => $team_id
         ]);
-        
+
         // Insert anggota1 into Users database
         User::create([
             'nama' => $this->namaAnggota1,

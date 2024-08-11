@@ -390,8 +390,14 @@ class TeamController extends BaseController
         }
         $randomIndex = array_rand($questionsAvailforTeam);
         $randomQuestionId = $questionsAvailforTeam[$randomIndex];
-
-        return $this->success($randomQuestionId);
+        $question = ElimQuestions::where('id',$randomQuestionId)->first();
+        return $this->success(['question_id'=>$question->id,
+        'question'=>$question->question,
+        'choice_1'=>$question->choice_1,
+        'choice_2'=>$question->choice_2,
+        'choice_3'=>$question->choice_3,
+        'choice_4'=>$question->choice_4
+    ]);
     }
 
     function uploadQuestion(Request $request)
@@ -431,8 +437,6 @@ class TeamController extends BaseController
             return $this->success([
                 'message' => 'Answer is Correct',
                 'nama' => $team->nama,
-                'gp now' => $team->curr_gp_streak,
-                $statistic
             ]);
         } else {
             $team->update([
@@ -446,8 +450,6 @@ class TeamController extends BaseController
             return $this->success([
                 'message' => 'Answer is Incorrect',
                 'nama' => $team->nama,
-                'gp now' => $team->curr_gp_streak,
-                $statistic
             ]);
         }
     }

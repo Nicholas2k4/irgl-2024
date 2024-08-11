@@ -183,7 +183,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-slide-in');
 
     const scrollHandler = () => {

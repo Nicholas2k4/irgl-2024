@@ -1,9 +1,9 @@
 <!-- <h1>Berisi logo irgl, prizepool, penjelasan lomba(about) </h1> -->
-<div class="fade-slide-in rounded-lg flex flex-col items-center justify-center mb-[2.5vh] mt-[104px] mx-auto">
+<div class="fade-slide-in rounded-lg flex flex-col items-center justify-center mb-[2.5vh] mt-[8.5vh] mx-auto">
 <img src="\assets\logo\logo-02-02.png" id="glitchlogo" class="glitchimg w-[63vw] h-[63vw] mb-6">
 <h2 class="k text-lg">TOTAL PRIZE : <br><br> RP 62.500.000 </h2>
 
-<div class="m bg-white/70 justify-center items-center flex flex-col pb-2 rounded-lg mt-[3.5vh]">
+<div class="m bg-white/70 justify-center items-center flex flex-col pb-2 rounded-lg mt-[8.5vh]">
 <div class="glitch items-center justify-center drop-shadow-2xl">
 <h2 class=" text-4xl font-bold text-gray-100 pt-4 pb-2 text-center fade-slide-in">ABOUT US</h2>
 </div>

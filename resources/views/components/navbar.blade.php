@@ -36,16 +36,16 @@
     <div class="flex flex-col justify-center items-center w-full h-[60%]">
         <ul class="items-center w-full h-full ">
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl">Home</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#">Home</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl">About</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#about">About</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl">Timeline</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#timeline">Timeline</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl">FAQ</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#faq">FAQ</a>
             </li>
             <li class="flex h-[15%] items-center">
                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
@@ -85,7 +85,9 @@
 #menuhtop {
     transition: transform 0.2s ease-in-out;
 }
-
+html{
+    scroll-behavior: smooth;
+}
 </style>
 
 <script>
@@ -107,11 +109,37 @@
 
 window.addEventListener('scroll', function() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop) {
+    if (scrollTop > lastScrollTop && berger.classList.contains('hidden')) {
         menutop.style.transform = 'translateY(-100%)';
     } else {
         menutop.style.transform = 'translateY(0)';
     }
     lastScrollTop = scrollTop;
 });
+
+// function goto(path){
+//     path = path.toLowerCase();
+    
+//     if(path.includes('home')){
+
+//     }
+//     else if(path.includes('about')){
+//         const about = document.getElementById('about');
+//         const navbarHeight = document.getElementById('menuhtop').offsetHeight;
+
+//         const scrollPosition = about.offsetTop;
+//         window.scrollTo({
+//         top: scrollPosition,
+//         behavior: 'smooth'
+//     });
+
+//     }
+//     else if(path.includes('timeline')){
+
+//     }
+//     else if(path.includes('faq')){
+
+//     }
+// }
+
 </script>

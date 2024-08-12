@@ -1,9 +1,11 @@
 <!-- <h1>Berisi logo irgl, prizepool, penjelasan lomba(about) </h1> -->
 <div class="fade-slide-in rounded-lg flex flex-col items-center justify-center mb-[2.5vh] mt-[8.5vh] mx-auto">
 <img src="\assets\logo\logo-02-02.png" id="glitchlogo" class="glitchimg w-[63vw] h-[63vw] mb-6">
-<h2 class="k text-lg">TOTAL PRIZE : <br><br> RP 62.500.000 </h2>
-
-<div class="m bg-white/70 justify-center items-center flex flex-col pb-2 rounded-lg mt-[8.5vh]">
+<div class="w-screen flex justify-evenly items-center">
+<h2 class="k text-base">TOTAL PRIZE : <br><br> RP 62.500.000 </h2>
+<img src="\assets\sammy\sam24_hooray.png" class="w-[25vw] scale-x-[-1] pt-[13vh]">
+</div>
+<div id="about" class="m bg-white/70 justify-center items-center flex flex-col pb-2 rounded-lg mt-[8.5vh]">
 <div class="glitch items-center justify-center drop-shadow-2xl">
 <h2 class=" text-4xl font-bold text-gray-100 pt-4 pb-2 text-center fade-slide-in">ABOUT US</h2>
 </div>
@@ -113,14 +115,14 @@ Lomba ini akan diadakan secara hybrid dimana babak eliminasi akan dilaksanakan s
     };
 
     while (true) {
-        await setGlitchIcon('../assets/logo/logo-02-02.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo1.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo2.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo3.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo4.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo5.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo6.png', 250);
-        await setGlitchIcon('../assets/logo/glitchlogo7.png', 250);
+        await setGlitchIcon('../assets/logo/logo-02-02.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo1.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo2.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo3.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo4.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo5.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo6.png', 175);
+        await setGlitchIcon('../assets/logo/glitchlogo7.png', 175);
         glitchicon.src = '../assets/logo/logo-02-02.png';
         await delay(1750);
     }

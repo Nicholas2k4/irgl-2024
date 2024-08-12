@@ -110,7 +110,7 @@
   
 </style>
 
-<div class="container mx-auto p-8 pt-10 bg-white bg-opacity-70 shadow-lg rounded-lg fade-slide-in">
+<div id="timeline" class="container mx-auto p-8 pt-10 bg-white bg-opacity-70 shadow-lg rounded-lg fade-slide-in">
 <div class="glitch items-center justify-items-center drop-shadow-2xl">
 <h2 class="text-4xl mb-4 font-bold text-gray-100 p-4 text-center fade-slide-in">TIMELINE</h2>
 </div>

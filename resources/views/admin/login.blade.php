@@ -33,7 +33,7 @@
     <div class="w-[400px] h-[400px] justify-center items-center py-[3vw] sm:p-7 flex flex-col
     border-solid border-[2px] border-[#cacaca80] rounded-[20px] backdrop-blur-lg shadow-inner shadow-[rgba(221,150,240,0.6)] bg-transparent">
         <div class="text-center">
-             <img src="\assets\logo\logo-02-02.png" class="w-[45vw] h-[45vw] sm:w-[17vw] sm:h-[17vw] bg-red-400">
+             <img src="{{ asset('assets/logo.png') }}" class="w-[45vw] h-[45vw] sm:w-[17vw] sm:h-[17vw]">
         </div>
 
         <div class="w-[100%] h-[40%] overflow-hidden translate-y-10">

@@ -1,7 +1,7 @@
 @extends('register')
 
 @section('container')
-<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] md:w-fit md:max-w-[420px] w-5/6 p-10 rounded-[20px] text-center m-8 relative">
+<div class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] md:w-[420px] w-5/6 p-10 rounded-[20px] text-center m-8 relative">
     <a href="{{ route('register.show.step.one') }}">
         <span class="text-2xl text-white absolute top-0 left-0 m-2 cursor-pointer material-icons">arrow_back</span>
     </a>

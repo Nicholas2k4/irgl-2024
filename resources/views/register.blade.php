@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
   </head>
-  <body class="bg-black flex justify-center items-center h-full bg-[url('https://images.hdqwalls.com/download/neon-city-5k-3u-1920x1080.jpg')]">
+  <body class="bg-black flex justify-center items-center h-full bg-[url('https://images.hdqwalls.com/download/neon-city-5k-3u-1920x1080.jpg')] bg-cover bg-center bg-no-repeat">
     @if ($errors->any())
     <script>
         Swal.fire({

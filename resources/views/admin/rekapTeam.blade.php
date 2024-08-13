@@ -57,8 +57,7 @@
                             <td>
                                 <button
                                     class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">
-                                    <a href="{{ asset('storage/uploads/' . basename($data->link_bukti_tf)) }}"
-                                        target="_blank">View</a>
+                                    <a href="{{ '/storage' . asset(str_replace('public/', '', $data->link_bukti_tf)) }}" target="_blank">View</a>
                                 </button>
                             </td>
 

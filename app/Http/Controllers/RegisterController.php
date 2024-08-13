@@ -172,7 +172,7 @@ class RegisterController extends Controller
     {
         $validatedData = $request->validate([
             'fileTeam' => 'nullable|image|max:8192', // Max 8MB
-            'namaTeam' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9]+$/'],
+            'namaTeam' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'password' => 'required|string|min:8|confirmed',
         ]);
         $validatedData['namaTeam'] = strtoupper($validatedData['namaTeam']); // UPPER CASE
@@ -214,10 +214,10 @@ class RegisterController extends Controller
         }
 
         // Store uploaded files
-        $fileKetuaPath = $this->moveFileToPermanentStorage(session('step1.fileKetua'), 'public/uploads/'.session('step4.namaTeam'));
-        $fileAnggota1Path = $this->moveFileToPermanentStorage(session('step2.fileAnggota1'), 'public/uploads/'.session('step4.namaTeam'));
-        $fileAnggota2Path = $this->moveFileToPermanentStorage(session('step3.fileAnggota2'), 'public/uploads/'.session('step4.namaTeam'));
-        $fileTeamPath = $this->moveFileToPermanentStorage(session('step4.fileTeam'), 'public/uploads/'.session('step4.namaTeam'));
+        $fileKetuaPath = $this->moveFileToPermanentStorage(session('step1.fileKetua'), 'public/uploads/' . session('step4.namaTeam'));
+        $fileAnggota1Path = $this->moveFileToPermanentStorage(session('step2.fileAnggota1'), 'public/uploads/' . session('step4.namaTeam'));
+        $fileAnggota2Path = $this->moveFileToPermanentStorage(session('step3.fileAnggota2'), 'public/uploads/' . session('step4.namaTeam'));
+        $fileTeamPath = $this->moveFileToPermanentStorage(session('step4.fileTeam'), 'public/uploads/' . session('step4.namaTeam'));
 
         // Update session data with new file path
         session()->put('step1.fileKetua', $fileKetuaPath);
@@ -293,7 +293,7 @@ class RegisterController extends Controller
         $filename = basename($file);
         $newPath = "$directory/$filename";
         Storage::move($file, $newPath);
-    
+
         return $newPath;
     }
 }

@@ -1,3 +1,39 @@
+<style>
+    /* .l{
+        border-bottom: 3px solid;
+        border-color: #edabe9;
+        border-image-slice: 1;
+
+        box-shadow: 0 3px 5px 2px #edabe9;
+    }*/
+    /* .l>div>a {
+        box-shadow: 0 6px 4px -4px #9df2f2,
+            0 8px 4px -3px #d6ed6f,
+            0 14px 6px -5px #d6ed6f,
+            0 17px 10px -9px #ffffff;
+        font-weight: bold;
+    } */
+
+     .pirgl{
+        text-shadow: 0 0 12px rgba(175, 0, 255, 0.95);
+        
+     }
+
+     .neon-purple-button svg {
+    stroke: rgba(175, 0, 255, 0.75);
+    filter: drop-shadow(0 0 10px rgba(175, 0, 255, 0.75))
+            drop-shadow(0 0 20px rgba(175, 0, 255, 0.75))
+            drop-shadow(0 0 30px rgba(175, 0, 255, 0.75));
+}
+
+#menuhtop {
+    transition: transform 0.2s ease-in-out;
+}
+body{
+    scroll-behavior: smooth;
+}
+</style>
+
 <header class="flex justify-center mb-[7vh]">
     <nav class="l w-[100%] h-[8vh] fixed flex flex-row z-20 mx-auto justify-between">
         <!-- <div class="w-full h-full flex justify-evenly items-end gap-[2.3vw]">
@@ -36,16 +72,16 @@
     <div class="flex flex-col justify-center items-center w-full h-[60%]">
         <ul class="items-center w-full h-full ">
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#">Home</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()" href="#">Home</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#about">About</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()" href="#about">About</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#timeline">Timeline</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()" href="#timeline">Timeline</a>
             </li>
             <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="#faq">FAQ</a>
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()" href="#faq">FAQ</a>
             </li>
             <li class="flex h-[15%] items-center">
                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
@@ -54,41 +90,6 @@
     </div>
 </div>
 
-<style>
-    /* .l{
-        border-bottom: 3px solid;
-        border-color: #edabe9;
-        border-image-slice: 1;
-
-        box-shadow: 0 3px 5px 2px #edabe9;
-    }*/
-    /* .l>div>a {
-        box-shadow: 0 6px 4px -4px #9df2f2,
-            0 8px 4px -3px #d6ed6f,
-            0 14px 6px -5px #d6ed6f,
-            0 17px 10px -9px #ffffff;
-        font-weight: bold;
-    } */
-
-     .pirgl{
-        text-shadow: 0 0 12px rgba(175, 0, 255, 0.95);
-        
-     }
-
-     .neon-purple-button svg {
-    stroke: rgba(175, 0, 255, 0.75);
-    filter: drop-shadow(0 0 10px rgba(175, 0, 255, 0.75))
-            drop-shadow(0 0 20px rgba(175, 0, 255, 0.75))
-            drop-shadow(0 0 30px rgba(175, 0, 255, 0.75));
-}
-
-#menuhtop {
-    transition: transform 0.2s ease-in-out;
-}
-html{
-    scroll-behavior: smooth;
-}
-</style>
 
 <script>
     let berger = document.getElementById('menune');
@@ -116,6 +117,8 @@ window.addEventListener('scroll', function() {
     }
     lastScrollTop = scrollTop;
 });
+
+
 
 // function goto(path){
 //     path = path.toLowerCase();

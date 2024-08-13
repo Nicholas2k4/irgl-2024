@@ -434,6 +434,11 @@ class TeamController extends BaseController
                 'id_question' => $creds['question_id']
             ]);
             $addToElimQuestionhistory->save();
+            if($team['curr_gp_streak'] === 3){
+                $statistic->update(['won_grand_prize' => true]);
+                $statistic->update(['end_time' => now()]);
+            }
+            
             return $this->success([
                 'message' => 'Answer is Correct',
                 'nama' => $team->nama,

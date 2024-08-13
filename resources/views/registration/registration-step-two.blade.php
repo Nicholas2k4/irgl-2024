@@ -25,8 +25,7 @@
         
         <div class="mb-2 flex flex-col items-left">
             <label for="alamat-anggota1-id" class="text-sm md:text-base text-white text-left">Alamat</label>
-            <textarea id="alamat-anggota1-id" name="alamatAnggota1" autocomplete="street-address" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">{{ old('alamatAnggota1', session('step2.alamatAnggota1')) }}
-            </textarea>
+            <textarea id="alamat-anggota1-id" name="alamatAnggota1" autocomplete="street-address" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">{{ old('alamatAnggota1', session('step2.alamatAnggota1')) }}</textarea>
         </div>
 
         <div class="mb-2 flex flex-col items-left">

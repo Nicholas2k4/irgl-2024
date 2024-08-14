@@ -38,7 +38,7 @@ body{
     <nav class="l w-[100%] h-[8vh] fixed flex flex-row z-20 mx-auto justify-between">
         <div class="w-full h-screen p-2" id="menuhtop">
 
-        <div class="w-full flex justify-center items-center px-4">
+        <div class="w-full flex justify-center items-center px-4 py-4">
             <button onclick="displayMenuh()" class="neon-purple-button">
                 <svg id="menuBurger" class="hover:stroke-slate-50" width="30px" height="30px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 18L20 18" stroke="#7d70b8" stroke-width="2" stroke-linecap="round" />
@@ -47,7 +47,7 @@ body{
                 </svg>
             </button>
             
-            <div class="flex w-full h-full justify-end items-center">
+            <div class="flex w-full h-full justify-end items-center mr-1">
                 <img src="../assets/logo/logo-02-02.png" class="w-[30px] h-[30px]">
                 <p class="text-white font-bold pirgl">IRGL 2024</p>
             </div>

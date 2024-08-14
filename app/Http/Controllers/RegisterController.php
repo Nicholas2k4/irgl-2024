@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\ElimStatistics;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -278,6 +279,11 @@ class RegisterController extends Controller
             'link_foto' => session('step3.fileAnggota2'), // Use the file path from session
             'is_ketua' => false,
             'id_tim' => $team_id
+        ]);
+
+        // Add new team stats
+        ElimStatistics::create([
+            'id_team' => $team_id
         ]);
 
         session()->flash('message', 'Team registered successfully!');

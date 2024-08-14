@@ -24,14 +24,14 @@ use Google\Service\Adsense\Row;
 Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
-Route::get('/homepage-pc', function () {
-    return view('homepage-pc');
-})->name('homepage.pc');
+Route::get('/homepage-hp', function () {
+    return view('homepage-hp');
+})->name('homepage.hp');
 
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', function () {
         return redirect('register/step-one');
-    });
+    })->name('register');
     Route::get('/register/step-one', 'showStepOne')->name('register.show.step.one');
     Route::post('/register/step-one', 'postStepOne')->name('register.post.step.one');
     Route::get('/register/step-two', 'showStepTwo')->name('register.show.step.two');

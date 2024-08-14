@@ -4,10 +4,10 @@
     <div class="justify-center items-center flex max-w-[100vw] min-h-screen">
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
-            <!-- <div class="w-full h-[15%] flex items-center justify-center mt-6">
+            <div class="w-full h-[15%] flex items-center justify-center mt-6">
                     <label for="inputCari">Search:</label>
-                    <input id="inputCari" oninput="search()" class="w-40 h-7 border-gray-400 border-[1px] ml-2 rounded-[3px]">
-                </div> -->
+                    <input id="inputCari" oninput="search()" datasearch class="w-40 h-7 border-gray-400 border-[1px] ml-2 rounded-[3px]">
+            </div>
 
             <div class="overflow-auto sm:overflow-x-scroll w-[98%] relative mb-2 px-4">
                 <table class="justify-center items-center mt-10 mb-1 w-[150vw]">
@@ -138,6 +138,7 @@
         }
 
         function togglePopup(teamId) {
+            console.log(teamId)
             const popup = document.getElementById('popup');
             let anggotaDiv = document.getElementById('displayAnggota')
 
@@ -192,8 +193,8 @@
             let input = document.getElementById('inputCari').value
             input = input.toLowerCase().trim().replace(/\s+/g, '')
 
-            let temuTeam = [];
-            let temuAnggotaTeam = [];
+            var temuTeam = [];
+            var temuAnggotaTeam = [];
             var simpanAwal = records.innerHTML;
             if (input === '' || input === null) {
                 records.innerHTML = `                @foreach ($teams as $team => $data)
@@ -310,10 +311,10 @@
                     let updatedAt = 'null';
 
                     if (temuTeam[i][5] != null && temuTeam[i][4] != null) {
-                        let createdAt = temuTeam[i][4];
-                        let updatedAt = temuTeam[i][5];
+                         createdAt = temuTeam[i][4];
+                         updatedAt = temuTeam[i][5];
                     }
-
+                    console.log(teamId);
 
                     recordsHtml += `
         <tr class="${i % 2 == 0 ? 'bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full' : 'bg-white text-center'}">
@@ -322,11 +323,11 @@
             <td>${ketuaLine}</td>
             <td>${ketuaTelp}</td>
             <td>
-                <button onclick="togglePopup(${teamId})" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+                <button id="anggotaView{{ $team }}" onclick="togglePopup('${teamId}')" class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
             </td>
             <td>
                 <button class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">
-                    <a href="{{ asset('storage/uploads/' . basename($data->link_bukti_tf)) }}" target="_blank">View</a>
+                    <a href="{{ '/storage' . asset(str_replace('public/', '', '${temuTeam[i][2]}')) }}" target="_blank">View</a>
                 </button>
             </td>
             <td>

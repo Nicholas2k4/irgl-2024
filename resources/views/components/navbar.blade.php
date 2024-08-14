@@ -36,14 +36,6 @@ body{
 
 <header class="flex justify-center mb-[7vh]">
     <nav class="l w-[100%] h-[8vh] fixed flex flex-row z-20 mx-auto justify-between">
-        <!-- <div class="w-full h-full flex justify-evenly items-end gap-[2.3vw]">
-            <a class="text-2xl text-white cursor-pointer">Home</a>
-            <a class="text-2xl text-white cursor-pointer">About</a>
-            <a class="text-2xl text-white cursor-pointer">Timeline</a>
-            <a class="text-2xl text-white cursor-pointer">FAQ</a>
-            <a class="text-2xl text-white cursor-pointer" href="{{ route('login') }}">Login</a>
-        </div> -->
-
         <div class="w-full h-screen p-2" id="menuhtop">
 
         <div class="w-full flex justify-center items-center px-4">
@@ -85,6 +77,9 @@ body{
             </li>
             <li class="flex h-[15%] items-center">
                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
+            </li>
+            <li class="flex h-[15%] items-center">
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('register') }}">Register</a>
             </li>
         </ul>
     </div>

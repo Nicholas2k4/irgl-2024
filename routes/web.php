@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\AuthMiddleware;
 use Google\Service\Adsense\Row;
 
@@ -27,8 +28,19 @@ Route::get('/homepage-pc', function () {
     return view('homepage-pc');
 })->name('homepage.pc');
 
-Route::get('/register', function () {
-    return view('register');
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/register', function() {
+        return redirect('register/step-one');
+    });
+    Route::get('/register/step-one','showStepOne')->name('register.show.step.one');
+    Route::post('/register/step-one','postStepOne')->name('register.post.step.one');
+    Route::get('/register/step-two','showStepTwo')->name('register.show.step.two');
+    Route::post('/register/step-two','postStepTwo')->name('register.post.step.two');
+    Route::get('/register/step-three','showStepthree')->name('register.show.step.three');
+    Route::post('/register/step-three','postStepthree')->name('register.post.step.three');
+    Route::get('/register/step-four','showStepfour')->name('register.show.step.four');
+    Route::post('/register/step-four','postStepfour')->name('register.post.step.four');
+    Route::get('/register/complete', 'completeRegistration')->name('register.complete');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');

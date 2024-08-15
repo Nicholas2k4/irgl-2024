@@ -251,12 +251,17 @@
                 </tr>
                 @endforeach`;
             } else {
+
+                // KARENA 3x looping for makanya ada yang bisa kedouble antara ketua dan anggota" nya
+
                 for (let i = 0; i < dataTeams.length; i++) {
                     if (dataTeams[i]['nama'].toLowerCase().trim().replace(/\s+/g, '').includes(input)) {
                         let temp = [dataTeams[i]['nama'], dataTeams[i]['id'], dataTeams[i]['link_bukti_tf'], dataTeams[i][
                             'is_validated'
                         ], dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                         temuTeam.push(temp);
+
+                        console.log(1)
                     }
                     if (input === 'false' || input.includes('validasi') || input.includes('gavalid') || input.includes(
                             'belumvalid') || input.includes('belomvalid') || input.includes('notvalid')) {
@@ -264,6 +269,8 @@
                             let temp = [dataTeams[i]['nama'], dataTeams[i]['id'], dataTeams[i]['link_bukti_tf'], dataTeams[
                                 i]['is_validated'], dataTeams[i]['created_at'], dataTeams[i]['updated_at']];
                             temuTeam.push(temp);
+
+                            console.log(2)
                         }
                     }
 
@@ -276,6 +283,9 @@
                                     dataTeams[i]['is_validated'], dataTeams[i]['created_at'], dataTeams[i]['updated_at']
                                 ];
                                 temuTeam.push(temp);
+
+                                console.log(3)
+
                             }
                         }
                     }
@@ -292,7 +302,9 @@
                 }
                 // Buat Tabelnya dari temuTeam dan temuAnggotaTeam
 
-                let recordsHtml = '';
+                records.innerHTML = "";
+                console.log(temuTeam);
+
                 for (let i = 0; i < temuTeam.length; i++) {
                     let teamId = temuTeam[i][1];
                     let tempAnggota = [];
@@ -314,9 +326,8 @@
                          createdAt = temuTeam[i][4];
                          updatedAt = temuTeam[i][5];
                     }
-                    console.log(teamId);
 
-                    recordsHtml += `
+                    records.innerHTML += `
         <tr class="${i % 2 == 0 ? 'bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full' : 'bg-white text-center'}">
             <td>${i + 1}</td>
             <td>${temuTeam[i][0]}</td>
@@ -343,7 +354,6 @@
         </tr>
     `;
                 }
-                records.innerHTML = recordsHtml;
             }
         }
 

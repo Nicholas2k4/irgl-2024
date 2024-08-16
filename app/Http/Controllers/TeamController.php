@@ -233,7 +233,12 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
-        return $this->success(['curr_streak' => $team->curr_streak, 'can_spin_roulette' => $team->can_spin_roulette, 'game_id_allowed_play' => $team->game_id_allowed_play]);
+        return $this->success([
+            'curr_streak' => $team->curr_streak, 
+            'can_spin_roulette' => $team->can_spin_roulette, 
+            'game_id_allowed_play' => $team->game_id_allowed_play,
+            'game_pass' => $team->game_pass,
+        ]);
     }
 
     public function getUserGrandPrizeStreak(Request $request)

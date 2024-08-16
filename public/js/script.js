@@ -1,8 +1,13 @@
-console.log('OK')
-
 import * as Three from "three";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+let videoReady = false;
+let modelReady = false;
+
+const video = document.getElementById("entranceVideo");
+video.addEventListener('canplaythrough', () => {
+    videoReady = true;
+});
 class CameraController {
     constructor(camera, target) {
         this._camera = camera;
@@ -15,24 +20,24 @@ class CameraController {
         this._positionState = 0;
         this._isCameraMove = false;
         this._positions = {
-            home: {x:32.137148559873054, y:10.934339507232652, z:-11.06945160231319},
-            home_out: {x:12.950184689755782, y:12.176477967077068, z:15.569973545478323},
-            about: {x:8.5, y:8, z:17.3},
-            about_out: {x:10, y:7.9046573820083106, z:21.796876990736383},
-            timeline:{x:-4.85, y:3.52, z:18.54030467164695},
-            timeline_out: {x:16.80896476498577, y:10.112139828222576, z:17.02780744372623},
-            login:{x:14.81, y:3.606665, z:12.600139},
-            login_out: {x:17.703155174424527, y:3.8174647293483432, z:12.544091884045505}
+            home: { x: 32.137148559873054, y: 10.934339507232652, z: -11.06945160231319 },
+            home_out: { x: 12.950184689755782, y: 12.176477967077068, z: 15.569973545478323 },
+            about: { x: 8.5, y: 8, z: 17.3 },
+            about_out: { x: 10, y: 7.9046573820083106, z: 21.796876990736383 },
+            timeline: { x: -4.85, y: 3.52, z: 18.54030467164695 },
+            timeline_out: { x: 16.80896476498577, y: 10.112139828222576, z: 17.02780744372623 },
+            login: { x: 14.81, y: 3.606665, z: 12.600139 },
+            login_out: { x: 17.703155174424527, y: 3.8174647293483432, z: 12.544091884045505 }
         };
         this._lookPositions = {
-            home: {x:-4.274588286299647, y:14.114813344928013, z:4.945554507682633},
-            home_out: {x:11.93577751182221, y:15.984156527223945, z:-24.140012311360703},
-            about: {x:8.4, y:8.1, z:-24.13495228},
-            about_out: {x:9.012601887652732, y:5.459247781458146, z:-20.600977871193717},
-            timeline:  {x:-4.45, y:2.9164828638132603, z:-24.46624425085919},
-            timeline_out: {x:-3.5168734956353696, y:10.834324674085014, z:-20.86785283080913},
-            login: {x:-26.58564185350557, y:-0.6806091267574303, z:13.679204825126408},
-            login_out: {x:-24.571200396210312, y:0.280343600874827, z:11.937758135652755},
+            home: { x: -4.274588286299647, y: 14.114813344928013, z: 4.945554507682633 },
+            home_out: { x: 11.93577751182221, y: 15.984156527223945, z: -24.140012311360703 },
+            about: { x: 8.4, y: 8.1, z: -24.13495228 },
+            about_out: { x: 9.012601887652732, y: 5.459247781458146, z: -20.600977871193717 },
+            timeline: { x: -4.45, y: 2.9164828638132603, z: -24.46624425085919 },
+            timeline_out: { x: -3.5168734956353696, y: 10.834324674085014, z: -20.86785283080913 },
+            login: { x: -26.58564185350557, y: -0.6806091267574303, z: 13.679204825126408 },
+            login_out: { x: -24.571200396210312, y: 0.280343600874827, z: 11.937758135652755 },
         };
 
         this._Initialize();
@@ -48,7 +53,7 @@ class CameraController {
             this._sound.setBuffer(buffer);
             this._sound.setLoop(false);
             this._sound.setVolume(0.5);
-        }); 
+        });
         window.addEventListener('mousemove', (e) => {
             if (this._isHold) {
                 this._xmove += (e.clientX - this._prevX);
@@ -135,10 +140,7 @@ addLight(0x0C17EF, 100, [20, 3, 10]);
 
 scene.fog = new Three.Fog(0x061327, 0, 55);
 
-let videoReady = false;
-let modelReady = false;
 
-const video = document.getElementById("entranceVideo");
 const checkReadyState = () => {
     if (videoReady && modelReady) {
         setTimeout(() => {
@@ -147,16 +149,15 @@ const checkReadyState = () => {
         }, 1000);
     }
 };
-video.addEventListener('canplaythrough', () => {
-    videoReady = true;
-    checkReadyState();
-});
+
 const loadingManager = new Three.LoadingManager();
 loadingManager.onLoad = function () {
-    console.log('Loading complete!');
+    console.log(videoReady);
+    console.log(modelReady);
     modelReady = true;
     checkReadyState();
 };
+
 
 let mod;
 const gltfLoader = new GLTFLoader(loadingManager);
@@ -201,11 +202,11 @@ let isMuted = false;
 const toggleMute = () => {
     isMuted = !isMuted;
     if (isMuted) {
-        sound.setVolume(0); 
+        sound.setVolume(0);
         mutedIcon.classList.remove('hidden');
         unmutedIcon.classList.add('hidden');
     } else {
-        sound.setVolume(1); 
+        sound.setVolume(1);
         mutedIcon.classList.add('hidden');
         unmutedIcon.classList.remove('hidden');
     }
@@ -226,34 +227,28 @@ startButton.addEventListener('click', () => {
     startScreen.style.display = 'none';
     video.play();
 });
-video.addEventListener('ended', () => {   
-    video.style.display = 'none'; 
+video.addEventListener('ended', () => {
+    video.style.display = 'none';
     videoContainer.style.display = 'none';
     startAudio();
     renderer.setAnimationLoop(animate);
 });
 video.addEventListener('timeupdate', function () {
     if (!actionTaken && video.duration - video.currentTime <= 1.1) {
-        actionTaken = true;
-        videoContainer.style.opacity = 0;
+        actionTaken = true; videoContainer.style.opacity = 0;
         video.style.opacity = 0;
     }
-})
-document.body.style.margin = 0;
-document.body.style.overflow = "hidden";
-renderer.domElement.style.display = "block";
-
-const aboutMeBoxes = new Three.Group();
-const hitBoxMaterial = new Three.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-const aboutMeHitBoxGeometry = new Three.PlaneGeometry(1, 0.35);
-const logregHitBoxGeometry = new Three.PlaneGeometry(0.3, 0.07);
-
-const createHitBox = (geometry, position, rotationY = 0) => {
-    const hitBox = new Three.Mesh(geometry, hitBoxMaterial);
-    hitBox.position.set(...position);
-    hitBox.rotation.y = rotationY;
-    return hitBox;
-};
+}) 
+document.body.style.margin = 0; document.body.style.overflow = "hidden";
+renderer.domElement.style.display = "block"; const aboutMeBoxes = new Three.Group(); const hitBoxMaterial = new
+    Three.MeshBasicMaterial({ color: 0xff0000, wireframe: true }); const aboutMeHitBoxGeometry = new
+        Three.PlaneGeometry(1, 0.35); const logregHitBoxGeometry = new Three.PlaneGeometry(0.3, 0.07); const
+            createHitBox = (geometry, position, rotationY = 0) => {
+                const hitBox = new Three.Mesh(geometry, hitBoxMaterial);
+                hitBox.position.set(...position);
+                hitBox.rotation.y = rotationY;
+                return hitBox;
+            };
 
 const days = [
     { position: [-6.85, 3.55, 14.35] },
@@ -297,47 +292,28 @@ window.addEventListener('pointerup', (event) => {
 
     if (touchedPoints.length === 1 && absX > cursorXMin && absX < cursorXMax && absY > cursorYMin && absY < cursorYMax) {
         handleClick(cursor);
-    }
-    touchedPoints.length = 0;
-});
-
-const raycaster = new Three.Raycaster();
-
-const handleClick = (cursor) => {
-    raycaster.setFromCamera(cursor, camera);
-    const intersects = raycaster.intersectObjects(objectsToTest);
-    if (intersects.length) {
-        const selectedModel = intersects[0].object;
-        const dayTextures = ['day1', 'day2', 'day3', 'day4', 'day5'];
-        const dayIndex = aboutMeBoxes.children.indexOf(selectedModel);
-        if (dayIndex !== -1 && dayIndex < 5) {
-            changeTexture(dayTextures[dayIndex]);
-        } else if (selectedModel === aboutMeBoxes.children[5]) {
-            window.location.href = '/login';
-        } else if (selectedModel === aboutMeBoxes.children[6]) {
-            window.location.href = '/register';
+    } touchedPoints.length = 0;
+}); const raycaster = new Three.Raycaster(); const
+    handleClick = (cursor) => {
+        raycaster.setFromCamera(cursor, camera);
+        const intersects = raycaster.intersectObjects(objectsToTest);
+        if (intersects.length) {
+            const selectedModel = intersects[0].object;
+            const dayTextures = ['day1', 'day2', 'day3', 'day4', 'day5'];
+            const dayIndex = aboutMeBoxes.children.indexOf(selectedModel);
+            if (dayIndex !== -1 && dayIndex < 5) { changeTexture(dayTextures[dayIndex]); } else if
+                (selectedModel === aboutMeBoxes.children[5]) { window.location.href = '/login'; } else if
+                (selectedModel === aboutMeBoxes.children[6]) { window.location.href = '/register'; }
         }
-    }
-};
-
-const loader = new Three.TextureLoader();
-const textures = {
-    day1: loader.load('coba/early.jpg'),
-    day2: loader.load('coba/normal.jpg'),
-    day3: loader.load('coba/tm.jpg'),
-    day4: loader.load('coba/prelim.jpg'),
-    day5: loader.load('coba/final.jpg'),
-};
-
-const geometry = new Three.PlaneGeometry(5, 2.97);
-const material = new Three.MeshBasicMaterial({ map: textures.day1 });
-const textureMesh = new Three.Mesh(geometry, material);
-textureMesh.position.set(-5.2, 2.6, 14.329);
-textureMesh.rotation.x = -0.01;
-textureMesh.rotation.z = -0.005;
-scene.add(textureMesh);
-
-const changeTexture = (day) => {
+    }; const loader = new
+        Three.TextureLoader(); const textures = {
+            day1: loader.load('coba/early.jpg'), day2:
+                loader.load('coba/normal.jpg'), day3: loader.load('coba/tm.jpg'), day4: loader.load('coba/prelim.jpg'),
+            day5: loader.load('coba/final.jpg'),
+        }; const geometry = new Three.PlaneGeometry(5, 2.97); const
+            material = new Three.MeshBasicMaterial({ map: textures.day1 }); const textureMesh = new Three.Mesh(geometry,
+                material); textureMesh.position.set(-5.2, 2.6, 14.329); textureMesh.rotation.x = -0.01;
+textureMesh.rotation.z = -0.005; scene.add(textureMesh); const changeTexture = (day) => {
     textureMesh.material.map = textures[day];
     textureMesh.material.needsUpdate = true;
 };

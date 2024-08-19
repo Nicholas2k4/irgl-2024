@@ -24,22 +24,22 @@ use Google\Service\Adsense\Row;
 Route::get('/', function () {
     return view('homepage');
 })->name('homepage');
-Route::get('/homepage-pc', function () {
-    return view('homepage-pc');
-})->name('homepage.pc');
+Route::get('/homepage-hp', function () {
+    return view('homepage-hp');
+})->name('homepage.hp');
 
 Route::controller(RegisterController::class)->group(function () {
-    Route::get('/register', function() {
+    Route::get('/register', function () {
         return redirect('register/step-one');
-    });
-    Route::get('/register/step-one','showStepOne')->name('register.show.step.one');
-    Route::post('/register/step-one','postStepOne')->name('register.post.step.one');
-    Route::get('/register/step-two','showStepTwo')->name('register.show.step.two');
-    Route::post('/register/step-two','postStepTwo')->name('register.post.step.two');
-    Route::get('/register/step-three','showStepthree')->name('register.show.step.three');
-    Route::post('/register/step-three','postStepthree')->name('register.post.step.three');
-    Route::get('/register/step-four','showStepfour')->name('register.show.step.four');
-    Route::post('/register/step-four','postStepfour')->name('register.post.step.four');
+    })->name('register');
+    Route::get('/register/step-one', 'showStepOne')->name('register.show.step.one');
+    Route::post('/register/step-one', 'postStepOne')->name('register.post.step.one');
+    Route::get('/register/step-two', 'showStepTwo')->name('register.show.step.two');
+    Route::post('/register/step-two', 'postStepTwo')->name('register.post.step.two');
+    Route::get('/register/step-three', 'showStepthree')->name('register.show.step.three');
+    Route::post('/register/step-three', 'postStepthree')->name('register.post.step.three');
+    Route::get('/register/step-four', 'showStepfour')->name('register.show.step.four');
+    Route::post('/register/step-four', 'postStepfour')->name('register.post.step.four');
     Route::get('/register/complete', 'completeRegistration')->name('register.complete');
 });
 
@@ -48,7 +48,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin/', [AuthController::class, 'adminLoginView'])->name('admin.login');
+Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
 
 

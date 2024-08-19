@@ -92,7 +92,7 @@ class AuthController extends BaseController
  
     public function logout(Request $request){
         $request->session()->flush();
-        return redirect()->to("/admin");
+        // return redirect()->to("/admin");
     }
 
     function getNameFromNRP(){

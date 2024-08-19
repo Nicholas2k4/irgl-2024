@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\admin;
+use App\Models\Admin;
 use App\Models\Division;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;

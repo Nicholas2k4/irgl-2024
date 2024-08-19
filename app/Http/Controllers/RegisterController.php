@@ -295,11 +295,22 @@ class RegisterController extends Controller
 
     private function moveFileToPermanentStorage($file, $directory)
     {
+        $this->createDirectory($directory);
+        
         // Move file to permanent storage with a custom file name
         $filename = basename($file);
         $newPath = "$directory/$filename";
         Storage::move($file, $newPath);
 
         return $newPath;
+    }
+
+    public function createDirectory($path)
+    {
+        $fullPath = storage_path('app/' . $path);
+
+        if (!file_exists($fullPath)) {
+            mkdir($fullPath, 0755, true); // Create directory with 755 permissions
+        }
     }
 }

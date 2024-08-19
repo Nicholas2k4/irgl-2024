@@ -133,7 +133,7 @@
     var dataTeams = <?php echo json_encode($teams); ?>;
 
     function asset(path) {
-        const baseUrl = '{{ url(' / ') }}'; // Base URL of your Laravel application
+        const baseUrl = '{{ url('/') }}'; // Base URL of your Laravel application
         return baseUrl + '/' + path;
     }
 

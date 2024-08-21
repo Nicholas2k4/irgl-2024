@@ -34,8 +34,8 @@ body{
 }
 </style>
 
-<header class="flex justify-center mb-[7vh]">
-    <nav class="l w-[100%] h-[8vh] fixed flex flex-row z-20 mx-auto justify-between">
+<header class="flex justify-center mb-[11vh]">
+    <nav class="l w-[100%] h-[11vh] fixed flex flex-row z-20 mx-auto justify-between">
         <div class="w-full h-screen p-2" id="menuhtop">
 
         <div class="w-full flex justify-center items-center px-4 py-4">

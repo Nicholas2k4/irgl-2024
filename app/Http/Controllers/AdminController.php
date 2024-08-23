@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Google_Client;
+use App\Models\Team;
+use App\Models\User;
 use App\Models\Admin;
+use Google_Service_Oauth2;
+use App\Models\ElimStatistics;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreadminRequest;
 use App\Http\Requests\UpdateadminRequest;
-use App\Models\Team;
-use App\Models\User;
-use Google_Client;
-use Google_Service_Oauth2;
 
 class AdminController extends Controller
 {
@@ -37,5 +39,14 @@ class AdminController extends Controller
         }
         
         return redirect()->back()->with(['error' => 'Kelompok tidak ditemukan']);
+    }
+
+    public function scoringSystem(){
+        $scores = ElimStatistics::all();
+        // dd($scores);
+        return view('admin.scoringSystem',[
+            'scores' => json_encode($scores),
+            'title' => 'Scoring System'
+        ]);
     }
 }

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Homepage</title>
+    <title>IRGL 2024 | Homepage</title>
+    <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
     <script type="importmap">
         {
             "imports": {
@@ -388,6 +389,9 @@
             <li><a id="about-link" href="#">About</a></li>
             <li><a id="timeline-link" href="#">Timeline</a></li>
             <li><a id="login-link" href="#">Login</a></li>
+            @if (Session::has('team_id'))
+                <li><a id="schedule-link" href="{{ route('jadwal.index') }}">Schedule</a></li>
+            @endif
         </ul>
     </nav>
     <div id="loading-screen">
@@ -406,11 +410,10 @@
     <script src="js/script.js" type="module"></script>
 
     <script>
-       
         if (window.innerWidth < 768) {
             window.location.href = "{{ route('homepage.hp') }}"
         }
-        
+
         window.addEventListener('resize', function() {
             if (window.innerWidth < 768) {
                 window.location.href = "{{ route('homepage.hp') }}"

@@ -97,7 +97,8 @@ class JadwalController extends Controller
         $teamResched = Team::with('jadwalResched')
             ->whereHas('jadwalResched')
             ->get();
-        return view('admin.jadwal-crud.main', compact('jadwal', 'teamResched'));
+        $title = 'Schedule';
+        return view('admin.jadwal-crud.main', compact('jadwal', 'teamResched', 'title'));
     }
     public function delete(Request $r)
     {
@@ -111,10 +112,11 @@ class JadwalController extends Controller
 
     public function view(Request $r)
     {
-
         $jadwal = Jadwal::where('id', $r->id)->first();
+        $title = 'Edit Schedule';
         return view('admin.jadwal-crud.view')
-            ->with('jadwal', $jadwal);
+            ->with('jadwal', $jadwal)
+            ->with('title', $title);
     }
     public function adminStore(Request $r)
     {
@@ -135,7 +137,7 @@ class JadwalController extends Controller
 
     public function input()
     {
-        return view('admin.jadwal-crud.input');
+        return view('admin.jadwal-crud.input', ['title' => 'Add Schedule']);
     }
 
     // Team Checker
@@ -149,10 +151,10 @@ class JadwalController extends Controller
         $team = Team::findOrFail($id);
 
         \DB::table('reschedule')->insert([
-            'id_kelompok' => $team->id, 
-            'id_jadwal_awal' => $team->id_jadwal, 
-            'id_jadwal_resched' => $team->id_jadwal_resched, 
-            'alasan' => $team->alasan_resched, 
+            'id_kelompok' => $team->id,
+            'id_jadwal_awal' => $team->id_jadwal,
+            'id_jadwal_resched' => $team->id_jadwal_resched,
+            'alasan' => $team->alasan_resched,
             'bukti' => $team->link_bukti_resched,
             'approval' => $team->resched_approval,
             'created_at' => now(),
@@ -166,7 +168,7 @@ class JadwalController extends Controller
             $team->save();
             return redirect()->back()->with('success', 'Reschedule request approved.');
         }
-    
+
         return redirect()->back()->with('error', 'Reschedule request not found.');
     }
 
@@ -188,8 +190,4 @@ class JadwalController extends Controller
         $reschedules = Reschedule::with(['jadwalAwal', 'jadwalResched'])->get();
         return response()->json($reschedules);
     }
-
-    
-
-
 }

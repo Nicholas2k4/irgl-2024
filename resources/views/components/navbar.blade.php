@@ -75,12 +75,19 @@ body{
             <li class="flex h-[15%] items-center">
                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()" href="#faq">FAQ</a>
             </li>
-            <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
-            </li>
-            <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('register') }}">Register</a>
-            </li>
+            @if(!Session::has('team_id'))
+                <li class="flex h-[15%] items-center">
+                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
+                </li>
+                <li class="flex h-[15%] items-center">
+                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('register') }}">Register</a>
+                </li>
+            @endif
+            @if(Session::has('team_id'))
+                <li class="flex h-[15%] items-center">
+                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('jadwal.index') }}">Schedule</a>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

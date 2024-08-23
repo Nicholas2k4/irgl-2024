@@ -18,13 +18,15 @@ class AdminController extends Controller
         $data['email'] = session('email');
         $data['nrp'] = session('nrp');
         $data['division_name'] = session('division_name');
+        $data['title'] = 'Homepage';
         return view('admin.main', $data);
     }
 
     public function rekapTeam(){
         $teams = Team::with('user')->get();
         $users = User::with('team')->get();
-        return view('admin.rekapTeam',compact('teams','users'));
+        $title = 'Teams';
+        return view('admin.rekapTeam',compact('teams','users', 'title'));
     }
     public function validasiBuktiTransfer($id){
         $team = Team::find($id);

@@ -89,6 +89,168 @@ class TeamSeeder extends Seeder
                 'alasan_resched' => null,
                 'link_bukti_resched' => null
             ],
+            [
+                'nama' => 'Team I',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team J',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team K',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team L',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team M',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team N',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team O',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team P',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team Q',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team R',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team S',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team T',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team U',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team V',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team W',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team X',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team Y',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
+            [
+                'nama' => 'Team Z',
+                'password' => Hash::make('password'), // Plain text password
+                'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                'is_validated' => true,
+                'id_jadwal' => 6,
+                'alasan_resched' => null,
+                'link_bukti_resched' => null
+            ],
         ];
 
         foreach ($teams as $team) {

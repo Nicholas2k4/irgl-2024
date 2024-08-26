@@ -150,22 +150,22 @@ class JadwalController extends Controller
     {
         $team = Team::findOrFail($id);
 
-        \DB::table('reschedule')->insert([
-            'id_kelompok' => $team->id,
-            'id_jadwal_awal' => $team->id_jadwal,
-            'id_jadwal_resched' => $team->id_jadwal_resched,
-            'alasan' => $team->alasan_resched,
-            'bukti' => $team->link_bukti_resched,
-            'approval' => $team->resched_approval,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
         if ($team->jadwalResched) {
             $team->resched_approval = 1;
             $team->id_jadwal = $team->id_jadwal_resched;
-            $team->id_jadwal_resched = null;
             $team->save();
+
+            \DB::table('reschedule')->insert([
+                'id_kelompok' => $team->id,
+                'id_jadwal_awal' => $team->id_jadwal,
+                'id_jadwal_resched' => $team->id_jadwal_resched,
+                'alasan' => $team->alasan_resched,
+                'bukti' => $team->link_bukti_resched,
+                'approval' => $team->resched_approval,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
             return redirect()->back()->with('success', 'Reschedule request approved.');
         }
 
@@ -178,8 +178,19 @@ class JadwalController extends Controller
 
         if ($team->jadwalResched) {
             $team->resched_approval = 0;
-            $team->id_jadwal_resched = null;
             $team->save();
+
+            \DB::table('reschedule')->insert([
+                'id_kelompok' => $team->id,
+                'id_jadwal_awal' => $team->id_jadwal,
+                'id_jadwal_resched' => $team->id_jadwal_resched,
+                'alasan' => $team->alasan_resched,
+                'bukti' => $team->link_bukti_resched,
+                'approval' => $team->resched_approval,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
             return redirect()->back()->with('success', 'Reschedule request rejected.');
         }
 

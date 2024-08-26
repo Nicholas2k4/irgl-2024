@@ -48,7 +48,7 @@
                                     <button onclick="viewGroup({{ $data->id }})"
                                         class="inline-block rounded bg-green-300 px-4 py-2 text-xs font-medium uppercase leading-normal text-gray-800 shadow-md transition duration-150 ease-in-out hover:bg-green-400 focus:bg-green-400 active:bg-green-500">View
                                         Teams</button>
-                                    <a href="{{ route('admin.jadwal.view', $data->id) }}"
+                                    {{-- <a href="{{ route('admin.jadwal.view', $data->id) }}"
                                         class="inline-block rounded bg-yellow-300 px-4 py-2 text-xs font-medium uppercase leading-normal text-gray-800 shadow-md transition duration-150 ease-in-out hover:bg-yellow-400 focus:bg-yellow-400 active:bg-yellow-500">Edit</a>
                                     <form action="{{ route('admin.jadwal.delete', $data->id) }}" method="POST"
                                         class="inline-block">
@@ -57,7 +57,7 @@
                                             onclick="return confirm('Hapus data ini? Id: {{ $data->id }}')">
                                             <button type="button"
                                                 class="inline-block rounded bg-red-500 px-4 py-2 text-xs font-bold uppercase leading-normal text-white shadow-md transition hover:bg-red-600 focus:outline-none active:bg-red-700">&times;</button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

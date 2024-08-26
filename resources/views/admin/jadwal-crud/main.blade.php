@@ -81,7 +81,7 @@
 
 
         <div id="teamModal" class="fixed inset-0 items-center flex justify-center z-50 hidden">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-lg">
+            <div class="team-modal bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-lg">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold dark:text-white">List Teams:</h2>
                     <button onclick="closeModal()"
@@ -198,7 +198,7 @@
             </div>
 
             <div id="logModal" class="fixed inset-0 items-center flex justify-center z-50 hidden">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-4xl">
+                <div class="log-modal bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-4xl">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-bold dark:text-white">History Log:</h2>
                         <button onclick="closeModal()"
@@ -236,10 +236,10 @@
                         </thead>
                         <tbody class="text-gray-700 dark:text-gray-200 divide-y divide-gray-800 dark:divide-gray-600">
                             ${data.map(member => `
-                                            <tr>
-                                                <td class="py-2 px-4 text-center">${member.nama}</td>
-                                            </tr>
-                                        `).join('')}
+                                                    <tr>
+                                                        <td class="py-2 px-4 text-center">${member.nama}</td>
+                                                    </tr>
+                                                `).join('')}
                         </tbody>
                     </table>
                 `;
@@ -295,26 +295,26 @@
                             </thead>
                             <tbody class="text-gray-700 dark:text-gray-200 divide-y divide-gray-800 dark:divide-gray-600">
                                 ${data.map(item => `
-                                                <tr>
-                                                    <td class="py-2 px-4 text-center">${teamNames[item.id_kelompok]}</td>
-                                                    <td class="py-2 px-4 text-center w-1/4">${moment(item.jadwal_awal.tanggal).format('ddd, DD MMMM YYYY')}<br>
-                                                    ${moment(item.jadwal_awal.start_time, 'HH:mm:ss').format('HH:mm')} s/d 
-                                                    ${moment(item.jadwal_awal.end_time, 'HH:mm:ss').format('HH:mm')} </td>
-                                                    <td class="py-2 px-4 text-center w-1/4">${moment(item.jadwal_resched.tanggal).format('ddd, DD MMMM YYYY')}<br>
-                                                    ${moment(item.jadwal_resched.start_time, 'HH:mm:ss').format('HH:mm')} s/d 
-                                                    ${moment(item.jadwal_resched.end_time, 'HH:mm:ss').format('HH:mm')} </td>
-                                                    <td class="py-2 px-4 text-center">${item.alasan}</td>
-                                                    <td class="py-2 px-4 text-center">
-                                                        <a href="${item.bukti ? `/storage/uploads/${item.bukti.split('/').pop()}` : '#'}" class="text-blue-500 hover:underline" target="_blank">View Document</a>
-                                                    </td>
-                                                    <td class="py-2 px-4 text-center">
-                                                        ${item.approval === 0 ?
-                                        `<p class="bg-red-200 text-red-700 font-bold py-2 px-4 rounded">Rejected</p>` :
-                                        `<p class="bg-green-200 text-green-700 font-bold py-2 px-4 rounded">Approved</p>`
-                                    }
-                                                    </td>
-                                                </tr>
-                                            `).join('')}
+                                                        <tr>
+                                                            <td class="py-2 px-4 text-center">${teamNames[item.id_kelompok]}</td>
+                                                            <td class="py-2 px-4 text-center w-1/4">${moment(item.jadwal_awal.tanggal).format('ddd, DD MMMM YYYY')}<br>
+                                                            ${moment(item.jadwal_awal.start_time, 'HH:mm:ss').format('HH:mm')} s/d 
+                                                            ${moment(item.jadwal_awal.end_time, 'HH:mm:ss').format('HH:mm')} </td>
+                                                            <td class="py-2 px-4 text-center w-1/4">${moment(item.jadwal_resched.tanggal).format('ddd, DD MMMM YYYY')}<br>
+                                                            ${moment(item.jadwal_resched.start_time, 'HH:mm:ss').format('HH:mm')} s/d 
+                                                            ${moment(item.jadwal_resched.end_time, 'HH:mm:ss').format('HH:mm')} </td>
+                                                            <td class="py-2 px-4 text-center">${item.alasan}</td>
+                                                            <td class="py-2 px-4 text-center">
+                                                                <a href="${item.bukti ? `/storage/uploads/${item.bukti.split('/').pop()}` : '#'}" class="text-blue-500 hover:underline" target="_blank">View Document</a>
+                                                            </td>
+                                                            <td class="py-2 px-4 text-center">
+                                                                ${item.approval === 0 ?
+                                                `<p class="bg-red-200 text-red-700 font-bold py-2 px-4 rounded">Rejected</p>` :
+                                                `<p class="bg-green-200 text-green-700 font-bold py-2 px-4 rounded">Approved</p>`
+                                            }
+                                                            </td>
+                                                        </tr>
+                                                    `).join('')}
                             </tbody>
                         </table>
                     `;
@@ -389,7 +389,16 @@
             }
         }
 
-        $(document).on('click', () => closeModal());
+        $(document).on('click', function(e) {
+            closeModal();
+        });
+
+        $('.team-modal').on('click', function(e) {
+            e.stopPropagation();
+        });
+        $('.log-modal').on('click', function(e) {
+            e.stopPropagation();
+        });
 
         $(document).on("click", "#buttonApproveResched", function() {
             var teamName = $(this).data('team');

@@ -414,9 +414,32 @@
 
         
     </style>
+
+    {{-- Swal --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+            });
+        </script>
+    @endif
+    
+
    @include('components.faq')
     <div class="video-container" id="videoContainer">
         <video id="entranceVideo">
@@ -431,6 +454,7 @@
             <li><a id="login-link" href="#">Login</a></li>
             @if (Session::has('team_id'))
                 <li><a id="schedule-link" href="{{ route('jadwal.index') }}">Schedule</a></li>
+                <li><a id="schedule-link" href="{{ route('logout') }}" class="text-amber-300 font-extrabold">Log Out</a></li>
             @endif
         </ul>
     </nav>

@@ -87,6 +87,9 @@
                 <li class="flex h-[15%] items-center">
                     <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('jadwal.index') }}">Schedule</a>
                 </li>
+                <li class="flex h-[15%] items-center">
+                    <a class="text-2xl w-full text-amber-300 font-extrabold cursor-pointer text-center pirgl" href="{{ route('logout') }}">Log Out</a>
+                </li>
             @endif
         </ul>
     </div>

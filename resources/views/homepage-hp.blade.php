@@ -15,15 +15,36 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-
     <style>
         html {
             scroll-behavior: smooth;
         }
     </style>
+
+    {{-- Swal --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body class="bg-[url('/assets/bg-mobile.png')] bg-cover bg-fixed">
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+            });
+        </script>
+    @endif
+
     <div class="absoulte inset-0 bg-black bg-opacity-40 h-full">
         @include('components.navbar')
         @include('components.about')

@@ -111,7 +111,7 @@ class AuthController extends BaseController
         try {
             return $res->json()['hasil'][0]['nama'];
         } catch (\Exception $e) {
-            Log::warning('NRP {nrp} not found in john API.', ['nrp' => $nrp]);
+            Log::channel('daily')->warning('NRP {nrp} not found in john API.', ['nrp' => $nrp]);
             return "";
         }
         // tambahhkan pengecekan error

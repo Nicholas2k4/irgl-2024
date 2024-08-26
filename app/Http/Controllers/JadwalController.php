@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\Reschedule;
 use App\Models\Team;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 
 class JadwalController extends Controller
 {
@@ -132,6 +133,8 @@ class JadwalController extends Controller
         $jadwal->end_time = $r->end_time;
         $jadwal->save();
 
+        Log::channel('daily')->info(session('name') . ' has created new schedule on ' . $r->tanggal . ' from ' . $r->start_time . ' to ' . $r->end_time);
+
         return redirect()->route('admin.jadwal.main')->with('success', 'Jadwal saved successfully.');
     }
 
@@ -151,14 +154,18 @@ class JadwalController extends Controller
         $team = Team::findOrFail($id);
 
         if ($team->jadwalResched) {
-            $oldSched = $team->id_jadwal;
+            $oldSchedId = $team->id_jadwal;
+
+            $oldSched = Jadwal::findOrFail($oldSchedId);
+            $newSched = Jadwal::findOrFail($team->id_jadwal_resched);
+
             $team->resched_approval = 1;
             $team->id_jadwal = $team->id_jadwal_resched;
             $team->save();
 
             \DB::table('reschedule')->insert([
                 'id_kelompok' => $team->id,
-                'id_jadwal_awal' => $oldSched,
+                'id_jadwal_awal' => $oldSchedId,
                 'id_jadwal_resched' => $team->id_jadwal_resched,
                 'alasan' => $team->alasan_resched,
                 'bukti' => $team->link_bukti_resched,
@@ -166,6 +173,8 @@ class JadwalController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            Log::channel('daily')->info(session('name') . ' has approved reschedule request for team "' . $team->nama . '" from ' . $oldSched->tanggal . ', ' . $oldSched->start_time . ' - ' . $oldSched->end_time . ' to ' . $newSched->tanggal . ', ' . $newSched->start_time . ' - ' . $newSched->end_time);
 
             return redirect()->back()->with('success', 'Reschedule request approved.');
         }
@@ -181,6 +190,9 @@ class JadwalController extends Controller
             $team->resched_approval = 0;
             $team->save();
 
+            $oldSched = Jadwal::findOrFail($team->id_jadwal);
+            $newSched = Jadwal::findOrFail($team->id_jadwal_resched);
+
             \DB::table('reschedule')->insert([
                 'id_kelompok' => $team->id,
                 'id_jadwal_awal' => $team->id_jadwal,
@@ -191,6 +203,8 @@ class JadwalController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            Log::channel('daily')->info(session('name') . ' has rejected reschedule request for team "' . $team->nama . '" from ' . $oldSched->tanggal . ', ' . $oldSched->start_time . ' - ' . $oldSched->end_time . ' to ' . $newSched->tanggal . ', ' . $newSched->start_time . ' - ' . $newSched->end_time);
 
             return redirect()->back()->with('success', 'Reschedule request rejected.');
         }

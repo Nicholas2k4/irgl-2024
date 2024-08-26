@@ -47,13 +47,13 @@
                     @endphp
                         @if (auth()->user()->resched_approval != 2)
                         @if (auth()->user()->resched_approval == 1 && auth()->user()->id_jadwal_resched)
-                            <div class="bg-green-200 p-2 mb-4 text-green-800 flex gap-2">
+                            <div class="bg-green-200 p-2 px-4 mb-4 text-green-800 flex gap-2 rounded-lg">
                             <p>Jadwal berhasil di-reschedule ke tanggal</p>
                             <p class="font-bold">{{ \Carbon\Carbon::parse($reschedJadwal->tanggal)->isoFormat('ddd, DD MMMM YYYY') }}</p>
                                     <p class="font-bold">{{ $reschedJadwal->start_time }} s/d {{ $reschedJadwal->end_time }}</p>
                             </div>
                         @elseif (auth()->user()->resched_approval == 0)
-                            <div class="bg-red-200 p-2 mb-4 text-red-800">
+                            <div class="bg-red-200 p-2 px-4 mb-4 text-red-800 rounded-lg">
                             <p>Jadwal reschedule tidak diterima.</p>
                             </div>
                         @endif
@@ -105,7 +105,7 @@
                         <p>{{ \Carbon\Carbon::parse(auth()->user()->jadwal->tanggal)->isoFormat('ddd, DD MMMM YYYY') }}
                             - {{ auth()->user()->jadwal->start_time }} s/d {{ auth()->user()->jadwal->end_time }}</p>
                             @if ($reschedJadwal)
-                                <div class="bg-yellow-200 p-2 mb-4 text-yellow-800 flex gap-2 mt-5">
+                                <div class="bg-yellow-200 p-2 px-4 mb-4 text-yellow-800 flex gap-2 mt-5 rounded-lg">
                                     <p>Waiting approval for reschedule date of</p>
                                     <p class="font-bold">{{ \Carbon\Carbon::parse($reschedJadwal->tanggal)->isoFormat('ddd, DD MMMM YYYY') }}</p>
                                     <p class="font-bold">{{ $reschedJadwal->start_time }} s/d {{ $reschedJadwal->end_time }}</p>

@@ -34,8 +34,8 @@
 </style>
 
 <header class="flex justify-center mb-[11vh]">
-    <nav class="l w-[100%] h-[11vh] fixed flex flex-row z-20 mx-auto justify-between">
-        <div class="w-full h-screen p-2" id="menuhtop">
+    <nav id="menuhtop" class="l translate-y-0 w-screen fixed flex flex-row z-20 mx-auto justify-between">
+        <div class="w-full h-screen p-2">
 
             <div class="w-full flex justify-center items-center px-4 py-4">
                 <button onclick="displayMenuh()" class="neon-purple-button">
@@ -53,14 +53,7 @@
                 </div>
 
             </div>
-
-
-
-        </div>
-    </nav>
-</header>
-
-<div class="w-screen h-screen hidden z-30 fixed" id="menune">
+            <div class="w-screen h-screen hidden z-30 fixed" id="menune">
     <div class="flex flex-col justify-center items-center w-full h-[60%]">
         <ul class="items-center w-full h-full ">
             <li class="flex h-[15%] items-center">
@@ -93,60 +86,47 @@
             @endif
         </ul>
     </div>
+        </div>
+    </nav>
+</header>
+
 </div>
 
 
 <script>
     let berger = document.getElementById('menune');
     let menutop = document.getElementById('menuhtop');
+    let lastScrollTop = 0;
+    let timeout;
 
     function displayMenuh() {
         if (berger.classList.contains('hidden')) {
             berger.classList.remove('hidden');
-
             menutop.classList.add('backdrop-blur-[6px]');
         } else {
-            berger.classList.add('hidden')
+            berger.classList.add('hidden');
             menutop.classList.remove('backdrop-blur-[6px]');
         }
     }
 
-    let lastScrollTop = 0;
-
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop && berger.classList.contains('hidden')) {
-            menutop.style.transform = 'translateY(-100%)';
-        } else {
-            menutop.style.transform = 'translateY(0)';
-        }
-        lastScrollTop = scrollTop;
-    });
-
-
-
-    // function goto(path){
-    //     path = path.toLowerCase();
-
-    //     if(path.includes('home')){
-
-    //     }
-    //     else if(path.includes('about')){
-    //         const about = document.getElementById('about');
-    //         const navbarHeight = document.getElementById('menuhtop').offsetHeight;
-
-    //         const scrollPosition = about.offsetTop;
-    //         window.scrollTo({
-    //         top: scrollPosition,
-    //         behavior: 'smooth'
-    //     });
-
-    //     }
-    //     else if(path.includes('timeline')){
-
-    //     }
-    //     else if(path.includes('faq')){
-
-    //     }
+    // function resetNavbar() {
+    //     menutop.style.transform = 'translateY(0)';
     // }
+
+    // function handleScroll() {
+    //     clearTimeout(timeout);
+    //     timeout = setTimeout(() => {
+    //         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //         if (scrollTop > lastScrollTop && berger.classList.contains('hidden')) {
+    //             menutop.style.transform = 'translateY(-100%)';
+    //         } else {
+    //             menutop.style.transform = 'translateY(0)';
+    //         }
+    //         lastScrollTop = scrollTop;
+    //     }, 100); // debounce by 100ms
+    // }
+
+    // window.addEventListener('load', resetNavbar);
+    // window.addEventListener('scroll', handleScroll);
 </script>
+

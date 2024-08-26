@@ -45,7 +45,7 @@
         </script>
     @endif
 
-    <div class="absoulte inset-0 bg-black bg-opacity-40 h-full">
+    <div class="absoulte inset-0 bg-black bg-opacity-40">
         @include('components.navbar')
         @include('components.about')
         @include('components.timeline')

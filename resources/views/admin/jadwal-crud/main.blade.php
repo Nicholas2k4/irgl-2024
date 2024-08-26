@@ -137,11 +137,11 @@
                                     </td>
                                     <td class="py-2 px-4 text-center">
                                         @if ($data->resched_approval == 0)
-                                            <p class="bg-white text-red-700 font-bold py-2 px-4 rounded border-red-700">
+                                            <p class="bg-red-200 text-red-700 font-bold py-2 px-4 rounded">
                                                 Rejected</p>
                                         @elseif ($data->resched_approval == 1)
                                             <p
-                                                class="bg-white text-green-700 font-bold py-2 px-4 rounded border border-green-700">
+                                                class="bg-green-200 text-green-700 font-bold py-2 px-4 rounded">
                                                 Approved</p>
                                         @else
                                             <form action="{{ route('admin.jadwal.approve', $data->id) }}" method="POST"
@@ -273,12 +273,12 @@
                                                 ${moment(item.jadwal_resched.end_time, 'HH:mm:ss').format('HH:mm')} </td>
                                                 <td class="py-2 px-4 text-center">${item.alasan}</td>
                                                 <td class="py-2 px-4 text-center">
-                                                    <a href="${item.bukti ? `/storage/${item.bukti}` : '#'}" class="text-blue-500 hover:underline" target="_blank">View Document</a>
+                                                    <a href="${item.bukti ? `/storage/uploads/${item.bukti.split('/').pop()}` : '#'}" class="text-blue-500 hover:underline" target="_blank">View Document</a>
                                                 </td>
                                                 <td class="py-2 px-4 text-center">
                                                     ${item.approval === 0 ?
-                                    `<p class="bg-white text-red-700 font-bold py-2 px-4 rounded">Rejected</p>` :
-                                    `<p class="bg-white text-green-700 font-bold py-2 px-4 rounded border">Approved</p>`
+                                    `<p class="bg-red-200 text-red-700 font-bold py-2 px-4 rounded">Rejected</p>` :
+                                    `<p class="bg-green-200 text-green-700 font-bold py-2 px-4 rounded">Approved</p>`
                                 }
                                                 </td>
                                             </tr>
@@ -356,5 +356,7 @@
                 }
             }
         }
+
+        $(document).on('click', ()=>closeModal());
     </script>
 @endsection

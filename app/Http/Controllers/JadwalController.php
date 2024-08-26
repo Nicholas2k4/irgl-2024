@@ -151,13 +151,14 @@ class JadwalController extends Controller
         $team = Team::findOrFail($id);
 
         if ($team->jadwalResched) {
+            $oldSched = $team->id_jadwal;
             $team->resched_approval = 1;
             $team->id_jadwal = $team->id_jadwal_resched;
             $team->save();
 
             \DB::table('reschedule')->insert([
                 'id_kelompok' => $team->id,
-                'id_jadwal_awal' => $team->id_jadwal,
+                'id_jadwal_awal' => $oldSched,
                 'id_jadwal_resched' => $team->id_jadwal_resched,
                 'alasan' => $team->alasan_resched,
                 'bukti' => $team->link_bukti_resched,

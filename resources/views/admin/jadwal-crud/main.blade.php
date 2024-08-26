@@ -68,7 +68,7 @@
 
 
         <div id="teamModal" class="fixed inset-0 items-center flex justify-center z-50 hidden">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-lg h-1/2 overflow-y-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-full max-w-lg">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold dark:text-white">List Teams:</h2>
                     <button onclick="closeModal()"
@@ -76,7 +76,7 @@
                         &times;
                     </button>
                 </div>
-                <div id="teamContent" class="text-gray-700 dark:text-gray-200">
+                <div id="teamContent" class="text-gray-700 dark:text-gray-200 rounded-lg overflow-auto max-h-[80vh]">
                     <!-- Isi Modal Team -->
                 </div>
             </div>

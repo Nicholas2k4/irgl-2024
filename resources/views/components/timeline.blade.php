@@ -114,7 +114,7 @@
     }
 </style>
 
-<div id="timeline" class="h-full my-8 p-8 pt-10 shadow-lg fade-slide-in">
+<div id="timeline" class="h-full mt-8 p-8 pt-10 shadow-lg fade-slide-in">
     <div class="glitch items-center justify-items-center drop-shadow-2xl">
         <h2 class="text-5xl mb-4 font-bold text-gray-100 p-4 text-center fade-slide-in tracking-wider">TIMELINE</h2>
 

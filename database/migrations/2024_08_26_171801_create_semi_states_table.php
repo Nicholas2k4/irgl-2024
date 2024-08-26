@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('semi_states', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('current_news_slug')->default('news-0');
+            $table->string('current_news_slug');
             $table->integer('email_filter_price')->default(0);
             $table->integer('encryption_machine_price')->default(0);
             $table->integer('traffic_controller_price')->default(0);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('semi_news', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('content');
             $table->integer('email_filter_price');
             $table->integer('encryption_machine_price');

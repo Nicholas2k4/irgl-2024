@@ -42,10 +42,16 @@ class AdminController extends Controller
     }
 
     public function scoringSystem(){
-        $scores = ElimStatistics::all();
-        // dd($scores);
+        $scores = ElimStatistics::with('team')->get();
+        $data = [];
+        foreach($scores as $score){
+            $temp = [];
+            $temp['team_name'] = $score->team->nama;
+            $temp['score'] = $score->total_score;
+            $data[] = $temp;
+        }
         return view('admin.scoringSystem',[
-            'scores' => json_encode($scores),
+            'scores' => json_encode($data),
             'title' => 'Scoring System'
         ]);
     }

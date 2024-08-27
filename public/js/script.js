@@ -1,13 +1,9 @@
 import * as Three from "three";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-let videoReady = false;
 let modelReady = false;
 
 const video = document.getElementById("entranceVideo");
-video.addEventListener('canplaythrough', () => {
-    videoReady = true;
-});
 class CameraController {
     constructor(camera, target) {
         this._camera = camera;
@@ -142,27 +138,21 @@ scene.fog = new Three.Fog(0x061327, 0, 55);
 
 
 const checkReadyState = () => {
-    if (videoReady && modelReady) {
         setTimeout(() => {
             document.getElementById('loading-screen').style.display = 'none';
             document.getElementById('start-screen').style.display = 'flex';
         }, 1000);
-    }
 };
 
 const loadingManager = new Three.LoadingManager();
 loadingManager.onLoad = function () {
-    console.log(videoReady);
-    console.log(modelReady);
-    modelReady = true;
     checkReadyState();
 };
-
 
 let mod;
 const gltfLoader = new GLTFLoader(loadingManager);
 let mixer;
-gltfLoader.load("./coba/untitled.gltf", (gltf) => {
+gltfLoader.load("./cobaa/untitled.gltf", (gltf) => {
     const model = gltf.scene;
     scene.add(model);
     mod = model;

@@ -33,7 +33,7 @@
     }
 </style>
 
-<header class="flex justify-center mb-[11vh]">
+<header class="flex justify-center mb-[11vh] top-0">
     <nav id="menuhtop" class="l translate-y-0 w-screen fixed flex flex-row z-20 mx-auto justify-between">
         <div class="w-full h-screen p-2">
 

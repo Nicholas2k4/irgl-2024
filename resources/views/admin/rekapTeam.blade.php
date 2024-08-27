@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('body')
-    <div class="justify-center items-center flex max-w-[100vw] min-h-screen mt-16 mx-auto">
+    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-16 mx-auto">
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
             <div class="w-full h-[15%] flex items-center justify-center mt-6">
@@ -28,67 +28,71 @@
                     </thead>
 
                     <tbody id="bodyTable" class="text-center">
-                        @foreach ($teams as $team => $data)
-                            @if ($team % 2 == 0)
-                                <tr
-                                    class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">
-                                @else
-                                <tr class="bg-white text-center">
-                            @endif
-                            <td>{{ ++$team }}</td>
-                            <td>{{ $data->nama }}</td>
+                        @if ($teams->isEmpty())
+                            {{$team = 0}}
+                        @else
+                            @foreach ($teams as $team => $data)
+                                @if ($team % 2 == 0)
+                                    <tr
+                                        class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">
+                                    @else
+                                    <tr class="bg-white text-center">
+                                @endif
+                                <td>{{ ++$team }}</td>
+                                <td>{{ $data->nama }}</td>
 
-                            <td id="lineKetua">
-                                @foreach ($users as $user => $userData)
-                                    @if ($userData->is_ketua && $userData->id_tim == $data->id)
-                                        {{ $userData->id_line }}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td id="telpKetua">
-                                @foreach ($users as $user => $userData)
-                                    @if ($userData->is_ketua && $userData->id_tim == $data->id)
-                                        {{ $userData->no_telp }}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td id="anggotas">
-                                <button id="anggotaView{{ $team }}" onclick="togglePopup('{{ $data->id }}')"
-                                    class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
-                            </td>
-                            <td>
-                                <button
-                                    class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">
-                                    <a href="{{ '/storage' . asset(str_replace('public/', '', $data->link_bukti_tf)) }}"
-                                        target="_blank">View</a>
-                                </button>
-                            </td>
-
-                            @if ($data->is_validated == false)
-                                <td>
-                                    <form id="formValidasiBayar"
-                                        action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}"
-                                        method="POST" class="hidden">
-                                        @csrf
-                                    </form>
-
-                                    <button id="validasiBuktiTransfer"
-                                        class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center"
-                                        data-team="{{ $data->nama }}">Validasi</button>
+                                <td id="lineKetua">
+                                    @foreach ($users as $user => $userData)
+                                        @if ($userData->is_ketua && $userData->id_tim == $data->id)
+                                            {{ $userData->id_line }}
+                                        @endif
+                                    @endforeach
                                 </td>
-                            @else
-                                <td>Validated</td>
-                            @endif
+                                <td id="telpKetua">
+                                    @foreach ($users as $user => $userData)
+                                        @if ($userData->is_ketua && $userData->id_tim == $data->id)
+                                            {{ $userData->no_telp }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td id="anggotas">
+                                    <button id="anggotaView{{ $team }}" onclick="togglePopup('{{ $data->id }}')"
+                                        class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>
+                                </td>
+                                <td>
+                                    <button
+                                        class="w-12 h-8 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">
+                                        <a href="{{ '/storage' . asset(str_replace('public/', '', $data->link_bukti_tf)) }}"
+                                            target="_blank">View</a>
+                                    </button>
+                                </td>
 
-                            @if ($data->updated_at != null && $data->created_at != null)
-                                <td>{{ $data->updated_at }}</td>
-                                <td>{{ $data->created_at }}</td>
-                            @else
-                                <td>null</td>
-                                <td>null</td>
-                            @endif
-                            </tr>
-                        @endforeach
+                                @if ($data->is_validated == false)
+                                    <td>
+                                        <form id="formValidasiBayar"
+                                            action="{{ route('admin.validasiBuktiTransfer', ['id' => $data->id]) }}"
+                                            method="POST" class="hidden">
+                                            @csrf
+                                        </form>
+
+                                        <button id="validasiBuktiTransfer"
+                                            class="w-16 h-8 my-2 rounded-[4px] bg-green-600 hover:bg-green-800 text-gray-200 text-center"
+                                            data-team="{{ $data->nama }}">Validasi</button>
+                                    </td>
+                                @else
+                                    <td>Validated</td>
+                                @endif
+
+                                @if ($data->updated_at != null && $data->created_at != null)
+                                    <td>{{ $data->updated_at }}</td>
+                                    <td>{{ $data->created_at }}</td>
+                                @else
+                                    <td>null</td>
+                                    <td>null</td>
+                                @endif
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

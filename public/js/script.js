@@ -152,7 +152,7 @@ loadingManager.onLoad = function () {
 let mod;
 const gltfLoader = new GLTFLoader(loadingManager);
 let mixer;
-gltfLoader.load("./cobaa/untitled.gltf", (gltf) => {
+gltfLoader.load("./coba/untitled.gltf", (gltf) => {
     const model = gltf.scene;
     scene.add(model);
     mod = model;

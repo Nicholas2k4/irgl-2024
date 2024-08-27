@@ -388,7 +388,7 @@ class TeamController extends BaseController
         }
 
         $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])->pluck('id_question')->toArray();
-        $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
+        $questionsAvailforTeam = ElimQuestions::whereNotIn  ('id', $teamQuestionHistory)->pluck('id')->toArray();
 
         if (empty($questionsAvailforTeam)) {
             return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);

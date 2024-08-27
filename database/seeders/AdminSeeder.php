@@ -21,6 +21,7 @@ class AdminSeeder extends Seeder
         DB::table('admins')->truncate();
         Schema::enableForeignKeyConstraints();
         $admins =[ 
+            // IT
             [
                 'id'=> Str::uuid(),
                 'name' => 'Kevin Tanaka',
@@ -62,7 +63,77 @@ class AdminSeeder extends Seeder
                 'name' => 'Christopher Joshua',
                 'email' => 'c14230260@john.petra.ac.id',
                 'division_name' => 'IT'
-            ]
+            ],
+
+            // BPH
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Maximillanus Grego S',
+                'email' => 'c14220014@john.petra.ac.id',
+                'division_name' => 'BPH'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Alexander Yofilio S',
+                'email' => 'c14220071@john.petra.ac.id',
+                'division_name' => 'BPH'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Cathlyn Angeline',
+                'email' => 'c14220133@john.petra.ac.id',
+                'division_name' => 'BPH'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Laura Wijaya Dinata',
+                'email' => 'c14220192@john.petra.ac.id',
+                'division_name' => 'BPH'
+            ],
+
+            // Pubsek
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Joyce Angelica',
+                'email' => 'c14220163@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Fernando Hose',
+                'email' => 'c14220151@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Sharon Valerina Tannus',
+                'email' => 'c14230048@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Axel Valent',
+                'email' => 'c14230145@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Natasya Yobel',
+                'email' => 'c14230151@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Aloysia Jennifer Harijadi',
+                'email' => 'c14230191@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
+            [
+                'id'=> Str::uuid(),
+                'name' => 'Matthew Benedict',
+                'email' => 'c14230234@john.petra.ac.id',
+                'division_name' => 'pubsek'
+            ],
         ]; 
             foreach($admins as $admin){
                 Admin::create($admin);

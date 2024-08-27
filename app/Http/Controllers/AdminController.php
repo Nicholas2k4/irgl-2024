@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreadminRequest;
 use App\Http\Requests\UpdateadminRequest;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -35,6 +36,7 @@ class AdminController extends Controller
         if($team){
             $team->is_validated = true;
             $team->save();
+            Log::channel('daily')->info(session('name') . ' has validated payment of team "' . $team->nama . '"');
             return redirect()->back()->with(['success' => 'Bukti transfer kelompok berhasil divalidasi']);
         }
         

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>IRGL 2024 | Homepage</title>
     <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
@@ -125,6 +127,7 @@
             }
         }
 
+
         .neon-title {
             font-family: "Share Tech Mono", monospace;
             position: relative;
@@ -171,6 +174,7 @@
                 }
             }
         }
+        
 
         body,
         html {
@@ -266,7 +270,7 @@
             justify-content: center;
             color: #fff;
             font-size: 2em;
-            z-index: 9999;
+            z-index: 15;
             flex-direction: column;
         }
 
@@ -274,6 +278,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         #loading-screen {
@@ -374,10 +379,68 @@
             left: 0;
             top: 0;
         }
+
+        .text {
+            position: relative;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .text:before,
+        .text:after {
+            color: white;
+            content: attr(data-text);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: none;
+            overflow: hidden;
+            top: 0;
+        }
+
+        .text:before {
+            left: 2px;
+            text-shadow: -2px 0 blue;
+            animation: glitch-1 5s linear infinite reverse;
+        }
+
+        .text:after {
+            left: -2px;
+            text-shadow: -2px 0 blue;
+            animation: glitch-2 5s linear infinite reverse;
+        }
+
+        
     </style>
+
+    {{-- Swal --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+            });
+        </script>
+    @endif
+    
+
+   @include('components.faq')
     <div class="video-container" id="videoContainer">
         <video id="entranceVideo">
             <source src="/assets/entrance.mp4" type="video/mp4">
@@ -391,6 +454,7 @@
             <li><a id="login-link" href="#">Login</a></li>
             @if (Session::has('team_id'))
                 <li><a id="schedule-link" href="{{ route('jadwal.index') }}">Schedule</a></li>
+                <li><a id="schedule-link" href="{{ route('logout') }}" class="text-amber-300 font-extrabold">Log Out</a></li>
             @endif
         </ul>
     </nav>
@@ -408,6 +472,8 @@
         <i id="muted" class="fa-solid fa-volume-xmark icon hidden"></i>
     </div>
     <script src="js/script.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/js/tw-elements.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 
     <script>
         if (window.innerWidth < 768) {
@@ -419,6 +485,7 @@
                 window.location.href = "{{ route('homepage.hp') }}"
             }
         });
+       
     </script>
 </body>
 

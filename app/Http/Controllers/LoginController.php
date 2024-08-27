@@ -29,7 +29,7 @@ class LoginController extends Controller
             Auth::loginUsingId($team->id);
 
             session()->flash('message', 'Login successful!');
-            return redirect()->intended('/'); // Adjust the route as needed
+            return redirect()->intended('/')->with('success', 'Login success!'); // Adjust the route as needed
         } else {
             return redirect()->back()->withErrors(['message' => 'The provided credentials do not match our records.']);
         }

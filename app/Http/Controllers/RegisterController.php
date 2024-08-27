@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\ElimStatistics;
+use App\Models\SemiStatistic;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -283,6 +284,11 @@ class RegisterController extends Controller
 
         // Add new team stats
         ElimStatistics::create([
+            'id_team' => $team_id
+        ]);
+
+        // Add new team stats
+        SemiStatistic::create([
             'id_team' => $team_id
         ]);
 

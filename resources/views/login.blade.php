@@ -53,7 +53,7 @@
                 </div>
                 <br>
                 <button type="submit"
-                    class="bg-[#B026FF] text-black text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Login</button>
+                    class="bg-[#B026FF] text-white text-base cursor-pointer transition-colors duration-300 ease-in-out px-5 py-2.5 rounded-[5px] border-none hover:bg-[#0f0]">Login</button>
             </form>
         </div>
     </div>

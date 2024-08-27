@@ -43,7 +43,7 @@
 
 </head>
 
-<body class="m-0 p-0 w-screen overflow-x-hidden h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
+<body class="m-0 p-0 w-screen overflow-x-hidden min-h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
     <header class="sm:shadow-xl sm:shadow-[#0000002D] bg-gradient-to-r from-[#6b2b52] to-[#311b55]">
         <nav class="w-[96%] h-[9vh] flex mx-auto justify-between items-center">
 

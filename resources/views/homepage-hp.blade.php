@@ -25,7 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
-<body class="bg-[url('/assets/bg-mobile.png')] bg-cover bg-fixed">
+<body class="bg-[url('/assets/bg-mobile.png')] bg-cover bg-fixed min-h-screen">
     @if (session('success'))
         <script>
             Swal.fire({

@@ -1,7 +1,7 @@
 @extends('layout.admin')
 
 @section('body')
-    <div class="justify-center items-center flex max-w-[100vw] min-h-screen mt-16 mx-auto">
+    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-16 mx-auto">
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
             <div class="w-full h-[15%] flex items-center justify-center mt-6">
@@ -29,6 +29,7 @@
 
                     <tbody id="bodyTable" class="text-center">
                         @foreach ($teams as $team => $data)
+                            {{$team = null}}
                             @if ($team % 2 == 0)
                                 <tr
                                     class="bg-gray-200/90 text-center border-t-[0.8px] border-b-[0.4px] border-gray-400/40 min-w-full">

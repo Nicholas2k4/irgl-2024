@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('semi_statistics', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('id_team');
-            $table->float('score')->default(0);
+            $table->integer('score')->default(0);
             $table->integer('email_filter')->default(0);
             $table->integer('encryption_machine')->default(0);
             $table->integer('traffic_controller')->default(0);

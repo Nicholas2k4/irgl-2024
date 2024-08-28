@@ -448,7 +448,8 @@
         <script>
             SweetAlert.fire({
                 icon: 'success',
-                title: '{{ session('success') }}',
+                title: 'Success',
+                text: "{{ session('success') }}",
             });
         </script>
         {{ session()->forget('success') }}
@@ -459,7 +460,8 @@
         <script>
             SweetAlert.fire({
                 icon: 'error',
-                title: '{{ session('error') }}',
+                title: 'Error',
+                text: "{{ session('error') }}",
             });
         </script>
         {{ session()->forget('error') }}

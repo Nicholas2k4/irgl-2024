@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>IRGL 2024 | Homepage</title>
     <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
@@ -18,6 +19,17 @@
     <style>
         html {
             scroll-behavior: smooth;
+            width: 100%;
+            height: 100%;
+            background: fixed;
+        }
+
+        body {
+            height: 100%;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
         }
     </style>
 
@@ -25,24 +37,24 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
-<body class="bg-[url('/assets/bg-mobile.png')] bg-cover bg-fixed min-h-screen">
+<body class="bg-[url('/assets/bg-mobile.png')] bg-cover bg-fixed">
     @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ session('success') }}",
+        });
+    </script>
     @endif
     @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: "{{ session('error') }}",
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ session('error') }}",
+        });
+    </script>
     @endif
 
     <div class="absoulte inset-0 bg-black bg-opacity-40">

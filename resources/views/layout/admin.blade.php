@@ -46,7 +46,6 @@
 <body class="m-0 p-0 w-screen overflow-x-hidden min-h-screen bg-gradient-to-r from-[#6b2b52]  to-[#422a6a]">
     <header class="sm:shadow-xl sm:shadow-[#0000002D] bg-gradient-to-r from-[#6b2b52] to-[#311b55]">
         <nav class="w-[96%] h-[9vh] flex mx-auto justify-between items-center">
-
             <a href="#" class=""><span class="text-[#fff] font-bold text-lg">ADMIN IRGL 2024</span></a>
 
             <div id="ull" class="hidden absolute bg-gradient-to-r from-[#6b2b52] to-[#311b55] sm:bg-none sm:shadow-none shadow-xl shadow-[#0000002D] sm:static sm:justify-end sm:max-w-[71.6vw] min-h-[35vh] left-0 top-[9%] w-full sm:flex justify-center items-center">
@@ -61,11 +60,11 @@
                         <a id="jadwal" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.jadwal.main') }}">Edit Jadwal</a>
                     </li>
                     <li class="flex">
-                        
-<a class="rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 text-lg w-full h-full hover:bg-red-800/80" href="{{ route('logout') }}">Log Out</a>
+                         <a class="rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 text-lg w-full h-full hover:bg-red-800/80" href="{{ route('logout') }}">Log Out</a>
                     </li>
                 </ul>
             </div>
+
             <div class="flex items-center sm:hidden py-[0.25rem] px-[0.75rem] rounded-md border-[0.5px] border-[#bcabeb77]">
                 <button onclick="displayMenu()" class="cursor-pointer">
                     <svg id="menuBurger" class="hover:stroke-slate-50" width="30px" height="30px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -88,8 +87,6 @@
                 ull.classList.add('hidden');
             }
         }
-
-
     </script>
 
     @yield('body')

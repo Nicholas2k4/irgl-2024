@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MarketController;
 use App\Http\Middleware\AuthMiddleware;
 use Google\Service\Adsense\Row;
 
@@ -61,7 +62,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-    Route::get('/scoringSystem',[AdminController::class, 'scoringSystem'])->name('scoringSystem');
+    Route::get('/scoringSystem', [AdminController::class, 'scoringSystem'])->name('scoringSystem');
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
@@ -76,4 +77,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::post('/jadwal/approve/{id}', [JadwalController::class, 'approve'])->name('jadwal.approve');
     Route::post('/jadwal/reject/{id}', [JadwalController::class, 'reject'])->name('jadwal.reject');
     Route::get('/jadwal/reschedule-log', [JadwalController::class, 'rescheduleLog'])->name('jadwal.reschedLog');
+
+    Route::get('/market', [MarketController::class, 'index'])->name('market');
 });

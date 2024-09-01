@@ -7,8 +7,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\InputScoreTeamController;
 use App\Http\Middleware\AuthMiddleware;
 use Google\Service\Adsense\Row;
+use Spatie\FlareClient\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,9 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-for
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
+Route::get('/inputscoreteam/search', [InputScoreTeamController::class, 'searchTeam'])->name('inputscoreteam.search');
 
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');

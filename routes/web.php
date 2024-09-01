@@ -79,4 +79,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/jadwal/reschedule-log', [JadwalController::class, 'rescheduleLog'])->name('jadwal.reschedLog');
 
     Route::get('/market', [MarketController::class, 'index'])->name('market');
+    Route::post('/market', [MarketController::class, 'store'])->name('market.store');
 });

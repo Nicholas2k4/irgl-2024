@@ -51,6 +51,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
+Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
 Route::get('/inputscoreteam/search', [InputScoreTeamController::class, 'searchTeam'])->name('inputscoreteam.search');
 
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');

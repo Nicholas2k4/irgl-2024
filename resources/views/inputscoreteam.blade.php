@@ -9,6 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
 </head>
 
 <body>
@@ -35,23 +39,16 @@
     <div class="bg-black flex justify-center items-center h-screen bg-[url('https://images.hdqwalls.com/download/neon-city-5k-3u-1920x1080.jpg')] bg-cover bg-center bg-no-repeat">
         <div
             class="bg-[rgba(0,0,0,0.5)] backdrop-blur-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] w-[400px] p-10 rounded-[20px] text-center m-8 relative">
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('inputscoreteam.addscore') }}" method="POST">
                 @csrf
                 <h2 class="text-2xl text-white font-bold mb-4">Input Score Team</h2>
 
                 <div class="mb-2 flex flex-col items-left">
-                    <label for="search" class="text-white text-left">Search Team</label>
-                    <input type="text" id="search" name="search"
-                        class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none" placeholder="Optional">
-                </div>
-
-                <div class="mb-2 flex flex-col items-left">
                     <label for="nama-team-id" class="text-white text-left">Pilih Team</label>
-                    <select type="text" id="nama-team-id" name="nama-team" placeholder="Contoh: NATUS VINCERE" required
-                        autocomplete="name"
-                        class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+                    <select id="nama-team-id" name="nama-team" required
+                        class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none select2">
                         @foreach ($teams as $team)
-                            <option value="{{ $team->nama }}" class="bg-[rgba(0,0,0,0.8)]">{{ $team->nama }}</option>
+                            <option value="{{ $team->nama }}">{{ $team->nama }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -68,7 +65,7 @@
 
                 <div class="mb-2 flex flex-col items-left">
                     <label for="jumlah-score-id" class="text-white text-left">Jumlah Score</label>
-                    <input type="number" id="jumlah-score-id" name="nama-game" required
+                    <input type="number" id="jumlah-score-id" name="jumlah-score" required
                         class="flex-1 bg-[rgba(255,255,255,0.1)] text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
                 </div>
 
@@ -79,24 +76,33 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('#search').on('keyup', function(){
-                let query = $(this).val(); // Get the value from the input field
-
-                $.ajax({
+        $(document).ready(function() {
+            $('#nama-team-id').select2({
+                placeholder: "Select a Team",
+                allowClear: true,
+                ajax: {
                     url: "{{ route('inputscoreteam.search') }}",
-                    type: "GET",
-                    data: {'query': query},
-                    success: function(data){
-                        $('#nama-team-id').empty(); // Clear the existing options
-                        $('#nama-team-id').append('<option value="" class="bg-[rgba(0,0,0,0.8)]">Select a Team</option>');
-                        $.each(data, function(key, team){
-                            $('#nama-team-id').append('<option value='+team.nama+' class="bg-[rgba(0,0,0,0.8)]">'+team.nama+'</option>');
-                        });
-                    }
-                });
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            query: params.term // Search term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(team) {
+                                return {
+                                    id: team.nama,
+                                    text: team.nama
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1
             });
         });
     </script>

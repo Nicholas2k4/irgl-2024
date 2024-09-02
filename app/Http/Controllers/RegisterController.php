@@ -29,7 +29,7 @@ class RegisterController extends Controller
             'kodePosKetua' => 'required|numeric',
             'phoneKetua' => 'required',
             'idlineKetua' => 'required',
-            'fileKetua' => 'nullable|image|max:8192', // Max 8MB
+            'fileKetua' => 'nullable|image|max:5120', // Max 5MB
         ]);
         $validatedData['namaKetua'] = ucwords(strtolower($validatedData['namaKetua'])); // Pascal Case
 
@@ -79,7 +79,7 @@ class RegisterController extends Controller
             'kodePosAnggota1' => 'required|numeric',
             'phoneAnggota1' => 'required',
             'idlineAnggota1' => 'required',
-            'fileAnggota1' => 'nullable|image|max:8192', // Max 8MB
+            'fileAnggota1' => 'nullable|image|max:5120', // Max 5MB
         ]);
         $validatedData['namaAnggota1'] = ucwords(strtolower($validatedData['namaAnggota1'])); // Pascal Case
 
@@ -130,7 +130,7 @@ class RegisterController extends Controller
             'kodePosAnggota2' => 'required|numeric',
             'phoneAnggota2' => 'required',
             'idlineAnggota2' => 'required',
-            'fileAnggota2' => 'nullable|image|max:8192', // Max 8MB
+            'fileAnggota2' => 'nullable|image|max:5120', // Max 5MB
         ]);
         $validatedData['namaAnggota2'] = ucwords(strtolower($validatedData['namaAnggota2'])); // Pascal Case
 
@@ -173,7 +173,7 @@ class RegisterController extends Controller
     public function postStepFour(Request $request)
     {
         $validatedData = $request->validate([
-            'fileTeam' => 'nullable|image|max:8192', // Max 8MB
+            'fileTeam' => 'nullable|image|max:5120', // Max 5MB
             'namaTeam' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'password' => 'required|string|min:8|confirmed',
         ]);

@@ -14,7 +14,7 @@
             <h2 class="text-white text-left text-xl">Transfer uang pendaftaran sesuai ketentuan berikut:</h2>
             <h2 class="text-white text-left text-md">No. Rek (BCA): 8221 4544 13 (a.n. Laura Wijaya)</h2>
             <h2 class="text-white text-left text-md mb-5">Berita: IRGL 2024, Nama Kelompok</h2>
-            <label for="file-team-id" class="text-sm md:text-base text-white block text-left mb-2">Bukti transfer</label>
+            <label for="file-team-id" class="text-sm md:text-base text-white block text-left mb-2">Bukti transfer (Max 5 MB)</label>
             <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
                 <input type="file" id="file-team-id" name="fileTeam" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('team')">
                 <span class="text-2xl material-icons">cloud_upload</span>

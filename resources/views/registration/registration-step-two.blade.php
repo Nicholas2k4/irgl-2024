@@ -47,7 +47,7 @@
         </div>
         
         <div class="mb-2 flex flex-col items-left">
-            <label for="file-anggota1-id" class="text-sm md:text-base text-white block text-left mb-2">Foto kartu siswa atau surat pernyataan siswa aktif</label>
+            <label for="file-anggota1-id" class="text-sm md:text-base text-white block text-left mb-2">Foto kartu siswa atau surat pernyataan siswa aktif (Max 5 MB)</label>
             <div class="relative overflow-hidden inline-block cursor-pointer bg-[#B026FF] text-white px-5 py-2.5 w-[70px] rounded-[5px]">
                 <input type="file" id="file-anggota1-id" name="fileAnggota1" accept="image/*" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer" onchange="showFileName('anggota1')">
                 <span class="text-2xl material-icons">cloud_upload</span>

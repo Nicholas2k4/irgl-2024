@@ -30,6 +30,10 @@
             <label for="nama-team-id" class="text-sm md:text-base text-white text-left">Nama Tim</label>
             <input type="text" id="nama-team-id" name="namaTeam" placeholder="Contoh: NATUS VINCERE" value="{{ old('namaTeam', session('step4.namaTeam')) }}" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
         </div>
+        <div class="mb-2 flex flex-col items-left">
+            <label for="asal_sekolah" class="text-sm md:text-base text-white text-left">Asal Sekolah</label>
+            <input type="text" id="asal_sekolah" name="asalsekolah" placeholder="" value="{{ old('asalsekolah') ?? ''}}" required class="flex-1 bg-[rgba(255,255,255,0.1)] text-sm md:text-base text-white shadow-[0_0_10px_rgba(255,255,255,0.1)] p-2.5 rounded-[5px] border-none">
+        </div>
 
         <div class="mb-2 flex flex-col items-left">
             <label for="password-id" class="text-sm md:text-base text-white text-left">Password</label>

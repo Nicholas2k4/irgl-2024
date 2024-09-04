@@ -68,4 +68,8 @@ class Team extends Model implements AuthenticatableContract
     {
         return $this->hasMany(Reschedule::class, 'id_kelompok');
     }
+    public function semiStatistic()
+    {
+        return $this->hasOne(SemiStatistic::class, 'id_team');
+    }
 }

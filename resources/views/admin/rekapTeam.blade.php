@@ -1,7 +1,12 @@
 @extends('layout.admin')
 
 @section('body')
-    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-16 mx-auto">
+
+    <div class="bg-white flex w-1/4 mx-auto mt-12 p-5 rounded-lg text-xs md:text-xl shadow-lg">
+        <span class="font-bold mr-5">Team Counter : </span> {{ $teams->count() }}
+    </div>
+
+    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-12 mx-auto">
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
             <div class="w-full h-[15%] flex items-center justify-center mt-6">
@@ -101,7 +106,7 @@
 
     <!-- Popup Section -->
     <div id="popup"
-        class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
+        class="fixed top-0 left-0 w-full h-full justify-center items-center bg-black bg-opacity-50 z-10 hidden">
         <div class="md:w-[66vw] h-[94%] w-[85vw]  bg-white px-4 py-[10px] rounded-lg">
             <div class="w-full border-b-[1px] border-gray-400/30 flex flex-row justify-between">
                 <h1 class="text-lg text-black">Detail Anggota</h1>

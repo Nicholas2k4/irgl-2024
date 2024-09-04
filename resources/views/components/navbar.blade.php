@@ -68,6 +68,11 @@
                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()"
                     href="#timeline">Timeline</a>
             </li>
+
+            <li class="flex h-[15%] items-center">
+                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()"
+                    href="https://drive.google.com/file/d/1b0aiwgtNyRBgMuBO7SpPKQiGlAjGGhlJ/view?usp=sharing" target="_blank">Guidebook</a>
+            </li>
             @if(!Session::has('team_id'))
                 <li class="flex h-[15%] items-center">
                     <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>

@@ -5,44 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\SemiStatistic;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class InputScoreTeamController extends Controller
 {
-    function showForm() {
+    function showForm()
+    {
         $teams = Team::select('nama')->get();
-        return view('inputscoreteam', compact('teams'));
+        return view('admin.inputscoreteam', [
+            'teams' => $teams,
+            'title' => 'Points',
+        ]);
     }
 
-    function searchTeam(Request $request) {
-        $query = $request->get('query');
-
-        $teams = Team::where('nama', 'LIKE', "%{$query}%")->select('nama')->get();
-
-        return response()->json($teams);
-    }
-
-    function addScore(Request $request) {
+    function addScore(Request $request)
+    {
+        // validate request
         $validated = $request->validate([
-            'nama-team' => 'required|string',
-            'nama-game' => 'required|string',
-            'jumlah-score' => 'required|numeric'
+            'team-name' => 'required|string',
+            // 'nama-game' => 'required|string',
+            'score' => 'required|numeric'
         ]);
 
-        $team = Team::where('nama', 'LIKE', $validated['nama-team'])->select('id')->first();
-        
-        if ($team) {
-            $semiStatistic = SemiStatistic::where('id_team', $team->id)->first();
-    
-            if ($semiStatistic) {
-                $semiStatistic->score += $validated['jumlah-score'];
-                $semiStatistic->save();
-    
-                return response()->json(['message' => 'Score updated successfully'], 200);
-            } else {
-                return response()->json(['message' => 'SemiStatistic entry not found'], 404);
-            }
+
+        // check if the team exists
+        try {
+            $team = Team::where('nama', $request['team-name'])->firstOrFail();
+            // return redirect()->route('admin.market')->with('success', 'Team ' . $request['team-name'] . ' found! Score=' . $team->semiStatistic->score);
+        } catch (Exception $e) {
+            return redirect()->route('admin.inputscoreteam')->with('error', 'Team ' . $request['team-name'] . ' not found!');
+        }
+
+
+        // get semi stats
+        $semiStatistic = $team->semiStatistic;
+
+
+        // add score
+        if ($semiStatistic) {
+            $semiStatistic->score += $validated['score'];
+            $semiStatistic->save();
+
+            Log::channel('daily')->info(Session::get('name') . ' added ' . $validated['score'] . ' points for team ' . $validated['team-name'] . '.');
+
+            return redirect()->route('admin.inputscoreteam')->with('success', 'Added ' . $validated['score'] . ' points for team ' . $validated['team-name'] . '!');
         } else {
-            return response()->json(['message' => 'Team not found'], 404);
+            return redirect()->route('admin.inputscoreteam')->with('error', 'Semifinal statistics for team ' . $request['team-name'] . ' not found!');
         }
     }
 }

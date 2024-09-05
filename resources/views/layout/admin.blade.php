@@ -60,6 +60,9 @@
                         <a id="jadwal" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.jadwal.main') }}">Jadwal</a>
                     </li>
                     <li class="flex">
+                        <a id="points" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.inputscoreteam') }}">Points</a>
+                    </li>
+                    <li class="flex">
                         <a id="market" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.market') }}">Market</a>
                     </li>
                     <li class="flex">

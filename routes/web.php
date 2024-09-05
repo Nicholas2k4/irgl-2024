@@ -52,21 +52,14 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
-Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
-Route::get('/inputscoreteam/search', [InputScoreTeamController::class, 'searchTeam'])->name('inputscoreteam.search');
-
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
-
 
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
 });
-
-
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     Route::get('/scoringSystem', [AdminController::class, 'scoringSystem'])->name('scoringSystem');
@@ -89,4 +82,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::post('/market', [MarketController::class, 'store'])->name('market.store');
     Route::get('/news', [NewsController::class, 'index'])->name('news');
     Route::post('/news/skipNews', [NewsController::class, 'skipNews'])->name('news.skipNews');
+
+    Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
+    Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
 });

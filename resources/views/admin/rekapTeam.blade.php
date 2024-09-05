@@ -1,7 +1,12 @@
 @extends('layout.admin')
 
 @section('body')
-    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-16 mx-auto">
+
+    <div class="bg-white flex w-1/4 mx-auto mt-12 p-5 rounded-lg text-xs md:text-xl shadow-lg">
+        <span class="font-bold mr-5">Team Counter : </span> {{ $teams->count() }}
+    </div>
+
+    <div class="justify-center items-center flex max-w-[100vw] h-fit mt-12 mx-auto">
         <div class="w-[93.6vw] justify-evenly items-center flex flex-col rounded-2xl bg-white">
 
             <div class="w-full h-[15%] flex items-center justify-center mt-6">
@@ -17,13 +22,14 @@
                             <th class="min-w-[28px] cursor-pointer" onclick="sortBy(0)">No</th>
                             <th class="min-w-[100px] cursor-pointer" onclick="sortBy(1)">Team</th>
                             <th class="min-w-[112px] max-w-[136px] cursor-pointer" onclick="sortBy(2)">Line</th>
-                            <th class="min-w-[112px] max-w-[136px] cursor-pointer" onclick="sortBy(3)">No Telp</th>
-                            <th class="min-w-[90px] cursor-pointer max-w-[80px]" onclick="sortBy(4)">Data Anggota</th>
-                            <th class="min-w-[90px] max-w-[80px] cursor-pointer" onclick="sortBy(5)">Bukti Transfer</th>
-                            <th class="cursor-pointer min-w-[90px] max-w-[80px]" onclick="sortBy(6)">Action Bukti Transfer
+                            <th class="min-w-[112px] max-w-[136px] cursor-pointer" onclick="sortBy(3)">No Telp</th>   
+                            <th class="min-w-[112px] max-w-[136px] cursor-pointer" onclick="sortBy(4)">Asal sekolah</th>
+                            <th class="min-w-[90px] cursor-pointer max-w-[80px]" onclick="sortBy(5)">Data Anggota</th>
+                            <th class="min-w-[90px] max-w-[80px] cursor-pointer" onclick="sortBy(6)">Bukti Transfer</th>
+                            <th class="cursor-pointer min-w-[90px] max-w-[80px]" onclick="sortBy(7)">Action Bukti Transfer
                             </th>
-                            <th class="min-w-[150px] cursor-pointer max-w-[180px]" onclick="sortBy(7)">Last Edited</th>
-                            <th class="min-w-[150px] max-w-[180px] cursor-pointer" onclick="sortBy(8)">Team Created</th>
+                            <th class="min-w-[150px] cursor-pointer max-w-[180px]" onclick="sortBy(8)">Last Edited</th>
+                            <th class="min-w-[150px] max-w-[180px] cursor-pointer" onclick="sortBy(9)">Team Created</th>
                         </tr>
                     </thead>
 
@@ -54,6 +60,10 @@
                                             {{ $userData->no_telp }}
                                         @endif
                                     @endforeach
+                                </td>
+                                <td id="asalsekolah">
+                                    {{ $data->asal_sekolah }}
+
                                 </td>
                                 <td id="anggotas">
                                     <button id="anggotaView{{ $team }}" onclick="togglePopup('{{ $data->id }}')"
@@ -448,7 +458,8 @@
         <script>
             SweetAlert.fire({
                 icon: 'success',
-                title: '{{ session('success') }}',
+                title: 'Success',
+                text: "{{ session('success') }}",
             });
         </script>
         {{ session()->forget('success') }}
@@ -459,7 +470,8 @@
         <script>
             SweetAlert.fire({
                 icon: 'error',
-                title: '{{ session('error') }}',
+                title: 'Error',
+                text: "{{ session('error') }}",
             });
         </script>
         {{ session()->forget('error') }}

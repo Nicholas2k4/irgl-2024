@@ -451,6 +451,10 @@
             <li><a id="home-link" href="#">Home</a></li>
             <li><a id="about-link" href="#">About</a></li>
             <li><a id="timeline-link" href="#">Timeline</a></li>
+            <li>
+                <a id="guidebook-link"
+                     href="https://drive.google.com/file/d/1b0aiwgtNyRBgMuBO7SpPKQiGlAjGGhlJ/view?usp=sharing" target="_blank">Guidebook</a>
+            </li>
             <li><a id="login-link" href="#">Login</a></li>
             @if (Session::has('team_id'))
                 <li><a id="schedule-link" href="{{ route('jadwal.index') }}">Schedule</a></li>

@@ -19,6 +19,7 @@ class Team extends Model implements AuthenticatableContract
         'nama',
         'password',
         'link_bukti_tf',
+        'asal_sekolah',
         'is_validated',
         'id_jadwal',
         'alasan_resched',

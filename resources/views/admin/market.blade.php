@@ -149,12 +149,11 @@
             // Confirmation before submit
             $('#submit-buy').on('click', function(event) {
                 Swal.fire({
-                    title: "Buy team " + $('#team-name').val() + "?",
+                    title: "Buy items for team " + $('#team-name').val() + "?",
                     showCancelButton: true,
                     confirmButtonText: "BUY!",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire("Order submitted!", "", "success");
                         $('#form-buy').submit();
                     }
                 });

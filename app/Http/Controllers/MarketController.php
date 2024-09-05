@@ -9,6 +9,8 @@ use App\Models\Team;
 use Exception;
 use Google\Service\Batch\Message;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class MarketController extends Controller
 {
@@ -101,7 +103,7 @@ class MarketController extends Controller
                     $curState->save();
                 }
             });
-
+            Log::channel('daily')->info(Session::get('name') . ' bought team ' . $request['team-name'] . ' ' . $request['email-qty'] . ' email fiter, ' . $request['encrypt-qty'] . ' encryption machine, ' . $request['traffic-qty'] . ' traffic controller, ' . $request['antivirus-qty'] . ' antivirus, ' . $request['input-qty'] . ' input validator. Total ' . $totalPrice . ' points is deducted.');
             return redirect()->route('admin.market')->with('success', 'Team ' . $request['team-name'] . " transactions completed (total price: " . $totalPrice . ")");
         } catch (Exception $e) {
             return redirect()->route('admin.market')->with('error', "Database error! (" . $e->getMessage() . ")");

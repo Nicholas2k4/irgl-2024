@@ -32,7 +32,7 @@
     <div class="h-fit p-10 text-center">
         <div class="bg-gradient-to-r from-[#133D7D] to-[#711191]  rounded-lg px-7 py-4 w-full md:w-1/2 mx-auto">
             <h1 class="font-bold text-white text-2xl mt-3 mb-5 tracking-wider md:text-3xl">Marketplace</h1>
-            <form action="{{ route('admin.market.store') }}" method="POST">
+            <form action="{{ route('admin.market.store') }}" method="POST" id="form-buy">
                 @csrf
                 <div class="relative mb-5">
                     <h2 class="text-white">Team Name</h2>
@@ -53,13 +53,15 @@
                         name="email-qty">
                 </div>
                 <div class="flex flex-col items-start mb-5">
-                    <h2 class="text-white mb-1">Encryption Machine <i class="text-sm font-bold">{{ '@' . $encrypt_price }}</i></h2>
+                    <h2 class="text-white mb-1">Encryption Machine <i
+                            class="text-sm font-bold">{{ '@' . $encrypt_price }}</i></h2>
                     <input type="number" id="encrypt-qty"
                         class="item-qty w-full rounded-lg bg-transparent text-white border-white focus:border-indigo-500 focus:ring-indigo-500"
                         name="encrypt-qty">
                 </div>
                 <div class="flex flex-col items-start mb-5">
-                    <h2 class="text-white mb-1">Traffic Controller <i class="text-sm font-bold">{{ '@' . $traffic_price }}</i></h2>
+                    <h2 class="text-white mb-1">Traffic Controller <i
+                            class="text-sm font-bold">{{ '@' . $traffic_price }}</i></h2>
                     <input type="number" id="traffic-qty"
                         class="item-qty w-full rounded-lg bg-transparent text-white border-white focus:border-indigo-500 focus:ring-indigo-500"
                         name="traffic-qty">
@@ -71,19 +73,19 @@
                         name="antivirus-qty">
                 </div>
                 <div class="flex flex-col items-start mb-5">
-                    <h2 class="text-white mb-1">Input Validator <i class="text-sm font-bold">{{ '@' . $input_price }}</i></h2>
+                    <h2 class="text-white mb-1">Input Validator <i class="text-sm font-bold">{{ '@' . $input_price }}</i>
+                    </h2>
                     <input type="number" id="input-qty"
                         class="item-qty w-full rounded-lg bg-transparent text-white border-white focus:border-indigo-500 focus:ring-indigo-500"
                         name="input-qty">
                 </div>
 
                 <h1 class="text-left text-amber-300 text-3xl font-bold mt-3 mb-5" id="total-price">Total: -</h1>
-
-                <button type="submit"
-                    class="bg-gradient-to-r from-green-300 to-green-700
-                 hover:from-[#235aad] hover:via-[#845893] hover:to-[#497cc9] px-4 py-2 rounded-lg cursor-pointer mt-4 text-white font-bold ease-in-out duration-500">Buy
-                    Items</button>
             </form>
+            <button id='submit-buy'
+                class="bg-gradient-to-r from-green-300 to-green-700
+                 hover:from-[#235aad] hover:via-[#845893] hover:to-[#497cc9] px-4 py-2 rounded-lg cursor-pointer mt-4 text-white font-bold ease-in-out duration-500">Buy
+                Items</button>
         </div>
     </div>
 @endsection
@@ -105,7 +107,8 @@
                 let antivirusPrice = @json($antivirus_price);
                 let inputPrice = @json($input_price);
 
-                let totalPrice = emailQty * emailPrice + encryptQty * encryptPrice + trafficQty * trafficPrice + antivirusQty * antivirusPrice +
+                let totalPrice = emailQty * emailPrice + encryptQty * encryptPrice + trafficQty *
+                    trafficPrice + antivirusQty * antivirusPrice +
                     inputQty * inputPrice;
                 $('#total-price').html('Total: ' + totalPrice);
             });
@@ -139,6 +142,22 @@
 
             $(document).on('click', function(event) {
                 dropdown.addClass('hidden');
+            });
+
+
+
+            // Confirmation before submit
+            $('#submit-buy').on('click', function(event) {
+                Swal.fire({
+                    title: "Buy team " + $('#team-name').val() + "?",
+                    showCancelButton: true,
+                    confirmButtonText: "Save",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire("Order submitted!", "", "success");
+                        $('#form-buy').submit();
+                    }
+                });
             });
         })
     </script>

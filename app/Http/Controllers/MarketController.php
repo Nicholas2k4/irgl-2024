@@ -102,7 +102,7 @@ class MarketController extends Controller
                 }
             });
 
-            return redirect()->route('admin.market')->with('success', 'Team ' . $request['team-name'] . " transactions completed (total: " . $totalPrice . ")");
+            return redirect()->route('admin.market')->with('success', 'Team ' . $request['team-name'] . " transactions completed (total price: " . $totalPrice . ")");
         } catch (Exception $e) {
             return redirect()->route('admin.market')->with('error', "Database error! (" . $e->getMessage() . ")");
         }

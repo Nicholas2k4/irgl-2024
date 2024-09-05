@@ -20,4 +20,9 @@ class SemiStatistic extends Model
         'antivirus',
         'input_validator',
     ];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'id_team');
+    }
 }

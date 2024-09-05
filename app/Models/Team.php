@@ -19,6 +19,7 @@ class Team extends Model implements AuthenticatableContract
         'nama',
         'password',
         'link_bukti_tf',
+        'asal_sekolah',
         'is_validated',
         'id_jadwal',
         'alasan_resched',
@@ -67,5 +68,9 @@ class Team extends Model implements AuthenticatableContract
     public function reschedules()
     {
         return $this->hasMany(Reschedule::class, 'id_kelompok');
+    }
+    public function semiStatistic()
+    {
+        return $this->hasOne(SemiStatistic::class, 'id_team');
     }
 }

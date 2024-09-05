@@ -463,4 +463,13 @@ class TeamController extends BaseController
             ]);
         }
     }
+
+    function getTeamsByName(Request $request)
+    {
+        $team_name = $request->team_name;
+        $teams = Team::where('nama', 'like', '%' . $team_name . '%')->get();
+        return $this->success([
+            'teams' => $teams
+        ]);
+    }
 }

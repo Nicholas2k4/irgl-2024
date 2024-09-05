@@ -22,6 +22,7 @@ Route::get('/coba', function () {
 });
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('getTeamsByName', [TeamController::class, 'getTeamsByName'])->name('api.getTeamsByName');
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('getUserData', [TeamController::class, 'getUserData']);
     Route::post('getUserDataByGamePass', [TeamController::class, 'getUserDataByGamePass']);

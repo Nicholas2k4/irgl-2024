@@ -111,7 +111,7 @@
 
     <!-- Popup Section -->
     <div id="popup"
-        class="fixed top-0 left-0 w-full h-full justify-center items-center bg-black bg-opacity-50 z-10 hidden">
+        class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 hidden">
         <div class="md:w-[66vw] h-[94%] w-[85vw]  bg-white px-4 py-[10px] rounded-lg">
             <div class="w-full border-b-[1px] border-gray-400/30 flex flex-row justify-between">
                 <h1 class="text-lg text-black">Detail Anggota</h1>

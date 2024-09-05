@@ -151,7 +151,7 @@
                 Swal.fire({
                     title: "Buy team " + $('#team-name').val() + "?",
                     showCancelButton: true,
-                    confirmButtonText: "Save",
+                    confirmButtonText: "BUY!",
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire("Order submitted!", "", "success");

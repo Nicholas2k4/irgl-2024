@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MarketController;
+use App\Http\Controllers\NewsController;
 use App\Http\Middleware\AuthMiddleware;
 use Google\Service\Adsense\Row;
 
@@ -80,4 +81,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     Route::get('/market', [MarketController::class, 'index'])->name('market');
     Route::post('/market', [MarketController::class, 'store'])->name('market.store');
+    Route::get('/news', [NewsController::class, 'index'])->name('news');
+    Route::post('/news/skipNews', [NewsController::class, 'skipNews'])->name('news.skipNews');
 });

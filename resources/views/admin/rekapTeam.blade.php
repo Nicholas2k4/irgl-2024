@@ -60,6 +60,10 @@
                                         @endif
                                     @endforeach
                                 </td>
+                                <td id="asalsekolah">
+                                    {{ $data->asal_sekolah }}
+
+                                </td>
                                 <td id="anggotas">
                                     <button id="anggotaView{{ $team }}" onclick="togglePopup('{{ $data->id }}')"
                                         class="w-12 h-8 my-2 rounded-[4px] bg-blue-600 hover:bg-blue-800 text-gray-200 text-center">View</button>

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\User;
-use App\Models\ElimStatistics;
-use App\Models\SemiStatistic;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Models\SemiStatistic;
+use App\Models\ElimStatistics;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
@@ -175,6 +177,7 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'fileTeam' => 'nullable|image|max:5120', // Max 5MB
             'namaTeam' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9\s]+$/'],
+            'asalsekolah' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
         ]);
         $validatedData['namaTeam'] = strtoupper($validatedData['namaTeam']); // UPPER CASE
@@ -227,71 +230,81 @@ class RegisterController extends Controller
         session()->put('step3.fileAnggota2', $fileAnggota2Path);
         session()->put('step4.fileTeam', $fileTeamPath);
 
+        DB::beginTransaction();
         // Insert team into Teams database
-        $newTeam = Team::create([
-            'nama' => session('step4.namaTeam'),
-            'password' => Hash::make(session('step4.password')),
-            'link_bukti_tf' => session('step4.fileTeam'), // Use the file path from session
-            'is_validated' => false
-        ]);
+        try {
+            $newTeam = Team::create([
+                'nama' => session('step4.namaTeam'),
+                'password' => Hash::make(session('step4.password')),
+                'link_bukti_tf' => session('step4.fileTeam'), // Use the file path from session
+                'asal_sekolah' => session('step4.asalsekolah'),
+                'is_validated' => false,
+            ]);
 
-        // Retrieve the ID of the newly inserted team
-        $team_id = $newTeam->id;
+            // Retrieve the ID of the newly inserted team
+            $team_id = $newTeam->id;
 
-        // Insert ketua into Users database
-        User::create([
-            'nama' => session('step1.namaKetua'),
-            'tanggal_lahir' => session('step1.tanggalLahirKetua'),
-            'tempat_lahir' => session('step1.tempatLahirKetua'),
-            'alamat' => session('step1.alamatKetua'),
-            'kode_pos' => session('step1.kodePosKetua'),
-            'no_telp' => session('step1.phoneKetua'),
-            'id_line' => session('step1.idlineKetua'),
-            'link_foto' => session('step1.fileKetua'), // Use the file path from session
-            'is_ketua' => true,
-            'bank' => session('step1.bankKetua'),
-            'no_rek' => session('step1.noRekeningKetuaTim'),
-            'id_tim' => $team_id
-        ]);
+            // Insert ketua into Users database
+            User::create([
+                'nama' => session('step1.namaKetua'),
+                'tanggal_lahir' => session('step1.tanggalLahirKetua'),
+                'tempat_lahir' => session('step1.tempatLahirKetua'),
+                'alamat' => session('step1.alamatKetua'),
+                'kode_pos' => session('step1.kodePosKetua'),
+                'no_telp' => session('step1.phoneKetua'),
+                'id_line' => session('step1.idlineKetua'),
+                'link_foto' => session('step1.fileKetua'), // Use the file path from session
+                'is_ketua' => true,
+                'bank' => session('step1.bankKetua'),
+                'no_rek' => session('step1.noRekeningKetuaTim'),
+                'id_tim' => $team_id,
+            ]);
 
-        // Insert anggota1 into Users database
-        User::create([
-            'nama' => session('step2.namaAnggota1'),
-            'tanggal_lahir' => session('step2.tanggalLahirAnggota1'),
-            'tempat_lahir' => session('step2.tempatLahirAnggota1'),
-            'alamat' => session('step2.alamatAnggota1'),
-            'kode_pos' => session('step2.kodePosAnggota1'),
-            'no_telp' => session('step2.phoneAnggota1'),
-            'id_line' => session('step2.idlineAnggota1'),
-            'link_foto' => session('step2.fileAnggota1'), // Use the file path from session
-            'is_ketua' => false,
-            'id_tim' => $team_id
-        ]);
+            // Insert anggota1 into Users database
+            User::create([
+                'nama' => session('step2.namaAnggota1'),
+                'tanggal_lahir' => session('step2.tanggalLahirAnggota1'),
+                'tempat_lahir' => session('step2.tempatLahirAnggota1'),
+                'alamat' => session('step2.alamatAnggota1'),
+                'kode_pos' => session('step2.kodePosAnggota1'),
+                'no_telp' => session('step2.phoneAnggota1'),
+                'id_line' => session('step2.idlineAnggota1'),
+                'link_foto' => session('step2.fileAnggota1'), // Use the file path from session
+                'is_ketua' => false,
+                'id_tim' => $team_id,
+            ]);
 
-        // Insert anggota2 into Users database
-        User::create([
-            'nama' => session('step3.namaAnggota2'),
-            'tanggal_lahir' => session('step3.tanggalLahirAnggota2'),
-            'tempat_lahir' => session('step3.tempatLahirAnggota2'),
-            'alamat' => session('step3.alamatAnggota2'),
-            'kode_pos' => session('step3.kodePosAnggota2'),
-            'no_telp' => session('step3.phoneAnggota2'),
-            'id_line' => session('step3.idlineAnggota2'),
-            'link_foto' => session('step3.fileAnggota2'), // Use the file path from session
-            'is_ketua' => false,
-            'id_tim' => $team_id
-        ]);
+            // Insert anggota2 into Users database
+            User::create([
+                'nama' => session('step3.namaAnggota2'),
+                'tanggal_lahir' => session('step3.tanggalLahirAnggota2'),
+                'tempat_lahir' => session('step3.tempatLahirAnggota2'),
+                'alamat' => session('step3.alamatAnggota2'),
+                'kode_pos' => session('step3.kodePosAnggota2'),
+                'no_telp' => session('step3.phoneAnggota2'),
+                'id_line' => session('step3.idlineAnggota2'),
+                'link_foto' => session('step3.fileAnggota2'), // Use the file path from session
+                'is_ketua' => false,
+                'id_tim' => $team_id,
+            ]);
 
-        // Add new team stats
-        ElimStatistics::create([
-            'id_team' => $team_id
-        ]);
+            // A dd new team stats
+            ElimStatistics::create([
+                'id_team' => $team_id,
+            ]);
 
-        // Add new team stats
-        SemiStatistic::create([
-            'id_team' => $team_id
-        ]);
-
+            // Add new team stats
+            SemiStatistic::create([
+                'id_team' => $team_id,
+            ]);
+            DB::commit();
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('daily')->info('An error occurred while registering the team: ' . $e->getMessage());
+            session()->flash('message', 'An error occurred while registering the team. Please try again.');
+            return redirect()->route('register.show.step.one');
+        }
         session()->flash('message', 'Team registered successfully!');
 
         $request->session()->flush();
@@ -302,7 +315,7 @@ class RegisterController extends Controller
     private function moveFileToPermanentStorage($file, $directory)
     {
         $this->createDirectory($directory);
-        
+
         // Move file to permanent storage with a custom file name
         $filename = basename($file);
         $newPath = "$directory/$filename";

@@ -92,6 +92,9 @@
 
 @section('script')
     <script>
+        let bold = document.getElementById('market');
+        bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
+
         $(document).ready(function() {
             // Dynamic item price
             $('.item-qty').on('change keyup', function() {

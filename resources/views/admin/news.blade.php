@@ -42,6 +42,7 @@
             <h1 class="text-left text-white text-xl">Input validator price: {{ $current_news->input_validator_price }}</h1>
             <h1 class="text-left text-white text-xl">Slot left: {{ $current_news->slot }}</h1>
             <h1 class="text-left text-white text-xl">Next news slug: {{ $current_news->next_slug }}</h1>
+            <h1 class="text-left text-white text-xl">Attack type: {{ $current_news->attack_type }}</h1>
 
             <form action="{{ route('admin.news.skipNews') }}" method="POST" id="form-next">
                 @csrf
@@ -55,6 +56,9 @@
 
 @section('script')
     <script>
+        let bold = document.getElementById('news');
+        bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
+
         $(document).ready(function() {
             // Confirmation before submit
             $('#submit-next').on('click', function(event) {

@@ -59,18 +59,35 @@
         let bold = document.getElementById('news');
         bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
 
+        let attack = @json($current_news->attack_type);
+
         $(document).ready(function() {
             // Confirmation before submit
             $('#submit-next').on('click', function(event) {
-                Swal.fire({
-                    title: "Skip to next news?",
-                    showCancelButton: true,
-                    confirmButtonText: "SKIP!",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#form-next').submit();
-                    }
-                });
+                if(attack == null || attack == ""){
+                    Swal.fire({
+                        title: "Skip to next news?",
+                        showCancelButton: true,
+                        confirmButtonText: "SKIP!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#form-next').submit();
+                        }
+                    });
+                }
+                else{
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Skip to next news?",
+                        text: "You will trigger " + attack + " attack!",
+                        showCancelButton: true,
+                        confirmButtonText: "SKIP!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#form-next').submit();
+                        }
+                    });
+                }
             });
         })
     </script>

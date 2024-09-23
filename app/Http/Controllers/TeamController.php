@@ -97,12 +97,11 @@ class TeamController extends BaseController
         $validate = Validator::make(
             $creds,
             [
-                'username' => 'required|exists:teams,id',
+                'username' => 'required',
                 'game_id' => 'required|exists:elim_games,id',
             ],
             [
                 'username.required' => 'username is required',
-                'username.exists' => 'username not found',
                 'game_id.required' => 'game_id is required',
                 'game_id.exists' => 'game_id not found',
             ],
@@ -110,7 +109,11 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $team = Team::find($creds['username']);
+        $team = Team::where('game_pass', $creds['username'])->first();
+        // dd($team);
+        if(!$team){
+            return $this->error('No data found for the provided username and game_id', HttpResponseCode::HTTP_FORBIDDEN);
+        }
         if($team->jadwal == null){
             return $this->error('Jadwal belum diatur', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
         }

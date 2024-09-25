@@ -321,9 +321,6 @@ class TeamController extends BaseController
 
         $team = Team::where('nama', $creds['team_name'])->first();
         $totalgames = ElimGames::count();
-        $alreadyPlayed = ElimGamesHistory::where('team_id', $team->id)
-            ->where('rotation', $team->curr_game_rotation)
-            ->count();
         if (!Hash::check($creds['password'], $team->password)) {
             return $this->error('Invalid credentials', HttpResponseCode::HTTP_UNAUTHORIZED);
         }
@@ -334,6 +331,9 @@ class TeamController extends BaseController
                 'team_id' => $team->id,
                 'rotation' => $team->curr_game_rotation,
             ]);
+            $alreadyPlayed = ElimGamesHistory::where('team_id', $team->id)
+            ->where('rotation', $team->curr_game_rotation)
+            ->count();
             if ($alreadyPlayed == $totalgames) {
                 $team->update([
                     'can_spin_roulette' => 0,

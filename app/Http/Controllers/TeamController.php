@@ -34,7 +34,7 @@ class TeamController extends BaseController
 
     public function cekJadwal(Team $team)
     {
-        if($team->jadwal == null){
+        if ($team->jadwal == null) {
             return $this->error('Jadwal belum diatur', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
         }
         $sekarang = Carbon::now();
@@ -42,7 +42,7 @@ class TeamController extends BaseController
         $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->end_time);
         if (!$sekarang->between($startDateTime, $endDateTime)) {
             return $this->error('Jadwal tidak sesuai', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
-        } 
+        }
         return true;
     }
 
@@ -111,10 +111,10 @@ class TeamController extends BaseController
         }
         $team = Team::where('game_pass', $creds['username'])->first();
         // dd($team);
-        if(!$team){
+        if (!$team) {
             return $this->error('No data found for the provided username and game_id', HttpResponseCode::HTTP_FORBIDDEN);
         }
-        if($team->jadwal == null){
+        if ($team->jadwal == null) {
             return $this->error('Jadwal belum diatur', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
         }
         $sekarang = Carbon::now();
@@ -122,7 +122,7 @@ class TeamController extends BaseController
         $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->end_time);
         if (!$sekarang->between($startDateTime, $endDateTime)) {
             return $this->error('Jadwal tidak sesuai', HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
-        } 
+        }
         $result = Team::where('game_pass', $creds['username'])
             ->where('game_id_allowed_play', $creds['game_id'])
             ->first();
@@ -441,7 +441,7 @@ class TeamController extends BaseController
         if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {
             return $cekJadwal;
         }
-        
+
 
         $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])
             ->pluck('id_question')
@@ -449,7 +449,14 @@ class TeamController extends BaseController
         $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
 
         if (empty($questionsAvailforTeam)) {
-            return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            ElimQuestionHistory::where('id_team', $creds['team_id'])->delete();
+            $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])
+            ->pluck('id_question')
+            ->toArray();
+            $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
+            if (empty($questionsAvailforTeam)) {
+                return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            }
         }
         $randomIndex = array_rand($questionsAvailforTeam);
         $randomQuestionId = $questionsAvailforTeam[$randomIndex];
@@ -480,6 +487,7 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
+        
         $team = Team::find($creds['team_id']);
         $cekJadwal = $this->cekJadwal($team);
         if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {

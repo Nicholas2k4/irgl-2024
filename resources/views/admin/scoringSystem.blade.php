@@ -9,6 +9,7 @@
                 <thead class=" bg-gray-200">
                     <tr class="min-w-full">
                         <th class="min-w-[28px] cursor-pointer">Rank</th>
+                        <th class="min-w-[100px] cursor-pointer">Already Played</th>
                         <th class="min-w-[100px] cursor-pointer">Team</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Time Taken</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Grandprize</th>
@@ -26,6 +27,7 @@
                     @foreach ($leaderboards as $index => $statTeam)
                     <tr id="team{{ $counter }}" class="border-b-2 border-solid hover:bg-gray-100 cursor-pointer">
                         <td>{{ $counter + 1 }}</td>
+                        <td class="flex justify-center items-center">{!! $statTeam->sudah_main !!}</td>
                         <td>{{ $statTeam->team->nama }}</td>
                         @if ($statTeam->end_time)
                         <td>{{ $statTeam->time_taken}}</td>
@@ -54,10 +56,6 @@
 <script>
     let bold = document.getElementById('rekapTeam');
     bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
-
-    var dataLeaderboards = <?php echo json_encode($leaderboards); ?>;
-
-    // if ada yang sama maka kan ga uniq
 </script>
 
 @if (session('success'))

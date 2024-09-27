@@ -85,4 +85,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
     Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
+
+    Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
 });

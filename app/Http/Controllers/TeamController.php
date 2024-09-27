@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\Exceptions\MissingAbilityException;
+use Illuminate\Support\Facades\DB;
+use App\Models\SemiStatistic;
 
 class TeamController extends BaseController
 {
@@ -234,8 +236,8 @@ class TeamController extends BaseController
         }
         $team = Team::find($creds['team_id']);
         return $this->success([
-            'curr_streak' => $team->curr_streak, 
-            'can_spin_roulette' => $team->can_spin_roulette, 
+            'curr_streak' => $team->curr_streak,
+            'can_spin_roulette' => $team->can_spin_roulette,
             'game_id_allowed_play' => $team->game_id_allowed_play,
             'game_pass' => $team->game_pass,
         ]);
@@ -388,21 +390,22 @@ class TeamController extends BaseController
         }
 
         $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])->pluck('id_question')->toArray();
-        $questionsAvailforTeam = ElimQuestions::whereNotIn  ('id', $teamQuestionHistory)->pluck('id')->toArray();
+        $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
 
         if (empty($questionsAvailforTeam)) {
             return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
         }
         $randomIndex = array_rand($questionsAvailforTeam);
         $randomQuestionId = $questionsAvailforTeam[$randomIndex];
-        $question = ElimQuestions::where('id',$randomQuestionId)->first();
-        return $this->success(['question_id'=>$question->id,
-        'question'=>$question->question,
-        'choice_1'=>$question->choice_1,
-        'choice_2'=>$question->choice_2,
-        'choice_3'=>$question->choice_3,
-        'choice_4'=>$question->choice_4
-    ]);
+        $question = ElimQuestions::where('id', $randomQuestionId)->first();
+        return $this->success([
+            'question_id' => $question->id,
+            'question' => $question->question,
+            'choice_1' => $question->choice_1,
+            'choice_2' => $question->choice_2,
+            'choice_3' => $question->choice_3,
+            'choice_4' => $question->choice_4
+        ]);
     }
 
     function uploadQuestion(Request $request)
@@ -439,11 +442,11 @@ class TeamController extends BaseController
                 'id_question' => $creds['question_id']
             ]);
             $addToElimQuestionhistory->save();
-            if($team['curr_gp_streak'] === 3){
+            if ($team['curr_gp_streak'] === 3) {
                 $statistic->update(['won_grand_prize' => true]);
                 $statistic->update(['end_time' => now()]);
             }
-            
+
             return $this->success([
                 'message' => 'Answer is Correct',
                 'nama' => $team->nama,
@@ -471,5 +474,59 @@ class TeamController extends BaseController
         return $this->success([
             'teams' => $teams
         ]);
+    }
+
+    function generateDummyTeams()
+    {
+        $names = [
+            'USER A',
+            'USER B',
+            'USER C',
+            'USER D',
+            'USER E',
+            'USER F',
+            'USER G',
+            'USER H',
+            'USER I',
+            'USER J',
+            'USER K',
+            'USER L',
+            'USER M',
+            'USER N',
+            'USER O',
+            'USER P',
+            'USER Q',
+            'USER R',
+            'USER S',
+            'USER T',
+            'USER U',
+            'USER V',
+            'USER W',
+            'USER X',
+            'USER Y',
+            'USER Z',
+        ];
+
+        DB::transaction(function () use ($names) {
+            foreach ($names as $name) {
+                $team = Team::create([
+                    'nama' => $name,
+                    'password' => Hash::make('password'), // Plain text password
+                    'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                    'is_validated' => false,
+                    'id_jadwal' => null,
+                    'alasan_resched' => null,
+                    'link_bukti_resched' => null
+                ]);
+
+                ElimStatistics::create([
+                    'id_team' => $team->id,
+                ]);
+
+                SemiStatistic::create([
+                    'id_team' => $team->id,
+                ]);
+            }
+        });
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FinalController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\AuthMiddleware;
@@ -42,6 +43,8 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register/step-four', 'postStepfour')->name('register.post.step.four');
     Route::get('/register/complete', 'completeRegistration')->name('register.complete');
 });
+
+Route::get('/final', [FinalController::class, 'index'])->name('final.index');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');

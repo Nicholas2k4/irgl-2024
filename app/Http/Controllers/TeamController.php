@@ -553,22 +553,6 @@ class TeamController extends BaseController
             'USER H',
             'USER I',
             'USER J',
-            'USER K',
-            'USER L',
-            'USER M',
-            'USER N',
-            'USER O',
-            'USER P',
-            'USER Q',
-            'USER R',
-            'USER S',
-            'USER T',
-            'USER U',
-            'USER V',
-            'USER W',
-            'USER X',
-            'USER Y',
-            'USER Z',
         ];
 
         DB::transaction(function () use ($names) {
@@ -578,7 +562,7 @@ class TeamController extends BaseController
                     'password' => Hash::make('password'), // Plain text password
                     'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
                     'is_validated' => false,
-                    'id_jadwal' => null,
+                    'id_jadwal' => 38,
                     'alasan_resched' => null,
                     'link_bukti_resched' => null
                 ]);

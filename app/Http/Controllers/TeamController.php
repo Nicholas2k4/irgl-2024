@@ -451,7 +451,14 @@ class TeamController extends BaseController
         $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
 
         if (empty($questionsAvailforTeam)) {
-            return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            ElimQuestionHistory::where('id_team', $creds['team_id'])->delete();
+            $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])
+            ->pluck('id_question')
+            ->toArray();
+            $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
+            if (empty($questionsAvailforTeam)) {
+                return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            }
         }
         $randomIndex = array_rand($questionsAvailforTeam);
         $randomQuestionId = $questionsAvailforTeam[$randomIndex];
@@ -482,6 +489,7 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
+        
         $team = Team::find($creds['team_id']);
         $cekJadwal = $this->cekJadwal($team);
         if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {

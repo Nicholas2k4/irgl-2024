@@ -551,16 +551,21 @@ class TeamController extends BaseController
     function generateDummyTeams()
     {
         $names = [
-            'USER A',
-            'USER B',
-            'USER C',
-            'USER D',
-            'USER E',
-            'USER F',
-            'USER G',
-            'USER H',
-            'USER I',
-            'USER J',
+            // 'USER A',
+            // 'USER B',
+            // 'USER C',
+            // 'USER D',
+            // 'USER E',
+            // 'USER F',
+            // 'USER G',
+            // 'USER H',
+            // 'USER I',
+            // 'USER J',
+            'USER K',
+            'USER L',
+            'USER M',
+            'USER N',
+            'USER O',
         ];
 
         DB::transaction(function () use ($names) {

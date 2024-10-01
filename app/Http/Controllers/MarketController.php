@@ -198,6 +198,39 @@ class MarketController extends Controller
                                     $teamSemiStats->save();
                                 }
                             }
+
+                            // convert back
+                            if($curNews->attack_type == 'convert'){
+                                if($teamSemiStats->email_filter > 0){
+                                    $teamSemiStats->score += $teamSemiStats->email_filter * $nextNews->email_filter_price;
+                                    $teamSemiStats->email_filter = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->encryption_machine > 0){
+                                    $teamSemiStats->score += $teamSemiStats->encryption_machine * $nextNews->encryption_machine_price;
+                                    $teamSemiStats->encryption_machine = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->traffic_controller > 0){
+                                    $teamSemiStats->score += $teamSemiStats->traffic_controller * $nextNews->traffic_controller_price;
+                                    $teamSemiStats->traffic_controller = 0;
+                                    $teamSemiStats->save();
+                                }  
+
+                                if($teamSemiStats->antivirus > 0){
+                                    $teamSemiStats->score += $teamSemiStats->antivirus * $nextNews->antivirus_price;
+                                    $teamSemiStats->antivirus = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->input_validator > 0){
+                                    $teamSemiStats->score += $teamSemiStats->input_validator * $nextNews->input_validator_price;
+                                    $teamSemiStats->input_validator = 0;
+                                    $teamSemiStats->save();
+                                }
+                            }
                         }
                     }
                 }

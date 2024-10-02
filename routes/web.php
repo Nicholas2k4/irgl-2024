@@ -49,6 +49,9 @@ Route::controller(RegisterController::class)->group(function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/info', function () {
+    return view('info');
+})->name('info');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

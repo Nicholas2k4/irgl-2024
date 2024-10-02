@@ -41,9 +41,9 @@
 </head>
 
 <body>
-    <a href="{{ route('register.show.step.one') }}">
-        <span class="text-5xl max-lg:text-4xl glow text-white absolute top-0 left-0 m-3 cursor-pointer material-icons">arrow_back</span>
-    </a>
+    <button class="absolute top-0 left-0 m-3 cursor-pointer" onclick="history.back()">
+        <span class="text-5xl max-lg:text-4xl glow text-white material-icons">arrow_back</span>
+    </button>
     <div class="bg-black flex flex-col items-center min-h-screen bg-[url('https://images.hdqwalls.com/download/neon-city-5k-3u-1920x1080.jpg')] bg-cover bg-center bg-no-repeat">
         <div class="my-4 border-white border-b-2 pb-4 w-3/4 flex justify-between items-end">
             <h2 class="text-5xl max-lg:text-4xl max-sm:text-3xl text-white font-bold glow">INFO PESERTA</h2>

@@ -65,9 +65,9 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-    Route::get('/scoringSystem', [AdminController::class, 'scoringSystem'])->name('scoringSystem');
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
+    Route::get('/leaderboards', [adminController::class, 'leaderboards'])->name('leaderboards');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 
     Route::get('/team/{id}', [TeamController::class, 'getTeamById']);
@@ -88,4 +88,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
 
     Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
     Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
+
+    Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
 });

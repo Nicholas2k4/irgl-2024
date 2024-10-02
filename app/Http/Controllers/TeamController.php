@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\Admin;
 use Firebase\JWT\JWT;
+use Carbon\Carbon;
 use App\Models\ElimGames;
 use App\Utils\HttpResponse;
 use Illuminate\Support\Str;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\Exceptions\MissingAbilityException;
+use Illuminate\Support\Facades\DB;
+use App\Models\SemiStatistic;
 
 class TeamController extends BaseController
 {
@@ -28,6 +31,21 @@ class TeamController extends BaseController
     public function __construct(Team $model)
     {
         parent::__construct($model);
+    }
+
+
+    public function cekJadwal(Team $team)
+    {
+        if ($team->jadwal == null) {
+            return $this->error('Jadwal belum diatur', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
+        }
+        $sekarang = Carbon::now();
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->start_time);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->end_time);
+        if (!$sekarang->between($startDateTime, $endDateTime)) {
+            return $this->error('Jadwal tidak sesuai', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
+        }
+        return true;
     }
 
     public function getUserData(Request $request)
@@ -50,7 +68,10 @@ class TeamController extends BaseController
         }
 
         $team = Team::where('nama', $creds['team_name'])->first();
-        // dd($team);
+        $cekJadwal = $this->cekJadwal($team);
+        if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {
+            return $cekJadwal;
+        }
         if (!$team) {
             return $this->error('You are not a participant of IRGL 2024!', HttpResponseCode::HTTP_UNAUTHORIZED);
         }
@@ -89,6 +110,20 @@ class TeamController extends BaseController
         );
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        $team = Team::where('game_pass', $creds['username'])->first();
+        // dd($team);
+        if (!$team) {
+            return $this->error('No data found for the provided username and game_id', HttpResponseCode::HTTP_FORBIDDEN);
+        }
+        if ($team->jadwal == null) {
+            return $this->error('Jadwal belum diatur', HttpResponseCode::HTTP_NOT_ACCEPTABLE);
+        }
+        $sekarang = Carbon::now();
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->start_time);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $team->jadwal->tanggal . ' ' . $team->jadwal->end_time);
+        if (!$sekarang->between($startDateTime, $endDateTime)) {
+            return $this->error('Jadwal tidak sesuai', HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $result = Team::where('game_pass', $creds['username'])
             ->where('game_id_allowed_play', $creds['game_id'])
@@ -233,9 +268,13 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
+        $cekJadwal = $this->cekJadwal($team);
+        if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {
+            return $cekJadwal;
+        }
         return $this->success([
-            'curr_streak' => $team->curr_streak, 
-            'can_spin_roulette' => $team->can_spin_roulette, 
+            'curr_streak' => $team->curr_streak,
+            'can_spin_roulette' => $team->can_spin_roulette,
             'game_id_allowed_play' => $team->game_id_allowed_play,
             'game_pass' => $team->game_pass,
         ]);
@@ -284,9 +323,6 @@ class TeamController extends BaseController
 
         $team = Team::where('nama', $creds['team_name'])->first();
         $totalgames = ElimGames::count();
-        $alreadyPlayed = ElimGamesHistory::where('team_id', $team->id)
-            ->where('rotation', $team->curr_game_rotation)
-            ->count();
         if (!Hash::check($creds['password'], $team->password)) {
             return $this->error('Invalid credentials', HttpResponseCode::HTTP_UNAUTHORIZED);
         }
@@ -297,6 +333,9 @@ class TeamController extends BaseController
                 'team_id' => $team->id,
                 'rotation' => $team->curr_game_rotation,
             ]);
+            $alreadyPlayed = ElimGamesHistory::where('team_id', $team->id)
+                ->where('rotation', $team->curr_game_rotation)
+                ->count();
             if ($alreadyPlayed == $totalgames) {
                 $team->update([
                     'can_spin_roulette' => 0,
@@ -386,23 +425,48 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
+        $team = Team::find($creds['team_id']);
+        if (!is_null($team->curr_question_id)) {
+            $question = ElimQuestions::where('id', $team->curr_question_id)->first();
+            if ($question) {
+                return $this->success([
+                    'question_id' => $question->id,
+                    'question' => $question->question,
+                    'choice_1' => $question->choice_1,
+                    'choice_2' => $question->choice_2,
+                    'choice_3' => $question->choice_3,
+                    'choice_4' => $question->choice_4
+                ]);
+            }
+        }
+        $cekJadwal = $this->cekJadwal($team);
+        if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {
+            return $cekJadwal;
+        }
 
-        $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])->pluck('id_question')->toArray();
-        $questionsAvailforTeam = ElimQuestions::whereNotIn  ('id', $teamQuestionHistory)->pluck('id')->toArray();
+
+        $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])
+            ->pluck('id_question')
+            ->toArray();
+        $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
 
         if (empty($questionsAvailforTeam)) {
-            return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            ElimQuestionHistory::where('id_team', $creds['team_id'])->delete();
+            $teamQuestionHistory = ElimQuestionHistory::where('id_team', $creds['team_id'])
+            ->pluck('id_question')
+            ->toArray();
+            $questionsAvailforTeam = ElimQuestions::whereNotIn('id', $teamQuestionHistory)->pluck('id')->toArray();
+            if (empty($questionsAvailforTeam)) {
+                return $this->error('No available Question left for the current session', HttpResponseCode::HTTP_NOT_FOUND);
+            }
         }
         $randomIndex = array_rand($questionsAvailforTeam);
         $randomQuestionId = $questionsAvailforTeam[$randomIndex];
-        $question = ElimQuestions::where('id',$randomQuestionId)->first();
-        return $this->success(['question_id'=>$question->id,
-        'question'=>$question->question,
-        'choice_1'=>$question->choice_1,
-        'choice_2'=>$question->choice_2,
-        'choice_3'=>$question->choice_3,
-        'choice_4'=>$question->choice_4
-    ]);
+        $question = ElimQuestions::where('id', $randomQuestionId)->first();
+        $team->update([
+            'curr_question_id' => $question->id,
+        ]);
+        return $this->success(['question_id' => $question->id, 'question' => $question->question, 'choice_1' => $question->choice_1, 'choice_2' => $question->choice_2, 'choice_3' => $question->choice_3, 'choice_4' => $question->choice_4]);
     }
 
     function uploadQuestion(Request $request)
@@ -425,10 +489,20 @@ class TeamController extends BaseController
         foreach ($validate->errors()->all() as $error) {
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
+        
         $team = Team::find($creds['team_id']);
+        $cekJadwal = $this->cekJadwal($team);
+        if ($cekJadwal instanceof \Illuminate\Http\JsonResponse) {
+            return $cekJadwal;
+        }
+        $team->update([
+            'curr_question_id' => null,
+        ]);
         $statistic = ElimStatistics::where('id_team', $creds['team_id'])->first();
 
-        $answerBenardariQuestion = ElimQuestions::where('id', $creds['question_id'])->pluck('answer')->first();
+        $answerBenardariQuestion = ElimQuestions::where('id', $creds['question_id'])
+            ->pluck('answer')
+            ->first();
         if ($creds['answer'] == $answerBenardariQuestion) {
             $team->increment('curr_gp_streak');
             if ($team->curr_gp_streak > $statistic->highest_gp_streak) {
@@ -436,25 +510,26 @@ class TeamController extends BaseController
             }
             $addToElimQuestionhistory = ElimQuestionHistory::create([
                 'id_team' => $creds['team_id'],
-                'id_question' => $creds['question_id']
+                'id_question' => $creds['question_id'],
             ]);
             $addToElimQuestionhistory->save();
-            if($team['curr_gp_streak'] === 3){
+            if ($team['curr_gp_streak'] === 3) {
                 $statistic->update(['won_grand_prize' => true]);
                 $statistic->update(['end_time' => now()]);
             }
-            
+
             return $this->success([
                 'message' => 'Answer is Correct',
                 'nama' => $team->nama,
             ]);
         } else {
             $team->update([
-                'curr_gp_streak' => 0
+                'curr_gp_streak' => 0,
+                'curr_streak' => 0,
             ]);
             $addToElimQuestionhistory = ElimQuestionHistory::create([
                 'id_team' => $creds['team_id'],
-                'id_question' => $creds['question_id']
+                'id_question' => $creds['question_id'],
             ]);
             $addToElimQuestionhistory->save();
             return $this->success([
@@ -469,7 +544,50 @@ class TeamController extends BaseController
         $team_name = $request->team_name;
         $teams = Team::where('nama', 'like', '%' . $team_name . '%')->get();
         return $this->success([
-            'teams' => $teams
+            'teams' => $teams,
         ]);
+    }
+
+    function generateDummyTeams()
+    {
+        $names = [
+            // 'USER A',
+            // 'USER B',
+            // 'USER C',
+            // 'USER D',
+            // 'USER E',
+            // 'USER F',
+            // 'USER G',
+            // 'USER H',
+            // 'USER I',
+            // 'USER J',
+            'USER K',
+            'USER L',
+            'USER M',
+            'USER N',
+            'USER O',
+        ];
+
+        DB::transaction(function () use ($names) {
+            foreach ($names as $name) {
+                $team = Team::create([
+                    'nama' => $name,
+                    'password' => Hash::make('password'), // Plain text password
+                    'link_bukti_tf' => 'https://example.com/bukti_tf_teamH.jpg',
+                    'is_validated' => false,
+                    'id_jadwal' => 38,
+                    'alasan_resched' => null,
+                    'link_bukti_resched' => null
+                ]);
+
+                ElimStatistics::create([
+                    'id_team' => $team->id,
+                ]);
+
+                SemiStatistic::create([
+                    'id_team' => $team->id,
+                ]);
+            }
+        });
     }
 }

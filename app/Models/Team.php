@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -31,8 +32,8 @@ class Team extends Model implements AuthenticatableContract
         'game_pass',
         'curr_streak',
         'curr_gp_streak',
-        'curr_game_rotation'
-
+        'curr_game_rotation',
+        'curr_question_id'
     ];
 
     public function user()
@@ -72,5 +73,9 @@ class Team extends Model implements AuthenticatableContract
     public function semiStatistic()
     {
         return $this->hasOne(SemiStatistic::class, 'id_team');
+    }
+    public function elimquestions()
+    {
+        return $this->belongsTo(ElimQuestions::class, 'curr_question_id');
     }
 }

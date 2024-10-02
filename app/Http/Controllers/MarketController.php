@@ -101,6 +101,138 @@ class MarketController extends Controller
                 if ($curNews->slot <= 0) {
                     $curState->current_news_slug = $curNews->next_slug;
                     $curState->save();
+                    $nextNews = $curState->news();
+
+                    // check if the news trigger an attack
+                    if ($curNews->attack_type != null) {
+                        $teams = Team::all();
+                        foreach ($teams as $team) {
+                            $teamSemiStats = $team->semiStatistic;
+
+                            // phising attack
+                            if($curNews->attack_type == 'phising'){
+                                if($teamSemiStats->email_filter > 0){
+                                    $teamSemiStats->email_filter--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->email_filter_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+                            
+                            // brute force attack
+                            if($curNews->attack_type == 'brute-force'){
+                                if($teamSemiStats->encryption_machine > 0){
+                                    $teamSemiStats->encryption_machine--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->encryption_machine_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+
+                            // ddos attack
+                            if($curNews->attack_type == 'ddos'){
+                                if($teamSemiStats->traffic_controller > 0){
+                                    $teamSemiStats->traffic_controller--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->traffic_controller_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+
+                            // malware attack
+                            if($curNews->attack_type == 'malware'){
+                                if($teamSemiStats->antivirus > 0){
+                                    $teamSemiStats->antivirus--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->antivirus_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+
+                            // sql injection attack
+                            if($curNews->attack_type == 'sql-injection'){
+                                if($teamSemiStats->input_validator > 0){
+                                    $teamSemiStats->input_validator--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->input_validator_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+                            
+                            // dystopia attack
+                            if($curNews->attack_type == 'dystopia'){
+                                if($teamSemiStats->email_filter > 0){
+                                    $teamSemiStats->email_filter--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->email_filter_price;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->traffic_controller > 0){
+                                    $teamSemiStats->traffic_controller--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->traffic_controller_price;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->antivirus > 0){
+                                    $teamSemiStats->antivirus--;
+                                    $teamSemiStats->save();
+                                }
+                                else{
+                                    $teamSemiStats->score-=$nextNews->antivirus_price;
+                                    $teamSemiStats->save();
+                                }
+                            }
+
+                            // convert back
+                            if($curNews->attack_type == 'convert'){
+                                if($teamSemiStats->email_filter > 0){
+                                    $teamSemiStats->score += $teamSemiStats->email_filter * $nextNews->email_filter_price;
+                                    $teamSemiStats->email_filter = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->encryption_machine > 0){
+                                    $teamSemiStats->score += $teamSemiStats->encryption_machine * $nextNews->encryption_machine_price;
+                                    $teamSemiStats->encryption_machine = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->traffic_controller > 0){
+                                    $teamSemiStats->score += $teamSemiStats->traffic_controller * $nextNews->traffic_controller_price;
+                                    $teamSemiStats->traffic_controller = 0;
+                                    $teamSemiStats->save();
+                                }  
+
+                                if($teamSemiStats->antivirus > 0){
+                                    $teamSemiStats->score += $teamSemiStats->antivirus * $nextNews->antivirus_price;
+                                    $teamSemiStats->antivirus = 0;
+                                    $teamSemiStats->save();
+                                }
+
+                                if($teamSemiStats->input_validator > 0){
+                                    $teamSemiStats->score += $teamSemiStats->input_validator * $nextNews->input_validator_price;
+                                    $teamSemiStats->input_validator = 0;
+                                    $teamSemiStats->save();
+                                }
+                            }
+                        }
+                    }
                 }
             });
             Log::channel('daily')->info(Session::get('name') . ' bought team ' . $request['team-name'] . ' ' . $request['email-qty'] . ' email fiter, ' . $request['encrypt-qty'] . ' encryption machine, ' . $request['traffic-qty'] . ' traffic controller, ' . $request['antivirus-qty'] . ' antivirus, ' . $request['input-qty'] . ' input validator. Total ' . $totalPrice . ' points is deducted.');

@@ -457,6 +457,7 @@
             </li>
             <li><a id="login-link" href="#">Login</a></li>
             @if (Session::has('team_id'))
+                <li><a id="schedule-link" href="{{ route('info') }}">Info</a></li>
                 <li><a id="schedule-link" href="{{ route('jadwal.index') }}">Schedule</a></li>
                 <li><a id="schedule-link" href="{{ route('logout') }}" class="text-amber-300 font-extrabold">Log Out</a></li>
             @endif

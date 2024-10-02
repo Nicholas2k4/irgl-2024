@@ -54,6 +54,9 @@
                         <a id="home" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.main') }}">Home</a>
                     </li>
                     <li class="flex">
+                        <a id="infos" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.infos.index') }}">Info</a>
+                    </li>
+                    <li class="flex">
                         <a id="rekapTeam" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.rekapTeam') }}">Team</a>
                     </li>
                     <li class="flex">

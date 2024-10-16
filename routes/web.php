@@ -15,6 +15,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\InputScoreTeamController;
+use App\Http\Middleware\ClosedMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,7 @@ Route::get('/homepage-hp', function () {
     return view('homepage-hp');
 })->name('homepage.hp');
 
-Route::controller(RegisterController::class)->group(function () {
+Route::controller(RegisterController::class)->middleware([ClosedMiddleware::class])->group(function () {
     Route::get('/register', function () {
         return redirect('register/step-one');
     })->name('register');

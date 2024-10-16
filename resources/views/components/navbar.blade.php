@@ -80,10 +80,10 @@
                                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
                                     href="{{ route('login') }}">Login</a>
                             </li>
-                            <li class="flex h-[15%] items-center">
+                            {{-- <li class="flex h-[15%] items-center">
                                 <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
                                     href="{{ route('register') }}">Register</a>
-                            </li>
+                            </li> --}}
                         @endif
                         @if (Session::has('team_id'))
                             <li class="flex h-[15%] items-center">

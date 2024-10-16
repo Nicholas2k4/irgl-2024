@@ -37,6 +37,19 @@
         .panel.show {
             max-height: 200px;
         }
+
+        .panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .panel::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
     </style>
 </head>
 
@@ -64,8 +77,8 @@
                             <span>{{ $info->title }}</span>
                             <span class="material-icons accordion-icon">expand_more</span>
                         </button>
-                        <div class="panel">
-                            <p class="text-white pt-2 border-white border-t-2 mt-2">{{ $info->content }}</p>
+                        <div class="panel overflow-y-auto">
+                            <p class="text-white pt-2 border-white border-t-2 mt-2 break-words">{{ $info->content }}</p>
                         </div>
                     </div>
                 @endforeach

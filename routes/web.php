@@ -51,7 +51,6 @@ Route::controller(RegisterController::class)->group(function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/info', [InfoController::class, 'userIndex'])->name('info');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -62,6 +61,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
+    Route::get('/info', [InfoController::class, 'userIndex'])->name('info');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {

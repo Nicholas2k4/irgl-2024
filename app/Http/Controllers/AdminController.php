@@ -65,7 +65,7 @@ class AdminController extends Controller
     public function leaderboards()
     {
         
-        $statWithJadwal = ElimStatistics::with(['team.jadwal'])
+        $statWithJadwal = ElimStatistics::with(['team.jadwal','team'])
         ->whereNotNull('end_time')
         ->get()
         ->map(function ($elim_stat) {

@@ -13,6 +13,8 @@
                         <th class="min-w-[100px] cursor-pointer">Team</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Time Taken</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Grandprize</th>
+                        <th class="min-w-[112px] max-w-[136px] cursor-pointer">Current Streak</th>
+                        <th class="min-w-[112px] max-w-[136px] cursor-pointer">Current GP Streak</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Highest GP Streak</th>
                         <th class="min-w-[112px] max-w-[136px] cursor-pointer">Highest Streak</th>
                         <th class="min-w-[90px] cursor-pointer max-w-[80px]">Score</th>
@@ -35,6 +37,8 @@
                         <td>Not Finished</td> <!-- belum ada end_time -->
                         @endif
                         <td>{{ $statTeam->won_grand_prize }}</td>
+                        <td>{{ $statTeam->team->curr_streak}}</td>
+                        <td>{{ $statTeam->team->curr_gp_streak}}</td>
                         <td>{{ $statTeam->highest_gp_streak}}</td>
                         <td>{{ $statTeam->highest_streak}}</td>
                         <td>{{ $statTeam->total_score}}</td>

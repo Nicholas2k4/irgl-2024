@@ -142,6 +142,7 @@ class TeamController extends BaseController
     public function uploadScoreWin(Request $request)
     {
         $creds = $request->only('team_id', 'game_id', 'score');
+        Log::channel('daily')->info('RequestUploadScoreWin', $creds);
         $validate = Validator::make(
             $creds,
             [
@@ -161,8 +162,10 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
+        Log::channel('daily')->info('UploadScoreWin untuk '. $team->nama, $creds);
         $statistic = ElimStatistics::where('id_team', $creds['team_id'])->first();
         // dd($team);
+        DB::beginTransaction();
         try {
             $team->games()->attach($creds['game_id'], ['score' => $creds['score']]);
             $team->update([
@@ -191,9 +194,13 @@ class TeamController extends BaseController
                     return $this->error('Team tidak ada di statistic', HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
                 }
             }
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('daily')->error($team->nama . ' failed to upload score'.$e->getMessage());
             return $this->error('SQL errror', HttpResponseCode::HTTP_INTERNAL_SERVER_ERROR);
         }
+
         return $this->success([
             'team_id' => $creds['team_id'],
             'game_id' => $creds['game_id'],
@@ -203,6 +210,7 @@ class TeamController extends BaseController
     public function uploadScoreLose(Request $request)
     {
         $creds = $request->only('team_id', 'game_id', 'score');
+        Log::channel('daily')->info('uploadScoreLose', $creds);
         $validate = Validator::make(
             $creds,
             [
@@ -223,7 +231,9 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
+        Log::channel('daily')->info('UploadScoreLose untuk '. $team->nama, $creds);
         $statistic = ElimStatistics::where('id_team', $creds['team_id'])->first();
+        DB::beginTransaction();
         try {
             $team->games()->attach($creds['game_id'], ['score' => $creds['score']]);
 
@@ -241,7 +251,10 @@ class TeamController extends BaseController
             } else {
                 return $this->error('Team tidak ada di statistic', HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
             }
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
+            Log::channel('daily')->info($team->nama . ' failed to upload score'.$e->getMessage());
             return $this->error('SQL errror', HttpResponseCode::HTTP_INTERNAL_SERVER_ERROR);
         }
         return $this->success([

@@ -210,7 +210,7 @@ class TeamController extends BaseController
     public function uploadScoreLose(Request $request)
     {
         $creds = $request->only('team_id', 'game_id', 'score');
-        Log::channel('daily')->info('uploadScoreLose', $creds);
+        Log::channel('daily')->info('RequestuploadScoreLose', $creds);
         $validate = Validator::make(
             $creds,
             [
@@ -231,7 +231,7 @@ class TeamController extends BaseController
             return $this->error($error, HttpResponseCode::HTTP_UNPROCESSABLE_ENTITY);
         }
         $team = Team::find($creds['team_id']);
-        Log::channel('daily')->info('RequestuploadScoreLose untuk '. $team->nama, $creds);
+        Log::channel('daily')->info('UploadScoreLose untuk '. $team->nama, $creds);
         $statistic = ElimStatistics::where('id_team', $creds['team_id'])->first();
         DB::beginTransaction();
         try {

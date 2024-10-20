@@ -88,7 +88,8 @@
                                 @endphp
                                 <option value="{{ $data->id }}">{{ $formattedDate }} - {{ $data->start_time }}
                                     s/d
-                                    {{ $data->end_time }}</option>
+                                    {{ $data->end_time }}
+                                </option>
                             @endforeach
                         </select>
                     </div>

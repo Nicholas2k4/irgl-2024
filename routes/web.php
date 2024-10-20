@@ -98,4 +98,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::delete('/infos/{id}', [InfoController::class, 'destroy'])->name('infos.destroy');
 
     Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
+    Route::get('/reset', [JadwalController::class, 'reset'])->name('reset');
+    Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
+    Route::put('/resetschedule',[JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
 });

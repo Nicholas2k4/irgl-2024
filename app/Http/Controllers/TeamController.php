@@ -485,6 +485,7 @@ class TeamController extends BaseController
     function uploadQuestion(Request $request)
     {
         $creds = $request->only('team_id', 'question_id', 'answer');
+        Log::channel('daily')->info('RequestUploadQuestion', $creds);
         $validate = Validator::make(
             $creds,
             [
@@ -517,6 +518,7 @@ class TeamController extends BaseController
             ->pluck('answer')
             ->first();
         if ($creds['answer'] == $answerBenardariQuestion) {
+            Log::channel('daily')->info('Upload Question untuk '.$team->nama . ', answered correctly');
             $team->increment('curr_gp_streak');
             if ($team->curr_gp_streak > $statistic->highest_gp_streak) {
                 $statistic->update(['highest_gp_streak' => $team->curr_gp_streak]);
@@ -536,6 +538,7 @@ class TeamController extends BaseController
                 'nama' => $team->nama,
             ]);
         } else {
+            Log::channel('daily')->info('Upload Question untuk '.$team->nama . ', answered incorrectly');
             $team->update([
                 'curr_gp_streak' => 0,
                 'curr_streak' => 0,

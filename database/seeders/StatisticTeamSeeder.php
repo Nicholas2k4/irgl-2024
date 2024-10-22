@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ElimStatistics;
+use App\Models\SemiStatistic;
 use App\Models\Team;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -98,6 +99,7 @@ class StatisticTeamSeeder extends Seeder
 
         foreach($statistic as $stat){
             ElimStatistics::create($stat);
+            SemiStatistic::create($stat);
         }
     }
 }

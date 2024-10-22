@@ -1,15 +1,22 @@
 <?php
 
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\TeamController;
+use Spatie\FlareClient\View;
+use Google\Service\Adsense\Row;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AuthMiddleware;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FinalController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Middleware\AuthMiddleware;
-use Google\Service\Adsense\Row;
+use App\Http\Controllers\InputScoreTeamController;
+use App\Http\Middleware\ClosedMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +36,7 @@ Route::get('/homepage-hp', function () {
     return view('homepage-hp');
 })->name('homepage.hp');
 
-Route::controller(RegisterController::class)->group(function () {
+Route::controller(RegisterController::class)->middleware([ClosedMiddleware::class])->group(function () {
     Route::get('/register', function () {
         return redirect('register/step-one');
     })->name('register');
@@ -54,19 +61,17 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
 
-
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
+    Route::get('/info', [InfoController::class, 'userIndex'])->name('info');
 });
 
-
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-    Route::get('/scoringSystem',[AdminController::class, 'scoringSystem'])->name('scoringSystem');
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
+    Route::get('/leaderboards', [adminController::class, 'leaderboards'])->name('leaderboards');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 
     Route::get('/team/{id}', [TeamController::class, 'getTeamById']);
@@ -79,4 +84,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::post('/jadwal/approve/{id}', [JadwalController::class, 'approve'])->name('jadwal.approve');
     Route::post('/jadwal/reject/{id}', [JadwalController::class, 'reject'])->name('jadwal.reject');
     Route::get('/jadwal/reschedule-log', [JadwalController::class, 'rescheduleLog'])->name('jadwal.reschedLog');
+
+    Route::get('/market', [MarketController::class, 'index'])->name('market');
+    Route::post('/market', [MarketController::class, 'store'])->name('market.store');
+    Route::get('/news', [NewsController::class, 'index'])->name('news');
+    Route::post('/news/skipNews', [NewsController::class, 'skipNews'])->name('news.skipNews');
+
+    Route::get('/inputscoreteam', [InputScoreTeamController::class, 'showForm'])->name('inputscoreteam');
+    Route::post('/inputscoreteam', [InputScoreTeamController::class, 'addScore'])->name('inputscoreteam.addscore');
+
+    Route::get('/infos', [InfoController::class, 'index'])->name('infos.index');
+    Route::get('/infos/create', [InfoController::class, 'create'])->name('infos.create');
+    Route::post('/infos', [InfoController::class, 'store'])->name('infos.store');
+    Route::get('/infos/edit/{id}', [InfoController::class, 'edit'])->name('infos.edit');
+    Route::put('/infos/{id}', [InfoController::class, 'update'])->name('infos.update');
+    Route::delete('/infos/{id}', [InfoController::class, 'destroy'])->name('infos.destroy');
+
+    Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
+    Route::get('/reset', [JadwalController::class, 'reset'])->name('reset');
+    Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
+    Route::put('/resetschedule',[JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
 });

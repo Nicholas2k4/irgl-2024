@@ -54,39 +54,54 @@
 
             </div>
             <div class="w-screen h-screen hidden z-30 fixed" id="menune">
-    <div class="flex flex-col justify-center items-center w-full h-[60%]">
-        <ul class="items-center w-full h-full ">
-            <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()"
-                    href="#">Home</a>
-            </li>
-            <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()"
-                    href="#about">About</a>
-            </li>
-            <li class="flex h-[15%] items-center">
-                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" onclick="displayMenuh()"
-                    href="#timeline">Timeline</a>
-            </li>
-            @if(!Session::has('team_id'))
-                <li class="flex h-[15%] items-center">
-                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('login') }}">Login</a>
-                </li>
-                <li class="flex h-[15%] items-center">
-                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('register') }}">Register</a>
-                </li>
-            @endif
-            @if(Session::has('team_id'))
-                <li class="flex h-[15%] items-center">
-                    <a class="text-2xl w-full text-white cursor-pointer text-center pirgl" href="{{ route('jadwal.index') }}">Schedule</a>
-                </li>
-                <li class="flex h-[15%] items-center">
-                    <a class="text-2xl w-full text-amber-300 font-extrabold cursor-pointer text-center pirgl" href="{{ route('logout') }}">Log Out</a>
-                </li>
-            @endif
-        </ul>
-    </div>
-        </div>
+                <div class="flex flex-col justify-center items-center w-full h-[60%]">
+                    <ul class="items-center w-full h-full ">
+                        <li class="flex h-[15%] items-center">
+                            <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                onclick="displayMenuh()" href="#">Home</a>
+                        </li>
+                        <li class="flex h-[15%] items-center">
+                            <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                onclick="displayMenuh()" href="#about">About</a>
+                        </li>
+                        <li class="flex h-[15%] items-center">
+                            <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                onclick="displayMenuh()" href="#timeline">Timeline</a>
+                        </li>
+
+                        <li class="flex h-[15%] items-center">
+                            <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                onclick="displayMenuh()"
+                                href="https://drive.google.com/file/d/1b0aiwgtNyRBgMuBO7SpPKQiGlAjGGhlJ/view?usp=sharing"
+                                target="_blank">Guidebook</a>
+                        </li>
+                        @if (!Session::has('team_id'))
+                            <li class="flex h-[15%] items-center">
+                                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                    href="{{ route('login') }}">Login</a>
+                            </li>
+                            {{-- <li class="flex h-[15%] items-center">
+                                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                    href="{{ route('register') }}">Register</a>
+                            </li> --}}
+                        @endif
+                        @if (Session::has('team_id'))
+                            <li class="flex h-[15%] items-center">
+                                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                    href="{{ route('info') }}">Info</a>
+                            </li>
+                            <li class="flex h-[15%] items-center">
+                                <a class="text-2xl w-full text-white cursor-pointer text-center pirgl"
+                                    href="{{ route('jadwal.index') }}">Schedule</a>
+                            </li>
+                            <li class="flex h-[15%] items-center">
+                                <a class="text-2xl w-full text-amber-300 font-extrabold cursor-pointer text-center pirgl"
+                                    href="{{ route('logout') }}">Log Out</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
     </nav>
 </header>
 
@@ -129,4 +144,3 @@
     // window.addEventListener('load', resetNavbar);
     // window.addEventListener('scroll', handleScroll);
 </script>
-

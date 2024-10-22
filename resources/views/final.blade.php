@@ -28,12 +28,11 @@
                     <p class=" text-sm font-bold opensans">IRGL Final Command Prompt</p>
                 </div>
             </div>
-            <div class="bg-black w-full h-full p-1 rounded-b-lg">
+            <div class="bg-black w-full h-full p-1 rounded-b-lg overflow-y-scroll" id="terminal">
                 <p class="text-green-500 leading-tight">IRGL Final Command Prompt</p>
                 <p class="text-green-500 leading-tight">Copyright © IRGL Corporation. All rights reserved.</p><br>
                 <p class="text-green-500 leading-tight">Complete this final game within 120 minutes! Goodluck Cyber Savants!
                 </p><br>
-                <x-commandLine>
                 {{-- <div class="flex">
                     <p class="text-green-500 leading-tight">IRGL C:\Users\NamaTim></p>
 
@@ -72,30 +71,94 @@
         </div>
     </section>
 
-
     <script>
-        var letterInputs = document.querySelectorAll('.letter-input');
+        let index = 0;
+        let terminal = document.getElementById('terminal');
 
-        letterInputs.forEach((input, index) => {
-            input.addEventListener('keyup', function(event) {
-                if (event.key.length === 1) {
-                    if (index < letterInputs.length - 1) {
-                        letterInputs[index + 1].focus();
-                    }
-                } else if (event.key === 'Backspace') {
-                    if (index > 0) {
-                        letterInputs[index - 1].focus();
-                    }
-                } else if (event.key === 'ArrowLeft') {
-                    if (index > 0) {
-                        letterInputs[index - 1].focus();
-                    }
-                } else if (event.key === 'ArrowRight') {
-                    if (index < letterInputs.length - 1) {
-                        letterInputs[index + 1].focus();
-                    }
-                }
-            });
+        // Array of correct answers for each command prompt
+        var correctAnswer = "DECODETHECYPHER"; // Replace with your actual answers
+
+        function terminalInit() {
+            appendComponent(index);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer(index); // Check if the answer is correct
+                disableInputs(index); // Disable the current input row
+                index++;
+
+                appendComponent(index); // Add the next row for input
+            }
         });
+
+        function appendComponent(index) {
+            let newCmd = document.createElement('div');
+            newCmd.innerHTML = `<x-cmd index=${index}></x-cmd>`;
+            terminal.appendChild(newCmd);
+
+            let letterInputs = document.querySelectorAll(`.letter-input${index}`);
+            letterInputs.forEach((input, i) => {
+                input.addEventListener('keyup', function(event) {
+                    handleInputKey(event, letterInputs, i);
+                });
+            });
+            letterInputs[0].focus();
+        }
+
+        function handleInputKey(event, letterInputs, i) {
+            if (event.key.length === 1) {
+                if (i < letterInputs.length - 1) {
+                    letterInputs[i + 1].focus();
+                }
+            } else if (event.key === 'Backspace') {
+                if (i > 0) {
+                    letterInputs[i - 1].focus();
+                }
+            } else if (event.key === 'ArrowLeft') {
+                if (i > 0) {
+                    letterInputs[i - 1].focus();
+                }
+            } else if (event.key === 'ArrowRight') {
+                if (i < letterInputs.length - 1) {
+                    letterInputs[i + 1].focus();
+                }
+            }
+        }
+
+        function disableInputs(index) {
+            let letterInputs = document.querySelectorAll(`.letter-input${index}`);
+            letterInputs.forEach((input) => {
+                input.disabled = true;
+            });
+        }
+
+        function checkAnswer(index) {
+            let letterInputs = document.querySelectorAll(`.letter-input${index}`);
+            let userAnswer = "";
+
+            // Concatenate the input values into a string
+            letterInputs.forEach((input) => {
+                userAnswer += input.value.toUpperCase(); // Convert to uppercase for case-insensitive comparison
+            });
+
+            console.log(userAnswer);
+
+            // Compare the user input with the correct answer
+            if (userAnswer === correctAnswer) {
+                displayFeedback("Correct!");
+            } else {
+                displayFeedback("Incorrect!");
+            }
+        }
+
+        function displayFeedback(message) {
+            let feedback = document.createElement('p');
+            feedback.classList.add('text-green-500', 'leading-tight');
+            feedback.textContent = message;
+            terminal.appendChild(feedback);
+        }
+
+        terminalInit();
     </script>
 @endsection

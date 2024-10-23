@@ -69,6 +69,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
     Route::get('/leaderboards', [adminController::class, 'leaderboards'])->name('leaderboards');
+    Route::get('/player-semi', [AdminController::class, 'playerSemi'])->name('playerSemi');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 
     Route::get('/team/{id}', [TeamController::class, 'getTeamById']);

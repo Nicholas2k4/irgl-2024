@@ -30,7 +30,7 @@
             77%,
             89%,
             97% {
-                box-shadow: 0 0 30px #853987, 0 0 80px #853987, 0 0 150px #023583;
+                box-shadow: 0 0 15px #853987, 0 0 40px #853987, 0 0 70px #023583;
             }
 
             3%,
@@ -40,11 +40,11 @@
             75%,
             88%,
             95% {
-                box-shadow: 0 0 10px #853987, 0 0 40px #853987, 0 0 80px #023583;
+                box-shadow: 0 0 5px #853987, 0 0 20px #853987, 0 0 40px #023583;
             }
 
             100% {
-                box-shadow: 0 0 20px #853987, 0 0 60px #853987, 0 0 100px #023583;
+                box-shadow: 0 0 10px #853987, 0 0 30px #853987, 0 0 50px #023583;
             }
         }
 
@@ -54,25 +54,124 @@
         }
 
         .main-layer {
-            backdrop-filter: blur(5.5px) brightness(0.7);
+            backdrop-filter: blur(15px) brightness(0.7);
         }
 
         .question-container {
             box-shadow: 0 0 20px #853987, 0 0 60px #853987, 0 0 100px #023583;
             animation: flicker 15s 1s infinite;
             transition: all .5s ease;
+            background-color: rgba(51, 123, 238, 0.401);
+        }
+
+        .input-answer {
+            box-shadow: 0 0 5px #009dff, 0 0 8px rgb(88, 219, 255);
+            transition: all .2s ease;
+        }
+
+        .input-answer:focus {
+            /* box-shadow: 0 0 5px white, 0 0 8px white; */
+            box-shadow: 0 0 5px white, 0 0 12px rgb(132, 228, 255);
+            outline: none;
+        }
+
+        .submit-button {
+            transition: all .2s ease;
+            box-shadow: 0 0 5px white, 0 0 8px rgb(132, 228, 255);
+        }
+
+        .submit-button:hover {
+            box-shadow: 0 0 8px white, 0 0 13px rgb(132, 228, 255);
+        }
+
+        .submit-button:active {
+            box-shadow: 0 0 2px white, 0 0 3px rgb(132, 228, 255);
+        }
+
+        body {
+            overflow-x: hidden;
         }
     </style>
 @endsection
 
 @section('content')
-    <div id="mainBackground" class="w-[500px] h-[500px] relative z-0 top-0 left-0"></div>
-    <div class="main-layer absolute w-screen h-screen z-50 top-0 left-0 overflow-hidden">
+    <div id="mainBackground" class="w-[500px] h-[500px] fixed z-0 top-0 left-0"></div>
+    <div class="main-layer absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">IRGL Final Game 1</h1>
-            <div class="question-container w-[800px] h-[500px] rounded-3xl bg-blue-500 bg-opacity-25"></div>
+            @foreach ($questions as $question)
+                <div class="question-container w-[800px] h-fit p-8 rounded-3xl bg-opacity-30 my-8">
+                    <p class="text-zinc-100">{{ $question->question }}</p>
+                    <div class="flex justify-center items-center mt-8 gap-x-8">
+                        <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
+                            class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100 bg-white bg-opacity-20">
+                        <button id="{{ 'submit-' . $question->id }}"
+                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]">
+                            Submit This Answer</button>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
+
+    <script>
+        function submitAnswer(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let answer = document.getElementById('answer-' + id).value;
+                    $.ajax({
+                        url: "{{ route('final.game1.store', '') }}/" + id,
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id,
+                            "answer": answer
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Oops...',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                })
+                            }
+                        },
+                        error: function(response) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Something went wrong!',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            })
+                        }
+                    });
+                }
+            })
+
+        }
+
+        let submitButtons = document.querySelectorAll('.submit-button');
+        for (let i = 0; i < submitButtons.length; i++) {
+            submitButtons[i].addEventListener('click', function() {
+                submitAnswer(i + 1);
+            })
+        }
+    </script>
 
     <!-- GLSL SCRIPT -->
     <!-- vertex shader -->

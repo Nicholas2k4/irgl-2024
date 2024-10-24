@@ -29,5 +29,9 @@ class FinalQuestionSeeder extends Seeder
                 'image' => null,
             ],
         ];
+
+        foreach ($questions as $question) {
+            \App\Models\FinalQuestion::create($question);
+        }
     }
 }

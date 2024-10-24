@@ -105,7 +105,7 @@ class TeamSeeder extends Seeder
                 'password' => Hash::make('password'), // Plain text password
                 'link_bukti_tf' => 'https://example.com/bukti_tf_teamJ.jpg',
                 'is_validated' => true,
-                'id_jadwal' => 61,
+                'id_jadwal' => 1,
                 'alasan_resched' => null,
                 'link_bukti_resched' => null,
             ]

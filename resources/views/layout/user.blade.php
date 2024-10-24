@@ -41,8 +41,17 @@
                 background-position: 0% 50%;
             }
         }
+
+        .swal2-confirm {
+            background: rgb(46, 143, 255) !important;
+        }
+
+        .swal2-deny,
+        .swal2-cancel {
+            background: rgb(255, 79, 79) !important;
+        }
     </style>
-   
+
     <script type="importmap">
         {
             "imports": {

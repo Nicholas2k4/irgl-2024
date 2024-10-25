@@ -55,6 +55,7 @@
 
         .main-layer {
             backdrop-filter: blur(15px) brightness(0.7);
+            -webkit-backdrop-filter: blur(15px) brightness(0.7);
         }
 
         .question-container {
@@ -75,16 +76,16 @@
             outline: none;
         }
 
-        .submit-button {
+        .animate-button {
             transition: all .2s ease;
             box-shadow: 0 0 5px white, 0 0 8px rgb(132, 228, 255);
         }
 
-        .submit-button:hover {
+        .animate-button:hover {
             box-shadow: 0 0 8px white, 0 0 13px rgb(132, 228, 255);
         }
 
-        .submit-button:active {
+        .animate-button:active {
             box-shadow: 0 0 2px white, 0 0 3px rgb(132, 228, 255);
         }
 
@@ -95,6 +96,11 @@
 @endsection
 
 @section('content')
+    <a href="{{ route('final.game2') }}" class="contents">
+        <button
+            class="fixed top-0 right-0 mt-8 mr-8 z-[100] animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-fit px-4 py-2 h-fit">
+            Go to Decode</button>
+    </a>
     <div id="mainBackground" class="w-[500px] h-[500px] fixed z-0 top-0 left-0"></div>
     <div class="main-layer absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
@@ -109,7 +115,7 @@
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
                             class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100 bg-white bg-opacity-20">
                         <button id="{{ 'submit-' . $question->id }}"
-                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]"
+                            class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]"
                             name="{{ $question->id }}">
                             Submit This Answer</button>
                     </div>

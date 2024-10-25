@@ -80,6 +80,10 @@ class Team extends Model implements AuthenticatableContract
         return $this->belongsTo(ElimQuestions::class, 'curr_question_id');
     }
 
+    public function finalStatistic()
+    {
+        return $this->hasOne(FinalStatistic::class, 'team_id');
+    }
     public function finalQuestions()
     {
         return $this->belongsToMany(FinalQuestion::class, 'final_answers', 'team_id', 'question_id');

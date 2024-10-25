@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
     Route::get('/reset', [JadwalController::class, 'reset'])->name('reset');
     Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
-    Route::put('/resetschedule',[JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
+    Route::put('/resetschedule', [JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
 
     Route::get('/lock', [LockController::class, 'index'])->name('lock.index');
     Route::get('/lock2', [LockController::class, 'index2'])->name('lock2.index');

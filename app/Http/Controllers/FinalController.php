@@ -7,6 +7,7 @@ use App\Models\Team;
 use Google\Service\Dataproc\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class FinalController extends Controller
 {
@@ -27,6 +28,30 @@ class FinalController extends Controller
     public function storeLogicAnswer(Request $request, $id)
     {
         $question = FinalQuestion::find($id);
+
+        $prevAnswer = DB::table('final_answers')
+            ->where('team_id', session('team_id'))
+            ->where('question_id', $id)
+            ->first();
+
+        if ($prevAnswer) {
+            if ($prevAnswer->is_correct) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'This Question already answered correctly!'
+                ]);
+            } else {
+                $cooldownEnd = Carbon::parse($prevAnswer->incorrect_at)->addMinutes(5);
+                if (now()->lessThan($cooldownEnd)) {
+                    $remainingTime = $cooldownEnd->diffInSeconds(now());
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Please wait for {$remainingTime} seconds before trying again."
+                    ]);
+                }
+            }
+        }
+
         if ($question->answer == $request->answer) {
             DB::table('final_answers')->updateOrInsert(
                 [
@@ -40,6 +65,11 @@ class FinalController extends Controller
                     'updated_at' => now()
                 ]
             );
+
+            $stats = Team::findOrFail(session('team_id'))->finalStatistic;
+            $stats->score += 25;
+            $stats->save();
+
             return response()->json(['success' => true, 'message' => 'Answer Correct!']);
         } else {
             DB::table('final_answers')->updateOrInsert(

@@ -32,17 +32,33 @@
     <div class="h-fit p-10 text-center">
         <div class="bg-gradient-to-r from-[#133D7D] to-[#711191]  rounded-lg px-7 py-4 w-full md:w-1/2 mx-auto">
             <h1 class="font-bold text-white text-2xl mt-3 mb-5 tracking-wider md:text-3xl">Clue Shop</h1>
-            <form action="{{ route('admin.market.store') }}" method="POST" id="form-buy">
+            <form action="{{ route('admin.buyClue') }}" method="POST" id="form-buy">
                 @csrf
                 <div class="relative mb-5">
-                    <h2 class="text-white">Team Name</h2>
-                    <h1 class="text-4xl mb-3 text-amber-300 font-bold" id='score-field'>score: -</h1>
+                    <h2 class="text-white text-start">Team Name</h2>
+                    <h1 class="text-2xl mb-3 text-amber-300 font-bold text-start" id='score-field'>score: -</h1>
                     <input type="text" id="team-name" placeholder="Search teams..."
                         class="w-full rounded-lg bg-transparent text-white border-white focus:border-indigo-500 focus:ring-indigo-500"
                         autocomplete="off" name="team-name">
                     <div id="dropdown" class="absolute z-10 w-full mt-1 bg-gray-800 rounded-lg shadow-lg hidden">
                         <ul id="dropdown-list" class="max-h-60 overflow-y-auto">
                             <!-- Options will be dynamically added here -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="relative mb-5">
+                    <h2 class="text-white text-start">Clue</h2>
+                    <h1 class="text-2xl mb-3 text-amber-300 font-bold text-start" id='price-field'>price: -</h1>
+                    <input type="text" placeholder="Search clue..."
+                        class="w-full rounded-lg bg-transparent text-white border-white focus:border-indigo-500 focus:ring-indigo-500"
+                        autocomplete="off" name="clue" id="clue-placeholder">
+                    <div class="absolute z-10 w-full mt-1 bg-gray-800 rounded-lg shadow-lg hidden" id="dropdown-clue">
+                        <ul class="max-h-60 overflow-y-auto">
+                            <li class="p-2 text-white cursor-pointer hover:bg-indigo-500">Clue 1</li>
+                            <li class="p-2 text-white cursor-pointer hover:bg-indigo-500">Clue 1</li>
+                            <li class="p-2 text-white cursor-pointer hover:bg-indigo-500">Clue 1</li>
+                            <li class="p-2 text-white cursor-pointer hover:bg-indigo-500">Clue 1</li>
+                            <li class="p-2 text-white cursor-pointer hover:bg-indigo-500">Clue 1</li>
                         </ul>
                     </div>
                 </div>
@@ -57,7 +73,7 @@
             <button id='submit-buy'
                 class="bg-gradient-to-r from-green-300 to-green-700
                  hover:from-[#235aad] hover:via-[#845893] hover:to-[#497cc9] px-4 py-2 rounded-lg cursor-pointer mt-4 text-white font-bold ease-in-out duration-500">Buy
-                Items</button>
+                Clue</button>
         </div>
     </div>
 @endsection
@@ -68,28 +84,14 @@
         bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
 
         $(document).ready(function() {
-            // Dynamic item price
-            // $('.item-qty').on('change keyup', function() {
-            //     let emailQty = $('#email-qty').val();
-            //     let encryptQty = $('#encrypt-qty').val();
-            //     let trafficQty = $('#traffic-qty').val();
-            //     let antivirusQty = $('#antivirus-qty').val();
-            //     let inputQty = $('#input-qty').val();
-
-
-            //     let totalPrice = emailQty * emailPrice + encryptQty * encryptPrice + trafficQty *
-            //         trafficPrice + antivirusQty * antivirusPrice +
-            //         inputQty * inputPrice;
-            //     $('#total-price').html('Total: ' + totalPrice);
-            // });
-
-
-
             // Dynamic team dropdown
             const input = $('#team-name');
             const dropdown = $('#dropdown');
             const dropdownList = $('#dropdown-list');
+            const dropdownClue = $('#dropdown-clue');
             const teams = @json($teams);
+
+            const cluePlaceholder = $('#clue-placeholder');
 
             input.on('input', function() {
                 const query = input.val().toUpperCase();
@@ -112,14 +114,21 @@
 
             $(document).on('click', function(event) {
                 dropdown.addClass('hidden');
+                if (!dropdownClue.is(event.target) && !dropdownClue.has(event.target).length &&
+                    !cluePlaceholder.is(event.target) && !cluePlaceholder.has(event.target).length) {
+                    dropdownClue.addClass('hidden'); 
+                }
             });
 
-
+            cluePlaceholder.on('click', function(event) {
+                event.stopPropagation();
+                dropdownClue.removeClass('hidden');
+            });
 
             // Confirmation before submit
             $('#submit-buy').on('click', function(event) {
                 Swal.fire({
-                    title: "Buy items for team " + $('#team-name').val() + "?",
+                    title: "Buy clue for team " + $('#team-name').val() + "?",
                     showCancelButton: true,
                     confirmButtonText: "BUY!",
                 }).then((result) => {

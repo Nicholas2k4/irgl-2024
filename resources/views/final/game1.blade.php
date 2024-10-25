@@ -103,7 +103,7 @@
                 {{ $score }}</h1>
             @foreach ($questions as $question)
                 <div class="question-container w-[800px] h-fit p-8 rounded-3xl bg-opacity-30 my-8">
-                    <p class="text-zinc-100">{{ $question->question }}</p>
+                    <p class="text-zinc-100">{!! $question->question !!}</p>
                     {{-- Tambahi image --}}
                     <div class="flex justify-center items-center mt-8 gap-x-8">
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"

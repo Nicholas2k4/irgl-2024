@@ -16,7 +16,10 @@ class FinalController extends Controller
     {
         $data['title'] = "Final Game 1";
         $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
-        $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
+        // $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
+        $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
+        $data['team_name'] = Team::where('id', session('team_id'))->first()->nama;
+        $data['score'] = Team::where('id', session('team_id'))->first()->finalStatistic->score;
         return view('final.game1', $data);
     }
     public function game2()
@@ -51,6 +54,7 @@ class FinalController extends Controller
                 }
             }
         }
+
 
         if ($question->answer == $request->answer) {
             DB::table('final_answers')->updateOrInsert(

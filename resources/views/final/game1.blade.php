@@ -99,6 +99,7 @@
     <div class="main-layer absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">IRGL Final Game 1</h1>
+            <h1 class="w-full text-center text-2xl text-white font-semibold my-8">{{ $team_name }} Score : {{ $score }}</h1>
             @foreach ($questions as $question)
                 <div class="question-container w-[800px] h-fit p-8 rounded-3xl bg-opacity-30 my-8">
                     <p class="text-zinc-100">{{ $question->question }}</p>
@@ -106,7 +107,7 @@
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
                             class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100 bg-white bg-opacity-20">
                         <button id="{{ 'submit-' . $question->id }}"
-                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]">
+                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]" name="{{ $question->id }}">
                             Submit This Answer</button>
                     </div>
                 </div>
@@ -167,8 +168,9 @@
 
         let submitButtons = document.querySelectorAll('.submit-button');
         for (let i = 0; i < submitButtons.length; i++) {
+            let questionId = parseInt(submitButtons[i].name, 10)
             submitButtons[i].addEventListener('click', function() {
-                submitAnswer(i + 1);
+                submitAnswer(questionId);
             })
         }
     </script>
@@ -187,7 +189,7 @@
 		uniform vec2 resolution;
 		uniform float time;
 		uniform vec2 colsrows;
-	
+
 		float HueToRGB(float f1, float f2, float hue)
 		{
 			if (hue < 0.0)
@@ -212,7 +214,7 @@
 			vec3 rgb;
 
 			if (hsl.y == 0.0)
-				rgb = vec3(hsl.z); 
+				rgb = vec3(hsl.z);
 			else
 			{
 				float f2;
@@ -231,12 +233,12 @@
 
 			return rgb;
 		}
-	
+
 		mat2 rotate2d(float _angle){
 			return mat2(cos(_angle),-sin(_angle),
 						sin(_angle),cos(_angle));
 		}
-		
+
 		vec2 rotateFrom(vec2 uv, vec2 center, float angle){
 			vec2 uv_ = uv - center;
 			uv_ =  rotate2d(angle) * uv_;
@@ -244,36 +246,36 @@
 
 			return uv_;
 		}
-		
+
 		float random(float value){
 			return fract(sin(value) * 43758.5453123);
 		}
-		
+
 		float random(vec2 tex){
 			return fract(sin(dot(tex.xy, vec2(12.9898, 78.233))) * 43758.5453123);
 		}
-	
+
 		vec2 random2D(vec2 uv){
 			uv = vec2(dot(uv, vec2(127.1, 311.7)), dot(uv, vec2(269.5, 183.3)));
-			
-			return fract(sin(uv) * 43758.5453123); 
+
+			return fract(sin(uv) * 43758.5453123);
 		}
 
 		vec3 random3D(vec3 uv){
 			uv = vec3(dot(uv, vec3(127.1, 311.7, 120.9898)), dot(uv, vec3(269.5, 183.3, 150.457)), dot(uv, vec3(380.5, 182.3, 170.457)));
 			return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
 		}
-	
+
 		float cubicCurve(float value){
-			return value * value * (3.0 - 2.0 * value); 
+			return value * value * (3.0 - 2.0 * value);
 		}
 
 		vec2 cubicCurve(vec2 value){
-			return value * value * (3.0 - 2.0 * value); 
+			return value * value * (3.0 - 2.0 * value);
 		}
 
 		vec3 cubicCurve(vec3 value){
-			return value * value * (3.0 - 2.0 * value); 
+			return value * value * (3.0 - 2.0 * value);
 		}
 
 		float noise(vec2 uv){
@@ -319,48 +321,48 @@
 
 			return mix(passH0, passH1, suv.z);
 		}
-	
+
 		float rect(vec2 uv, vec2 length, float lembut){
 			float dx = abs(uv.x - 0.5);
 			float dy = abs(uv.y - 0.5);
 			float lenx = 1.0 - smoothstep(length.x - lembut, length.x + lembut, dx);
 			float leny = 1.0 - smoothstep(length.y - lembut, length.y + lembut, dy);
-			
+
 			return lenx * leny;
 		}
-	
+
 		vec4 addGrain(vec2 uv, float time, float grainIntensity){
     		float grain = random(fract(uv * time)) * grainIntensity;
     		return vec4(vec3(grain), 1.0);
 		}
-	
+
 		vec2 fishey(vec2 uv, vec2 center, float ratio, float dist){
 			  vec2 puv = uv + vec2(1.0);
-			 
+
 			  vec2 m = vec2(center.x, center.y/ratio) + vec2(1.0);
-			  
+
 			  vec2 d = puv - m;
-			  
-			  float r = sqrt(dot(d, d)); 
-			  
+
+			  float r = sqrt(dot(d, d));
+
 			  float power = ( TWO_PI / (2.0 * sqrt(dot(m, m)))) * mix(0.1, 0.4, pow(dist, 0.75));
-			  
+
 			  float bind;
 			  if (power > 0.0) bind = sqrt(dot(m, m));
-			  
 
-			  
+
+
 			  vec2 nuv;
 			  if (power > 0.0)
 				nuv = m + normalize(d) * tan(r * power) * bind / tan( bind * power);
 			  else if (power < 0.0)
 			   nuv = m + normalize(d) * atan(r * -power * 10.0) * bind / atan(-power * bind * 10.0);
-			  else 
+			  else
 				nuv = puv;
 
 			return nuv - vec2(1.0);
 		}
-	
+
 		float addStreamLine(vec2 uv, float rows, float height, float lembut){
 			vec2 uvstream = uv * vec2(1.0, rows);
 			float distFromCenter = abs(0.5 - fract(uvstream.y));
@@ -376,33 +378,33 @@
 			vec2 uv = gl_FragCoord.xy / resolution.xy;
 			vec2 ouv = uv;
 			float ratio = resolution.x / resolution.y;
-			
+
 			float horizontalGlitch = sin(random(uv.y) * TWO_PI);
 			float noiseAmp = noise(vec2(uv.y + time * horizontalGlitch));
 			float minAmp = 0.001;
 			float maxAmp = 0.005;
 			float amp = mix(minAmp, maxAmp, noiseAmp);
 			uv.x = fract(uv.x + amp);
-			
+
 			uv = fishey(uv, vec2(0.5, 0.5/ratio), 1.0, 2.0);
 			uv = rotateFrom(uv, vec2(0.5, 0.5 * ratio), time * 0.01);
-			
-			
+
+
 			float indexCol = floor(uv.x * (colsrows.x * 2.0)/ratio);
 			float randColIndex = random(indexCol);
 			float orientation = randColIndex * 2.0 - 1.0;
 			float minSpeed = 0.1;
 			float maxSpeed = 0.5;
 			float speed = mix(minSpeed, maxSpeed, randColIndex);
-			
+
 			uv.y += time * speed * orientation;
 			uv.y += floor(time);
-			
-			
+
+
 			vec2 nuv = uv * vec2(colsrows.x, colsrows.x / ratio);
 			vec2 fuv = fract(nuv);
 			vec2 iuv = floor(nuv);
-	
+
 			#define OCTAVE 4
 			#define SUBDIV 3
 			float sub = 0.0;
@@ -419,49 +421,49 @@
 			float indexRatio = step(2.0, sub);
 			float index = random(iuv);
 			float isLight = step(0.5, index) * indexRatio;
-				
-			
+
+
 			float randIndex = random(iuv * 0.01 + floor(time));
 			float minSize = 0.05;
 			float maxSize = 0.35;
 			float size = mix(minSize, maxSize, randIndex);
-			
+
 			float shape = rect(fuv, vec2(size), 0.01) * isLight;
-			
-			
+
+
 			float shiftNoiseAnimation = noise(vec2(iuv * time * 0.1)) * 0.25;
 			float shiftRandomAnimation = random(vec2(time)) * 0.01;
 			vec2 offset = vec2(shiftRandomAnimation + shiftNoiseAnimation, 0.0);
 			float shapeRed = rect(fuv - offset, vec2(size), 0.01);
 			float shapeGreen = rect(fuv + offset, vec2(size), 0.01);
 			float shapeBlue = rect(fuv, vec2(size), 0.01);
-			
+
 			float minHue = 0.6;
 			float maxHue = 1.0;
 			float hue = mix(minHue, maxHue, randIndex);
-			
+
 			float randIndex2 = random(iuv * 0.5 + floor(time));
 			float minLightness = 0.65;
 			float maxLightness = 0.85;
 			float lightness = mix(minLightness, maxLightness, randIndex2);
-			
+
 			vec3 background = HSLToRGB(vec3(336.0/360.0, 0.75, 0.075));
 			vec3 foreground = HSLToRGB(vec3(hue, 1.0, lightness));
-			
+
 			vec3 shapeShift = vec3(shapeRed, shapeGreen, shapeBlue) * shape;
 			vec3 final = mix(background, foreground, shapeShift);
-			
-			
+
+
 			float randGrain = random(time * 0.001);
 			vec4 grain = addGrain(uv, time, 0.05 + randGrain * 0.05);
-			
+
 			vec2 souv = fract(ouv + vec2(0.0, time * 0.05));
 			float brightness = sin(souv.y * TWO_PI * 2.0);
 			float vhsLines = addStreamLine(souv, 200.0, 0.35, 0.01) * brightness;
-		
+
 			gl_FragColor = vec4(final, 1.0) + vhsLines * 0.05 + grain;
 		}
-        
+
     </script>
 
     <script type="module">

@@ -126,6 +126,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
     Route::put('/resetschedule', [JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
 
+    Route::get('/clue', [FinalController::class, 'clue'])->name('clue');
+    Route::get('/clue', [FinalController::class, 'buyClue'])->name('buyClue');
+
     Route::get('/lock', [LockController::class, 'index'])->name('lock.index');
     Route::get('/lock2', [LockController::class, 'index2'])->name('lock2.index');
     Route::post('/lock', [LockController::class, 'store'])->name('lock.store');

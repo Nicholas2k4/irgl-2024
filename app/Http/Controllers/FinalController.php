@@ -94,4 +94,22 @@ class FinalController extends Controller
             return response()->json(['success' => false, 'message' => 'Incorrect Answer!']);
         }
     }
+
+    public function clue()
+    {
+        $teams = DB::table('teams')
+            ->join('final_statistics', 'teams.id', '=', 'final_statistics.team_id')
+            ->select('teams.nama as nama', 'final_statistics.score as score')
+            ->get();
+
+        return view('admin.clue', [
+            'title' => 'Clue',
+            'teams' => $teams,
+        ]);
+    }
+
+    public function buyClue(Request $request)
+    {
+        dd($request);
+    }
 }

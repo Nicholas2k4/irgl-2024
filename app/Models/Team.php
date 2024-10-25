@@ -33,7 +33,8 @@ class Team extends Model implements AuthenticatableContract
         'curr_streak',
         'curr_gp_streak',
         'curr_game_rotation',
-        'curr_question_id'
+        'curr_question_id',
+        'status',
     ];
 
     public function user()

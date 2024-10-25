@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function leaderboards()
     {
-        
+
         $statWithJadwal = ElimStatistics::with(['team.jadwal','team'])
         ->whereNotNull('end_time')
         ->get()
@@ -160,6 +160,14 @@ class AdminController extends Controller
         return view('admin.scoringSystem', [
             'leaderboards' => $leaderboards,
             'title' => 'Leaderboards'
+        ]);
+    }
+
+    public function playerSemi(){
+        $teams = Team::where('status', '>=', 1)->get();
+        return view('admin.semiPlayer', [
+            'teams' => $teams,
+            'title' => 'Semi Player',
         ]);
     }
 }

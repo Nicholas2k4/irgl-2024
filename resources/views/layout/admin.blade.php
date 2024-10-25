@@ -50,18 +50,18 @@
 
             <div id="ull" class="hidden absolute bg-gradient-to-r from-[#6b2b52] to-[#311b55] sm:bg-none sm:shadow-none shadow-xl shadow-[#0000002D] sm:static sm:justify-end sm:max-w-[71.6vw] min-h-[35vh] left-0 top-[9%] w-full sm:flex justify-center items-center">
                 <ul class="flex flex-col sm:flex-row sm:gap-[1.4vw] gap-[5vh] h-full w-[97vw] sm:max-w-[100%] sm:justify-end">
-                    <li class="flex">
+                    {{-- <li class="flex">
                         <a id="home" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.main') }}">Home</a>
-                    </li>
+                    </li> --}}
                     <li class="flex">
                         <a id="infos" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.infos.index') }}">Info</a>
                     </li>
                     <li class="flex">
                         <a id="rekapTeam" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.rekapTeam') }}">Team</a>
                     </li>
-                    <li class="flex">
+                    {{-- <li class="flex">
                         <a id="jadwal" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.jadwal.main') }}">Jadwal</a>
-                    </li>
+                    </li> --}}
                     <li class="flex">
                         <a id="points" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.inputscoreteam') }}">Points</a>
                     </li>
@@ -71,11 +71,11 @@
                     <li class="flex">
                         <a id="news" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.news') }}">News</a>
                     </li>
-                    <li class="flex">
+                    {{-- <li class="flex">
                         <a id="news" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.leaderboards') }}">Leaderboard</a>
-                    </li>
+                    </li> --}}
                     <li class="flex">
-                         <a class="rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 px-5 text-lg w-full h-full hover:bg-red-800/80 mb-3 md:mb-0" href="{{ route('logout') }}">Log Out</a>
+                         <a class="rounded-lg text-[#fff]/60 hover:text-[#fff]/80 p-1 px-4 text-lg w-full h-full hover:bg-red-800/80 mb-3 md:mb-0" href="{{ route('logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
                     </li>
                 </ul>
             </div>

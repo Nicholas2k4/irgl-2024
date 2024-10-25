@@ -16,6 +16,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\InputScoreTeamController;
+use App\Http\Controllers\LockController;
 use App\Http\Middleware\ClosedMiddleware;
 
 /*
@@ -91,6 +92,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/main', [adminController::class, 'main'])->name('main');
     Route::get('/rekapTeam', [adminController::class, 'rekapTeam'])->name('rekapTeam');
     Route::get('/leaderboards', [adminController::class, 'leaderboards'])->name('leaderboards');
+    Route::get('/player-semi', [AdminController::class, 'playerSemi'])->name('playerSemi');
     Route::post('/validasiBuktiTransfer/{id}', [AdminController::class, 'validasiBuktiTransfer'])->name('validasiBuktiTransfer');
 
     Route::get('/team/{id}', [TeamController::class, 'getTeamById']);
@@ -122,5 +124,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
     Route::get('/reset', [JadwalController::class, 'reset'])->name('reset');
     Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
-    Route::put('/resetschedule', [JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
+    Route::put('/resetschedule',[JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
+
+    Route::get('/lock', [LockController::class, 'index'])->name('lock.index');
+    Route::get('/lock2', [LockController::class, 'index2'])->name('lock2.index');
+    Route::post('/lock', [LockController::class, 'store'])->name('lock.store');
+    Route::post('/lock2', [LockController::class, 'store2'])->name('lock2.store');
 });

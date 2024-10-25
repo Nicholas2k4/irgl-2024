@@ -51,13 +51,13 @@ class Team extends Model implements AuthenticatableContract
         return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
     public function jadwalResched()
-{
-    return $this->belongsTo(Jadwal::class, 'id_jadwal_resched');
-}
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal_resched');
+    }
 
     public function games()
     {
-        return $this->belongsToMany(ElimGames::class,'elim_scores','id_team','id_game')->withPivot('score','time','created_at','updated_at');
+        return $this->belongsToMany(ElimGames::class, 'elim_scores', 'id_team', 'id_game')->withPivot('score', 'time', 'created_at', 'updated_at');
     }
     public function history()
     {
@@ -78,5 +78,30 @@ class Team extends Model implements AuthenticatableContract
     public function elimquestions()
     {
         return $this->belongsTo(ElimQuestions::class, 'curr_question_id');
+    }
+
+    public function finalStatistic()
+    {
+        return $this->hasOne(FinalStatistic::class, 'team_id');
+    }
+    public function finalQuestions()
+    {
+        return $this->belongsToMany(FinalQuestion::class, 'final_answers', 'team_id', 'question_id');
+    }
+    public function unansweredFinalQuestion()
+    {
+        $team_id = $this->id;
+        $questions = FinalQuestion::leftJoin('final_answers', function ($join) use ($team_id) {
+            $join->on('final_questions.id', '=', 'final_answers.question_id')
+                ->where('final_answers.team_id', '=', $team_id);
+        })
+            ->where(function ($query) {
+                $query->where('final_answers.is_correct', '!=', 1)
+                    ->orWhereNull('final_answers.id');
+            })
+            ->select('final_questions.*')
+            ->get();
+
+        return $questions;
     }
 }

@@ -96,8 +96,7 @@ class AuthController extends BaseController
         if (Session::has('isAdmin')) {
             $request->session()->flush();
             return redirect()->to("/admin")->with('success', 'Log out success!');
-        }
-        else{
+        } else {
             $request->session()->flush();
             return redirect()->to("/")->with('success', 'Log out success!');
         }
@@ -121,7 +120,7 @@ class AuthController extends BaseController
     //login for team
     public function login(Request $request)
     {
-        // dd($request->all());
+        // dd($request->all()); 
         $creds = $request->only('team_name', 'password');
         $validate = Validator::make(
             $creds,

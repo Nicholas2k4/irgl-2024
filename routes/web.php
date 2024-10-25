@@ -10,6 +10,7 @@ use App\Http\Controllers\InfoController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FinalController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MarketController;
@@ -36,6 +37,10 @@ Route::get('/homepage-hp', function () {
     return view('homepage-hp');
 })->name('homepage.hp');
 
+
+/**
+ * Routes for registration
+ */
 Route::controller(RegisterController::class)->middleware([ClosedMiddleware::class])->group(function () {
     Route::get('/register', function () {
         return redirect('register/step-one');
@@ -51,6 +56,7 @@ Route::controller(RegisterController::class)->middleware([ClosedMiddleware::clas
     Route::get('/register/complete', 'completeRegistration')->name('register.complete');
 });
 
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login-form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
@@ -65,6 +71,22 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
     Route::get('/info', [InfoController::class, 'userIndex'])->name('info');
 });
+
+/**
+ * Routes for final game
+ */
+Route::prefix('final')->group(function () {
+    Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
+    Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
+    Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');
+
+    Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
+});
+
+
+/**
+ * Routes for admin
+ */
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     Route::get('/main', [adminController::class, 'main'])->name('main');
@@ -102,7 +124,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::get('/generate-dummy-teams', [TeamController::class, 'generateDummyTeams']);
     Route::get('/reset', [JadwalController::class, 'reset'])->name('reset');
     Route::post('/reset', [JadwalController::class, 'resetPost'])->name('resetgame-team');
-    Route::put('/resetschedule',[JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
+    Route::put('/resetschedule', [JadwalController::class, 'resetSchedule'])->name('resetgame-schedule');
+
+    Route::get('/clue', [FinalController::class, 'clue'])->name('clue');
+    Route::get('/clue', [FinalController::class, 'buyClue'])->name('buyClue');
 
     Route::get('/lock', [LockController::class, 'index'])->name('lock.index');
     Route::get('/lock2', [LockController::class, 'index2'])->name('lock2.index');

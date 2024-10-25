@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TeamSeeder::class);
         // $this->call(StatisticTeamSeeder::class);
         // $this->call(ElimQuestionSeeder::class);
+
+        // $this->call(FinalQuestionSeeder::class);
     }
 }

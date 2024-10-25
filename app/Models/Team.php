@@ -40,7 +40,7 @@ class Team extends Model implements AuthenticatableContract
     {
         return $this->hasMany(User::class, 'id_tim');
     }
-    
+
     public function getAuthPassword()
     {
         return $this->password;
@@ -50,13 +50,13 @@ class Team extends Model implements AuthenticatableContract
         return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
     public function jadwalResched()
-{
-    return $this->belongsTo(Jadwal::class, 'id_jadwal_resched');
-}
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal_resched');
+    }
 
     public function games()
     {
-        return $this->belongsToMany(ElimGames::class,'elim_scores','id_team','id_game')->withPivot('score','time','created_at','updated_at');
+        return $this->belongsToMany(ElimGames::class, 'elim_scores', 'id_team', 'id_game')->withPivot('score', 'time', 'created_at', 'updated_at');
     }
     public function history()
     {
@@ -77,5 +77,10 @@ class Team extends Model implements AuthenticatableContract
     public function elimquestions()
     {
         return $this->belongsTo(ElimQuestions::class, 'curr_question_id');
+    }
+
+    public function finalQuestions()
+    {
+        return $this->belongsToMany(FinalQuestion::class, 'final_answers', 'team_id', 'question_id');
     }
 }

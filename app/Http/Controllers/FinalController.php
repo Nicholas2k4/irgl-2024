@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FinalQuestion;
+use App\Models\Team;
 use Google\Service\Dataproc\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ class FinalController extends Controller
     public function game1()
     {
         $data['title'] = "Final Game 1";
+        $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
         $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
         return view('final.game1', $data);
     }

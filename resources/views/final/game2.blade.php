@@ -76,7 +76,7 @@
         let terminal = document.getElementById('terminal');
 
         // Array of correct answers for each command prompt
-        var correctAnswer = "DECODETHECYPHER"; // Replace with your actual answers
+        var correctAnswer = "XAJGXAVNAJDBNAM"; // Replace with actual answer
 
         function terminalInit() {
             appendComponent(index);

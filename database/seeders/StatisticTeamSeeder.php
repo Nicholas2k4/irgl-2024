@@ -17,9 +17,9 @@ class StatisticTeamSeeder extends Seeder
     {
         //
         $statistic =[
-            [
-                'id_team' => Team::where('nama', 'Team 11')->first()->id,
-            ],
+            // [
+            //     'id_team' => Team::where('nama', 'Team 1')->first()->id,
+            // ],
             // [
             //     'id_team' => Team::where('nama', 'Team B')->first()->id,
             // ],

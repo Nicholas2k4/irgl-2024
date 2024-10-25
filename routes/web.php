@@ -81,6 +81,7 @@ Route::prefix('final')->group(function () {
     Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');
 
     Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
+    Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');
 });
 
 

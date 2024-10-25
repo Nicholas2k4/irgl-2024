@@ -142,19 +142,42 @@
                 userAnswer += input.value.toUpperCase(); // Convert to uppercase for case-insensitive comparison
             });
 
-            console.log(userAnswer);
 
             // Compare the user input with the correct answer
             if (userAnswer === correctAnswer) {
-                displayFeedback("Correct!");
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('final.game2.store') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        answer: userAnswer
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Congratulations',
+                            text: response.message,
+                            icon: 'success',
+                        }).then(() => {
+                            window.location.href = "{{ route('final.game3') }}";
+                        });
+                    },
+                    error: function(response) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.responseJSON.message,
+                            icon: 'error',
+                        })
+                        console.log(response);
+                    }
+                })
             } else {
-                displayFeedback("Incorrect!");
+                displayFeedback("Incorrect answer!");
             }
         }
 
         function displayFeedback(message) {
             let feedback = document.createElement('p');
-            feedback.classList.add('text-green-500', 'leading-tight');
+            feedback.classList.add('text-red-500', 'leading-tight');
             feedback.textContent = message;
             terminal.appendChild(feedback);
         }

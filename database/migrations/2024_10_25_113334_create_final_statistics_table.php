@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('final_statistics', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('team_id');
+            $table->dateTime('decode_time')->nullable();
             $table->integer('score')->default(0);
             $table->boolean('has_clue1')->default(0);
             $table->boolean('has_clue2')->default(0);

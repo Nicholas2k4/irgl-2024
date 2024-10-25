@@ -82,7 +82,7 @@ class Team extends Model implements AuthenticatableContract
 
     public function finalStatistic()
     {
-        return $this->hasOne(FinalStatistic::class, 'team_id');
+        return $this->hasOne(FinalStatistic::class, 'team_id', 'id');
     }
     public function finalQuestions()
     {

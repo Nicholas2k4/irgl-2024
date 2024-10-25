@@ -99,15 +99,18 @@
     <div class="main-layer absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">IRGL Final Game 1</h1>
-            <h1 class="w-full text-center text-2xl text-white font-semibold my-8">{{ $team_name }} Score : {{ $score }}</h1>
+            <h1 class="w-full text-center text-2xl text-white font-semibold my-8">{{ $team_name }} Score :
+                {{ $score }}</h1>
             @foreach ($questions as $question)
                 <div class="question-container w-[800px] h-fit p-8 rounded-3xl bg-opacity-30 my-8">
                     <p class="text-zinc-100">{{ $question->question }}</p>
+                    {{-- Tambahi image --}}
                     <div class="flex justify-center items-center mt-8 gap-x-8">
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
                             class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100 bg-white bg-opacity-20">
                         <button id="{{ 'submit-' . $question->id }}"
-                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]" name="{{ $question->id }}">
+                            class="submit-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-[300px] h-[40px]"
+                            name="{{ $question->id }}">
                             Submit This Answer</button>
                     </div>
                 </div>

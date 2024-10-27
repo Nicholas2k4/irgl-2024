@@ -31,6 +31,7 @@ class FinalController extends Controller
     public function game3()
     {
         $data['title'] = "Final Cryptography";
+        $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
         return view('final.game3', $data);
     }
     public function storeLogicAnswer(Request $request, $id)

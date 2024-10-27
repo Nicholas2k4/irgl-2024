@@ -16,6 +16,7 @@ return new class extends Migration
             $table->longText('question');
             $table->string('answer');
             $table->string('image')->nullable();
+            $table->string('category');
             $table->timestamps();
         });
     }

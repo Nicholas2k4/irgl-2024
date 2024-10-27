@@ -129,7 +129,7 @@
                         <i class="fa-solid fa-users-between-lines mr-4"></i>{{ $team_name }}
                     </h1>
                     <h1 class="rounded-lg text-center text-2xl text-white font-semibold flex justify-start items-center">
-                        <i class="fa-solid fa-money-bill-wave mr-4"></i>{{ $score }}
+                        <i class="fa-solid fa-money-check-dollar mr-4"></i>{{ $score }}
                     </h1>
                 </div>
             </div>

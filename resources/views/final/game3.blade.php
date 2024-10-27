@@ -122,17 +122,7 @@
     </div>
     <div class="absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
-            <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Quiz</h1>
-            <div class="w-[800px]">
-                <div class="info w-fit rounded-md px-4 py-2">
-                    <h1 class="rounded-lg text-center text-2xl text-white font-semibold flex justify-start items-center">
-                        <i class="fa-solid fa-users-between-lines mr-4"></i>{{ $team_name }}
-                    </h1>
-                    <h1 class="rounded-lg text-center text-2xl text-white font-semibold flex justify-start items-center">
-                        <i class="fa-solid fa-money-bill-wave mr-4"></i>{{ $score }}
-                    </h1>
-                </div>
-            </div>
+            <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Cryptography</h1>
             <div class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8">
                 <p class="text-zinc-100">{!! env('SET_A') !!}</p>
                 {{-- Tambahi image --}}

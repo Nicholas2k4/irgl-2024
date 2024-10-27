@@ -75,7 +75,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 /**
  * Routes for final game
  */
-Route::prefix('final')->group(function () {
+Route::prefix('final')->middleware([ClosedMiddleware::class])->group(function () {
     Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
     Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
     Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');

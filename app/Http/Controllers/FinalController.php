@@ -8,6 +8,7 @@ use Google\Service\Dataproc\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Exception;
 
 class FinalController extends Controller
 {
@@ -105,7 +106,7 @@ class FinalController extends Controller
     {
         $teams = DB::table('teams')
             ->join('final_statistics', 'teams.id', '=', 'final_statistics.team_id')
-            ->select('teams.nama as nama', 'final_statistics.score as score')
+            ->select('teams.nama as nama', 'final_statistics.*')
             ->get();
 
         return view('admin.clue', [
@@ -116,7 +117,68 @@ class FinalController extends Controller
 
     public function buyClue(Request $request)
     {
-        dd($request);
+         // validate request
+         $request->validate([
+            'team-name' => 'required|string',
+            'clue' => 'required',
+        ]);
+
+        // check if the team exists
+        try {
+            $team = Team::where('nama', $request['team-name'])->firstOrFail();
+            // return redirect()->route('admin.clue')->with('success', 'Team ' . $request['team-name'] . ' found! Score=' . $team->finalStatistic->score);
+        } catch (Exception $e) {
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' not found!');
+        }
+
+        // check if already bought
+        if($request['clue'] == 1 && $team->finalStatistic->has_clue1){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 1!');
+        }
+        if($request['clue'] == 2 && $team->finalStatistic->has_clue2){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 2!');
+        }
+        if($request['clue'] == 3 && $team->finalStatistic->has_clue3){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 3!');
+        }
+        if($request['clue'] == 4 && $team->finalStatistic->has_clue4){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 4!');
+        }
+        if($request['clue'] == 5 && $team->finalStatistic->has_clue5){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 5!');
+        }
+        if($request['clue'] == 6 && $team->finalStatistic->has_clue6){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 6!');
+        }
+        if($request['clue'] == 7 && $team->finalStatistic->has_clue7){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought dictionary 1!');
+        }
+        if($request['clue'] == 8 && $team->finalStatistic->has_clue8){
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought dictionary 2!');
+        }
+
+        // payment
+        DB::beginTransaction();
+        $price = $request['clue'] <= 6 ? 15:100;
+
+        if($team->finalStatistic->score < $price){
+            DB::rollBack();
+            return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . " doesnt has enough points!");
+        }
+        else{
+            $team->finalStatistic->score -= $price;
+            if($request['clue'] == 1) $team->finalStatistic->has_clue1 = true;
+            if($request['clue'] == 2) $team->finalStatistic->has_clue2 = true;
+            if($request['clue'] == 3) $team->finalStatistic->has_clue3 = true;
+            if($request['clue'] == 4) $team->finalStatistic->has_clue4 = true;
+            if($request['clue'] == 5) $team->finalStatistic->has_clue5 = true;
+            if($request['clue'] == 6) $team->finalStatistic->has_clue6 = true;
+            if($request['clue'] == 7) $team->finalStatistic->has_clue7 = true;
+            if($request['clue'] == 8) $team->finalStatistic->has_clue8 = true;
+            $team->finalStatistic->save();
+            DB::commit();
+            return redirect()->route('admin.clue')->with('success', 'Team ' . $request['team-name'] . ' transaction success!');
+        }
     }
 
     public function storeDecode(Request $request)

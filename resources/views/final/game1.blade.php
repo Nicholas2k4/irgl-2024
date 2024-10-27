@@ -82,16 +82,16 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        .submit-button {
+        .animate-button {
             transition: all .2s ease;
             box-shadow: 0 0 5px white, 0 0 8px rgb(132, 228, 255);
         }
 
-        .submit-button:hover {
+        .animate-button:hover {
             box-shadow: 0 0 8px white, 0 0 13px rgb(132, 228, 255);
         }
 
-        .submit-button:active {
+        .animate-button:active {
             box-shadow: 0 0 2px white, 0 0 3px rgb(132, 228, 255);
         }
 

@@ -14,7 +14,7 @@ class FinalController extends Controller
 
     public function game1()
     {
-        $data['title'] = "Final Game 1";
+        $data['title'] = "Final Quiz";
         $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
         // $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
         $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
@@ -24,9 +24,14 @@ class FinalController extends Controller
     }
     public function game2()
     {
-        $data['title'] = "Final Game 2";
+        $data['title'] = "Final Decode";
         $data['words'] = env('SECRET_WORDS');
         return view('final.game2', $data);
+    }
+    public function game3()
+    {
+        $data['title'] = "Final Cryptography";
+        return view('final.game3', $data);
     }
     public function storeLogicAnswer(Request $request, $id)
     {

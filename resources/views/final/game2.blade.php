@@ -171,13 +171,15 @@
                     }
                 })
             } else {
-                displayFeedback("Incorrect answer!");
+                displayFeedback("IRGL C:\\Users\\NamaTim> Incorrect answer!");
             }
         }
 
         function displayFeedback(message) {
             let feedback = document.createElement('p');
-            feedback.classList.add('text-red-500', 'leading-tight');
+            feedback.classList.add('text-green-500', 'leading-tight');
+            
+
             feedback.textContent = message;
             terminal.appendChild(feedback);
         }

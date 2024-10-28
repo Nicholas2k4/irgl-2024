@@ -49,6 +49,45 @@
         }
 
 
+        @keyframes flickerIncorrect {
+
+            0%,
+            5%,
+            10%,
+            42%,
+            55%,
+            70%,
+            85%,
+            92% {
+                box-shadow: 0 0 3px red, 0 0 8px red, 0 0 13px red;
+            }
+
+            2%,
+            7%,
+            20%,
+            47%,
+            60%,
+            77%,
+            89%,
+            97% {
+                box-shadow: 0 0 8px red, 0 0 20px red, 0 0 35px red;
+            }
+
+            3%,
+            15%,
+            50%,
+            63%,
+            75%,
+            88%,
+            95% {
+                box-shadow: 0 0 3px red, 0 0 10px red, 0 0 20px red;
+            }
+
+            100% {
+                box-shadow: 0 0 5px red, 0 0 15px red, 0 0 25px red;
+            }
+        }
+
         canvas {
             display: block;
         }
@@ -64,6 +103,7 @@
             transition: all .5s ease;
             background-color: rgba(51, 123, 238, 0.401);
             backdrop-filter: blur(10px) brightness(0.65);
+            -webkit-backdrop-filter: blur(10px) brightness(0.65);
         }
 
         .input-answer {
@@ -103,6 +143,10 @@
             box-shadow: 0 0 5px white, 0 0 15px white, 0 0 25px #023583;
             background-color: rgba(213, 44, 191, 0.351);
         }
+
+        .incorrected {
+            animation: flickerIncorrect 15s 1s infinite !important;
+        }
     </style>
 @endsection
 
@@ -123,18 +167,25 @@
     <div class="absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Cryptography</h1>
-            <div class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8">
-                <p class="text-zinc-100">{!! env('SET_A') !!}</p>
-                {{-- Tambahi image --}}
-                <div class="flex justify-center items-center mt-8 gap-x-8">
-                    <input type="text" placeholder="Answer here"
-                        class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100">
-                    <button id="submit-set-a"
-                        class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-lg w-[300px] h-[40px]"
-                        name="{{ $question->id }}" data-te-ripple-init data-te-ripple-color="light">
-                        Submit This Answer</button>
+            @foreach ($questions as $question)
+                <div
+                    class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }} ">
+                    <p class="text-zinc-100">{!! $question->question !!}</p>
+                    @if ($question->image)
+                        @foreach (json_decode($question->image) as $image)
+                            <img src="{{ asset($image) }}" alt="Question Image" class="w-[800px] my-2">
+                        @endforeach
+                    @endif
+                    <div class="flex justify-center items-center mt-8 gap-x-8">
+                        <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
+                            class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100">
+                        <button id="{{ 'submit-' . $question->id }}"
+                            class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-lg w-[300px] h-[40px]"
+                            name="{{ $question->id }}" data-te-ripple-init data-te-ripple-color="light">
+                            Submit This Answer</button>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -172,7 +223,11 @@
                                     text: response.message,
                                     icon: 'error',
                                     confirmButtonText: 'OK'
-                                })
+                                }).then(() => {
+                                    console.log('.question-' + id);
+                                    document.querySelector('.question-' + id).classList.add(
+                                        'incorrected');
+                                });
                             }
                         },
                         error: function(response) {

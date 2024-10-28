@@ -13,8 +13,12 @@ class FinalQuestion extends Model
 
     protected $table = 'final_questions';
 
+    protected $fillable = [
+        'status',
+    ];
+
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'final_answers', 'question_id', 'team_id');
+        return $this->belongsToMany(Team::class, 'final_answers', 'question_id', 'team_id', );
     }
 }

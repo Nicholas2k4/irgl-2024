@@ -54,7 +54,7 @@
             </div>
             <div class="bg-black w-full h-full p-1 rounded-b-lg overflow-y-scroll" id="terminal">
                 <p class="text-green-500 leading-tight">IRGL Final Command Prompt</p>
-                <p class="text-green-500 leading-tight">Copyright © IRGL Corporation. All rights reserved.</p><br>
+                <p class="text-green-500 leading-tight">Copyright © IRGL IT Division. All rights reserved.</p><br>
                 <p class="text-green-500 leading-tight">Complete this final game within 120 minutes! Goodluck Cyber Savants!
                 </p><br>
                 {{-- <div class="flex">
@@ -100,7 +100,6 @@
         let terminal = document.getElementById('terminal');
 
         // Array of correct answers for each command prompt
-        var correctAnswer = "XAJGXAVNAJDBNAM"; // Replace with actual answer
 
         function terminalInit() {
             appendComponent(index);
@@ -168,7 +167,7 @@
 
 
             // Compare the user input with the correct answer
-            if (userAnswer === correctAnswer) {
+            if (userAnswer === "{{ env('DECODE_ANSWER') }}") {
                 $.ajax({
                     method: "POST",
                     url: "{{ route('final.game2.store') }}",
@@ -202,7 +201,7 @@
         function displayFeedback(message) {
             let feedback = document.createElement('p');
             feedback.classList.add('text-green-500', 'leading-tight');
-            
+
 
             feedback.textContent = message;
             terminal.appendChild(feedback);
@@ -210,6 +209,7 @@
 
         terminalInit();
     </script>
+    
     <!-- GLSL SCRIPT -->
     <!-- vertex shader -->
     <script id="vertexShader" type="x-shader/x-vertex">

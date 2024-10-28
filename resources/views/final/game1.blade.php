@@ -103,6 +103,52 @@
             box-shadow: 0 0 5px white, 0 0 15px white, 0 0 25px #023583;
             background-color: rgba(213, 44, 191, 0.351);
         }
+
+        .incorrected {
+            animation: flickerIncorrect 15s 1s infinite !important;
+            transition: all .5s ease;
+            background-color: rgba(51, 123, 238, 0.401);
+            backdrop-filter: blur(10px) brightness(0.65);
+        }
+
+        @keyframes flickerIncorrect {
+
+            0%,
+            5%,
+            10%,
+            42%,
+            55%,
+            70%,
+            85%,
+            92% {
+                box-shadow: 0 0 3px red, 0 0 8px red, 0 0 13px #023583;
+            }
+
+            2%,
+            7%,
+            20%,
+            47%,
+            60%,
+            77%,
+            89%,
+            97% {
+                box-shadow: 0 0 8px red, 0 0 20px red, 0 0 35px #023583;
+            }
+
+            3%,
+            15%,
+            50%,
+            63%,
+            75%,
+            88%,
+            95% {
+                box-shadow: 0 0 3px red, 0 0 10px red, 0 0 20px #023583;
+            }
+
+            100% {
+                box-shadow: 0 0 5px red, 0 0 15px red, 0 0 25px #023583;
+            }
+        }
     </style>
 @endsection
 
@@ -125,10 +171,10 @@
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Quiz</h1>
             <div class="w-[800px]">
                 <div class="info w-fit rounded-md px-4 py-2">
-                    <h1 class="rounded-lg text-center text-2xl text-white font-semibold flex justify-start items-center">
+                    <h1 class="rounded-lg text-center text-xl text-white font-semibold flex justify-start items-center">
                         <i class="fa-solid fa-users-between-lines mr-4"></i>{{ $team_name }}
                     </h1>
-                    <h1 class="rounded-lg text-center text-2xl text-white font-semibold flex justify-start items-center">
+                    <h1 class="rounded-lg text-center text-xl text-white font-semibold flex justify-start items-center">
                         <i class="fa-solid fa-money-check-dollar mr-4"></i>{{ $score }}
                     </h1>
                 </div>
@@ -136,7 +182,11 @@
             @foreach ($questions as $question)
                 <div class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8">
                     <p class="text-zinc-100">{!! $question->question !!}</p>
-                    {{-- Tambahi image --}}
+                    @if ($question->image)
+                        @foreach (json_decode($question->image) as $image)
+                            <img src="{{ asset($image) }}" alt="Question Image" class="w-[800px] my-4">
+                        @endforeach
+                    @endif
                     <div class="flex justify-center items-center mt-8 gap-x-8">
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
                             class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100">

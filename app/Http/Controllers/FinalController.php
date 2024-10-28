@@ -32,11 +32,13 @@ class FinalController extends Controller
     public function game3()
     {
         $data['title'] = "Final Cryptography";
-        $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
+        $data['questions'] = FinalQuestion::where('category', 'like', '%crypto%')->where('status', 1)->get();
         return view('final.game3', $data);
     }
     public function storeLogicAnswer(Request $request, $id)
     {
+
+        $request->merge(['answer' => strtolower($request->answer)]);
         $question = FinalQuestion::find($id);
 
         $prevAnswer = DB::table('final_answers')
@@ -63,7 +65,7 @@ class FinalController extends Controller
         }
 
 
-        if ($question->answer == $request->answer) {
+        if (strtolower($question->answer) == $request->answer) {
             DB::table('final_answers')->updateOrInsert(
                 [
                     'team_id' => session('team_id'),
@@ -78,8 +80,21 @@ class FinalController extends Controller
             );
 
             $stats = Team::findOrFail(session('team_id'))->finalStatistic;
-            $stats->score += 25;
-            $stats->save();
+            if ($question->category == 'quiz') {
+                $stats->score += 25;
+                $stats->save();
+            } else if ($question->category == 'crypto_a') {
+                $question->update(['status' => 0]);
+                FinalQuestion::where('category', 'crypto_b')->where('status', 0)->first()->update(['status' => 1]);
+                $stats->update(['crypto_time_1' => now()]);
+            } else if ($question->category == 'crypto_b') {
+                $question->update(['status' => 0]);
+                FinalQuestion::where('category', 'crypto_c')->where('status', 0)->first()->update(['status' => 1]);
+                $stats->update(['crypto_time_2' => now()]);
+            } else if ($question->category == 'crypto_c') {
+                $question->update(['status' => 0]);
+                $stats->update(['crypto_time_3' => now()]);
+            }
 
             return response()->json(['success' => true, 'message' => 'Answer Correct!']);
         } else {
@@ -102,6 +117,7 @@ class FinalController extends Controller
         }
     }
 
+
     public function clue()
     {
         $teams = DB::table('teams')
@@ -117,8 +133,8 @@ class FinalController extends Controller
 
     public function buyClue(Request $request)
     {
-         // validate request
-         $request->validate([
+        // validate request
+        $request->validate([
             'team-name' => 'required|string',
             'clue' => 'required',
         ]);
@@ -132,49 +148,48 @@ class FinalController extends Controller
         }
 
         // check if already bought
-        if($request['clue'] == 1 && $team->finalStatistic->has_clue1){
+        if ($request['clue'] == 1 && $team->finalStatistic->has_clue1) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 1!');
         }
-        if($request['clue'] == 2 && $team->finalStatistic->has_clue2){
+        if ($request['clue'] == 2 && $team->finalStatistic->has_clue2) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 2!');
         }
-        if($request['clue'] == 3 && $team->finalStatistic->has_clue3){
+        if ($request['clue'] == 3 && $team->finalStatistic->has_clue3) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 3!');
         }
-        if($request['clue'] == 4 && $team->finalStatistic->has_clue4){
+        if ($request['clue'] == 4 && $team->finalStatistic->has_clue4) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 4!');
         }
-        if($request['clue'] == 5 && $team->finalStatistic->has_clue5){
+        if ($request['clue'] == 5 && $team->finalStatistic->has_clue5) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 5!');
         }
-        if($request['clue'] == 6 && $team->finalStatistic->has_clue6){
+        if ($request['clue'] == 6 && $team->finalStatistic->has_clue6) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought clue 6!');
         }
-        if($request['clue'] == 7 && $team->finalStatistic->has_clue7){
+        if ($request['clue'] == 7 && $team->finalStatistic->has_clue7) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought dictionary 1!');
         }
-        if($request['clue'] == 8 && $team->finalStatistic->has_clue8){
+        if ($request['clue'] == 8 && $team->finalStatistic->has_clue8) {
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . ' already bought dictionary 2!');
         }
 
         // payment
         DB::beginTransaction();
-        $price = $request['clue'] <= 6 ? 15:100;
+        $price = $request['clue'] <= 6 ? 15 : 100;
 
-        if($team->finalStatistic->score < $price){
+        if ($team->finalStatistic->score < $price) {
             DB::rollBack();
             return redirect()->route('admin.clue')->with('error', 'Team ' . $request['team-name'] . " doesnt has enough points!");
-        }
-        else{
+        } else {
             $team->finalStatistic->score -= $price;
-            if($request['clue'] == 1) $team->finalStatistic->has_clue1 = true;
-            if($request['clue'] == 2) $team->finalStatistic->has_clue2 = true;
-            if($request['clue'] == 3) $team->finalStatistic->has_clue3 = true;
-            if($request['clue'] == 4) $team->finalStatistic->has_clue4 = true;
-            if($request['clue'] == 5) $team->finalStatistic->has_clue5 = true;
-            if($request['clue'] == 6) $team->finalStatistic->has_clue6 = true;
-            if($request['clue'] == 7) $team->finalStatistic->has_clue7 = true;
-            if($request['clue'] == 8) $team->finalStatistic->has_clue8 = true;
+            if ($request['clue'] == 1) $team->finalStatistic->has_clue1 = true;
+            if ($request['clue'] == 2) $team->finalStatistic->has_clue2 = true;
+            if ($request['clue'] == 3) $team->finalStatistic->has_clue3 = true;
+            if ($request['clue'] == 4) $team->finalStatistic->has_clue4 = true;
+            if ($request['clue'] == 5) $team->finalStatistic->has_clue5 = true;
+            if ($request['clue'] == 6) $team->finalStatistic->has_clue6 = true;
+            if ($request['clue'] == 7) $team->finalStatistic->has_clue7 = true;
+            if ($request['clue'] == 8) $team->finalStatistic->has_clue8 = true;
             $team->finalStatistic->save();
             DB::commit();
             return redirect()->route('admin.clue')->with('success', 'Team ' . $request['team-name'] . ' transaction success!');

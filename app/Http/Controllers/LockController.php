@@ -70,7 +70,7 @@ class LockController extends Controller
         try {
             DB::beginTransaction();
 
-            sleep(4);
+            sleep(4);   
 
             $semiState = DB::table('semi_states')->lockForUpdate()->first();
 

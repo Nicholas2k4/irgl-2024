@@ -91,7 +91,23 @@ class Team extends Model implements AuthenticatableContract
     public function unansweredFinalQuestion()
     {
         $team_id = $this->id;
-        $questions = FinalQuestion::leftJoin('final_answers', function ($join) use ($team_id) {
+        $questions = FinalQuestion::where('category', 'quiz')->leftJoin('final_answers', function ($join) use ($team_id) {
+            $join->on('final_questions.id', '=', 'final_answers.question_id')
+                ->where('final_answers.team_id', '=', $team_id);
+        })
+            ->where(function ($query) {
+                $query->where('final_answers.is_correct', '!=', 1)
+                    ->orWhereNull('final_answers.id');
+            })
+            ->select('final_questions.*')
+            ->get();
+
+        return $questions;
+    }
+    public function unansweredCryptography()
+    {
+        $team_id = $this->id;
+        $questions = FinalQuestion::where('category', 'crypto')->leftJoin('final_answers', function ($join) use ($team_id) {
             $join->on('final_questions.id', '=', 'final_answers.question_id')
                 ->where('final_answers.team_id', '=', $team_id);
         })

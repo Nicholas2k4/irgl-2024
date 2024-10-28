@@ -209,7 +209,7 @@
 
         terminalInit();
     </script>
-    
+
     <!-- GLSL SCRIPT -->
     <!-- vertex shader -->
     <script id="vertexShader" type="x-shader/x-vertex">

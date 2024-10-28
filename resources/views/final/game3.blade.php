@@ -169,7 +169,7 @@
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Cryptography</h1>
             @foreach ($questions as $question)
                 <div
-                    class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }} ">
+                    class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }}">
                     <p class="text-zinc-100">{!! $question->question !!}</p>
                     @if ($question->image)
                         @foreach (json_decode($question->image) as $image)

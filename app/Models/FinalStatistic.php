@@ -13,6 +13,10 @@ class FinalStatistic extends Model
 
     protected $fillable = [
         'team_id',
+        'crypto_time_1',
+        'crypto_time_2',
+        'crypto_time_3',
+        'decode_time',
         'score',
         'has_clue1',
         'has_clue2',

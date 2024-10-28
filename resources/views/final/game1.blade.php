@@ -103,52 +103,6 @@
             box-shadow: 0 0 5px white, 0 0 15px white, 0 0 25px #023583;
             background-color: rgba(213, 44, 191, 0.351);
         }
-
-        .incorrected {
-            animation: flickerIncorrect 15s 1s infinite !important;
-            transition: all .5s ease;
-            background-color: rgba(51, 123, 238, 0.401);
-            backdrop-filter: blur(10px) brightness(0.65);
-        }
-
-        @keyframes flickerIncorrect {
-
-            0%,
-            5%,
-            10%,
-            42%,
-            55%,
-            70%,
-            85%,
-            92% {
-                box-shadow: 0 0 3px red, 0 0 8px red, 0 0 13px #023583;
-            }
-
-            2%,
-            7%,
-            20%,
-            47%,
-            60%,
-            77%,
-            89%,
-            97% {
-                box-shadow: 0 0 8px red, 0 0 20px red, 0 0 35px #023583;
-            }
-
-            3%,
-            15%,
-            50%,
-            63%,
-            75%,
-            88%,
-            95% {
-                box-shadow: 0 0 3px red, 0 0 10px red, 0 0 20px #023583;
-            }
-
-            100% {
-                box-shadow: 0 0 5px red, 0 0 15px red, 0 0 25px #023583;
-            }
-        }
     </style>
 @endsection
 
@@ -180,7 +134,7 @@
                 </div>
             </div>
             @foreach ($questions as $question)
-                <div class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8">
+                <div class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }}">
                     <p class="text-zinc-100">{!! $question->question !!}</p>
                     @if ($question->image)
                         @foreach (json_decode($question->image) as $image)
@@ -234,7 +188,11 @@
                                     text: response.message,
                                     icon: 'error',
                                     confirmButtonText: 'OK'
-                                })
+                                }). then(() => {
+                                    console.log('.question-' + id);
+                                    document.querySelector('.question-' + id).classList.add(
+                                        'incorrected');
+                                });
                             }
                         },
                         error: function(response) {

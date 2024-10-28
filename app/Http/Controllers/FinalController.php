@@ -201,10 +201,7 @@ class FinalController extends Controller
             return response()->json(['success' => false, 'message' => 'Incorrect Answer!']);
         }
         $team = Team::findOrFail(session('team_id'));
-
-        if (!$team->finalStatistic->decode_time) {
-            $team->finalStatistic->update(['decode_time', now()]);
-        }
+        $team->finalStatistic->update(['decode_time' => now()]);
 
         return response()->json(['success' => true, 'message' => 'You have successfully decoded the secret!']);
     }

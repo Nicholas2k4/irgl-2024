@@ -96,7 +96,7 @@
     </section>
 
     <script>
-        let index = 0;
+        var index = 0;
         let terminal = document.getElementById('terminal');
 
         // Array of correct answers for each command prompt
@@ -108,10 +108,6 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 checkAnswer(index); // Check if the answer is correct
-                disableInputs(index); // Disable the current input row
-                index++;
-
-                appendComponent(index); // Add the next row for input
             }
         });
 
@@ -156,8 +152,8 @@
             });
         }
 
-        function checkAnswer(index) {
-            let letterInputs = document.querySelectorAll(`.letter-input${index}`);
+        function checkAnswer(i) {
+            let letterInputs = document.querySelectorAll(`.letter-input${i}`);
             let userAnswer = "";
 
             // Concatenate the input values into a string
@@ -165,37 +161,42 @@
                 userAnswer += input.value.toUpperCase(); // Convert to uppercase for case-insensitive comparison
             });
 
-
-            // Compare the user input with the correct answer
-            if (userAnswer === "{{ env('DECODE_ANSWER') }}") {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('final.game2.store') }}",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        answer: userAnswer
-                    },
-                    success: function(response) {
-                        Swal.fire({
+            // Send the answer to the server
+            $.ajax({
+                method: "POST",
+                url: "{{ route('final.game2.store') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    answer: userAnswer
+                },
+                success: async function(response) {
+                    if (response.success) {
+                        await Swal.fire({
                             title: 'Congratulations',
                             text: response.message,
                             icon: 'success',
                         }).then(() => {
                             window.location.href = "{{ route('final.game3') }}";
                         });
-                    },
-                    error: function(response) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: response.responseJSON.message,
-                            icon: 'error',
-                        })
-                        console.log(response);
+                    } else {
+                        await displayFeedback("IRGL C:\\Users\\NamaTim> Incorrect answer!");
+
+                        disableInputs(index); // Disable the current input row
+                        index++;
+                        console.log(index);
+                        appendComponent(index); // Add the next row for input
                     }
-                })
-            } else {
-                displayFeedback("IRGL C:\\Users\\NamaTim> Incorrect answer!");
-            }
+                },
+                error: function(response) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.responseJSON.message,
+                        icon: 'error',
+                    })
+                    console.log(response);
+                }
+            });
+
         }
 
         function displayFeedback(message) {

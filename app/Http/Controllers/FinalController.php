@@ -198,6 +198,9 @@ class FinalController extends Controller
 
     public function storeDecode(Request $request)
     {
+        if ($request->answer != env('DECODE_ANSWER')) {
+            return response()->json(['success' => false, 'message' => 'Incorrect Answer!']);
+        }
         $team = Team::findOrFail(session('team_id'));
 
         if (!$team->finalStatistic->decode_time) {

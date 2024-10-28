@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinalAnswer;
 use App\Models\FinalQuestion;
 use App\Models\Team;
 use Google\Service\Dataproc\Session;
@@ -17,7 +18,6 @@ class FinalController extends Controller
     {
         $data['title'] = "Final Quiz";
         $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
-        // $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
         $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
         $data['team_name'] = Team::where('id', session('team_id'))->first()->nama;
         $data['score'] = Team::where('id', session('team_id'))->first()->finalStatistic->score;
@@ -26,7 +26,6 @@ class FinalController extends Controller
     public function game2()
     {
         $data['title'] = "Final Decode";
-        $data['words'] = env('SECRET_WORDS');
         return view('final.game2', $data);
     }
     public function game3()

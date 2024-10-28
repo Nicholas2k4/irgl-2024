@@ -19,6 +19,6 @@ class FinalQuestion extends Model
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'final_answers', 'question_id', 'team_id', );
+        return $this->belongsToMany(Team::class, 'final_answers', 'question_id', 'team_id')->withPivot('answer', 'is_correct', 'incorrect_at');
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\InputScoreTeamController;
 use App\Http\Controllers\LockController;
 use App\Http\Middleware\ClosedMiddleware;
+use App\Http\Middleware\CryptoMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +66,16 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
 
-Route::middleware([AuthMiddleware::class])->group(function () {
+Route::middleware('login')->group(function () {
+    Route::prefix('final')->group(function () {
+        Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
+        Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
+        Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3')->middleware(CryptoMiddleware::class);
+
+        Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
+        Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');
+    });
+
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
@@ -75,14 +85,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 /**
  * Routes for final game
  */
-Route::prefix('final')->group(function () {
-    Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
-    Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
-    Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');
 
-    Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
-    Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');
-});
 
 
 /**

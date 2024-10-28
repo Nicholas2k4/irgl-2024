@@ -38,6 +38,15 @@
     </style>
 @endsection
 @section('content')
+    @if (session()->has('error'))
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                icon: 'error',
+            });
+        </script>
+    @endif
     <div id="mainBackground" class="w-[500px] h-[500px] fixed z-[-1] top-0 left-0"></div>
     <a href="{{ route('final.game1') }}" class="contents">
         <button

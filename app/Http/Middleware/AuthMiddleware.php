@@ -10,7 +10,7 @@ class AuthMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Session::has('team_id')) {
+        if (!session()->has('team_id')) {
             return redirect()->route('login'); // Adjust the route as needed
         }
 

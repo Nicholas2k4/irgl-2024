@@ -170,6 +170,7 @@ class FinalQuestionSeeder extends Seeder
                 'answer' => 'cybertopia madness',
                 'image' => json_encode(['storage/questions/crypto/set-a.jpg']),
                 'category' => 'crypto_a',
+                'status' => 1,
             ],
             // Cryptography Set B
             [

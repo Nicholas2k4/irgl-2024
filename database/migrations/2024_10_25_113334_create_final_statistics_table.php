@@ -16,6 +16,9 @@ return new class extends Migration
             $table->uuid('team_id');
             $table->dateTime('decode_time')->nullable();
             $table->integer('score')->default(0);
+            $table->dateTime('crypto_time_1')->nullable();
+            $table->dateTime('crypto_time_2')->nullable();
+            $table->dateTime('crypto_time_3')->nullable();
             $table->boolean('has_clue1')->default(0);
             $table->boolean('has_clue2')->default(0);
             $table->boolean('has_clue3')->default(0);

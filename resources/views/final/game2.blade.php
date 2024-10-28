@@ -54,7 +54,7 @@
             </div>
             <div class="bg-black w-full h-full p-1 rounded-b-lg overflow-y-scroll" id="terminal">
                 <p class="text-green-500 leading-tight">IRGL Final Command Prompt</p>
-                <p class="text-green-500 leading-tight">Copyright © IRGL Corporation. All rights reserved.</p><br>
+                <p class="text-green-500 leading-tight">Copyright © IRGL IT Division. All rights reserved.</p><br>
                 <p class="text-green-500 leading-tight">Complete this final game within 120 minutes! Goodluck Cyber Savants!
                 </p><br>
                 {{-- <div class="flex">
@@ -96,11 +96,10 @@
     </section>
 
     <script>
-        let index = 0;
+        var index = 0;
         let terminal = document.getElementById('terminal');
 
         // Array of correct answers for each command prompt
-        var correctAnswer = "XAJGXAVNAJDBNAM"; // Replace with actual answer
 
         function terminalInit() {
             appendComponent(index);
@@ -109,10 +108,6 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 checkAnswer(index); // Check if the answer is correct
-                disableInputs(index); // Disable the current input row
-                index++;
-
-                appendComponent(index); // Add the next row for input
             }
         });
 
@@ -157,8 +152,8 @@
             });
         }
 
-        function checkAnswer(index) {
-            let letterInputs = document.querySelectorAll(`.letter-input${index}`);
+        function checkAnswer(i) {
+            let letterInputs = document.querySelectorAll(`.letter-input${i}`);
             let userAnswer = "";
 
             // Concatenate the input values into a string
@@ -166,48 +161,56 @@
                 userAnswer += input.value.toUpperCase(); // Convert to uppercase for case-insensitive comparison
             });
 
-
-            // Compare the user input with the correct answer
-            if (userAnswer === correctAnswer) {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('final.game2.store') }}",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        answer: userAnswer
-                    },
-                    success: function(response) {
-                        Swal.fire({
+            // Send the answer to the server
+            $.ajax({
+                method: "POST",
+                url: "{{ route('final.game2.store') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    answer: userAnswer
+                },
+                success: async function(response) {
+                    if (response.success) {
+                        await Swal.fire({
                             title: 'Congratulations',
                             text: response.message,
                             icon: 'success',
                         }).then(() => {
                             window.location.href = "{{ route('final.game3') }}";
                         });
-                    },
-                    error: function(response) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: response.responseJSON.message,
-                            icon: 'error',
-                        })
-                        console.log(response);
+                    } else {
+                        await displayFeedback("IRGL C:\\Users\\NamaTim> Incorrect answer!");
+
+                        disableInputs(index); // Disable the current input row
+                        index++;
+                        console.log(index);
+                        appendComponent(index); // Add the next row for input
                     }
-                })
-            } else {
-                displayFeedback("Incorrect answer!");
-            }
+                },
+                error: function(response) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.responseJSON.message,
+                        icon: 'error',
+                    })
+                    console.log(response);
+                }
+            });
+
         }
 
         function displayFeedback(message) {
             let feedback = document.createElement('p');
-            feedback.classList.add('text-red-500', 'leading-tight');
+            feedback.classList.add('text-green-500', 'leading-tight');
+
+
             feedback.textContent = message;
             terminal.appendChild(feedback);
         }
 
         terminalInit();
     </script>
+
     <!-- GLSL SCRIPT -->
     <!-- vertex shader -->
     <script id="vertexShader" type="x-shader/x-vertex">

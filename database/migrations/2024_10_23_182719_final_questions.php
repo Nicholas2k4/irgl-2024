@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->longText('question');
             $table->string('answer');
-            $table->string('image')->nullable();
+            $table->json('image')->nullable();
+            $table->string('category');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -50,6 +50,52 @@
         .swal2-cancel {
             background: rgb(255, 79, 79) !important;
         }
+
+        .incorrected {
+            animation: flickerIncorrect 15s 1s infinite !important;
+            transition: all .5s ease;
+            background-color: rgba(51, 123, 238, 0.401);
+            backdrop-filter: blur(10px) brightness(0.65);
+        }
+
+        @keyframes flickerIncorrect {
+
+            0%,
+            5%,
+            10%,
+            42%,
+            55%,
+            70%,
+            85%,
+            92% {
+                box-shadow: 0 0 3px red, 0 0 8px red, 0 0 13px red;
+            }
+
+            2%,
+            7%,
+            20%,
+            47%,
+            60%,
+            77%,
+            89%,
+            97% {
+                box-shadow: 0 0 8px red, 0 0 20px red, 0 0 35px red;
+            }
+
+            3%,
+            15%,
+            50%,
+            63%,
+            75%,
+            88%,
+            95% {
+                box-shadow: 0 0 3px red, 0 0 10px red, 0 0 20px red;
+            }
+
+            100% {
+                box-shadow: 0 0 5px red, 0 0 15px red, 0 0 25px red;
+            }
+        }
     </style>
 
     <script type="importmap">

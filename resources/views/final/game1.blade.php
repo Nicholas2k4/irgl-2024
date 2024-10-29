@@ -67,7 +67,7 @@
         }
 
         .input-answer {
-            box-shadow: 0 0 5px rgb(219, 64, 247), 0 0 8px rgb(137, 64, 247);
+            box-shadow: 0 0 5px rgb(219, 64, 247), 0 0 8px rgb(158, 124, 209);
             transition: all .4s ease;
             background-color: rgba(219, 64, 247, 0.3) !important;
         }

@@ -170,4 +170,25 @@ class NewsController extends Controller
             return redirect()->route('admin.news')->with('error', 'Failed to skip news!');
         }
     }
+
+    public function semifinalHome(){
+        $data =[
+            'title' => 'Home',
+        ];
+        return view('semifinal.home', $data);
+    }
+
+    public function semifinalNews(){
+        $data =[
+            'title' => 'News',
+        ];
+        return view('semifinal.news', $data);
+    }
+
+    public function semifinalInventory(){
+        $data =[
+            'title' => 'Inventory',
+        ];
+        return view('semifinal.inventory', $data);
+    }
 }

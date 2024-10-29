@@ -81,7 +81,7 @@ class FinalQuestionSeeder extends Seeder
                 <br><p class="text-zinc-100">5. Code 59418 : 2 digit Benar tetapi hanya 1 yang posisinya benar</p>
                 <br><p class="text-zinc-100">6. Code 92716: 4 digit Benar tetapi hanya 2 yang posisinya benar</p>
                 <br><p class="text-zinc-100">7. Code 43571: 3 digit Benar tetapi hanya 1 yang posisinya benar, sisanya salah</p>',
-                'answer' => '637',
+                'answer' => '42617',
                 'image' => null,
                 'category' => 'quiz',
             ],
@@ -103,7 +103,7 @@ class FinalQuestionSeeder extends Seeder
                 <br><p class="text-zinc-100">ABC</p>
                 <br><p class="text-zinc-100">________ +</p>
                 <br><p class="text-zinc-100">CCC</p>
-                <br><p class="text-zinc-100">Tentukan nilai A, B, dan C!</p>
+                <br><p class="text-zinc-100">Tentukan nilai ABC!</p>
                 <br>',
                 'answer' => '185',
                 'image' => null,
@@ -165,8 +165,7 @@ class FinalQuestionSeeder extends Seeder
             // Cryptography Set A
             [
                 'question' => '<p class="text-zinc-100">Hexadecimal >  Phone multi-tap encrypt </p>
-                <br><p class="text-zinc-100">DE 3E7 16 21 309 8 29A 7 1BC 2 0 6 2 3 42 21 1E61 1E61</p>
-                <br><p class="text-zinc-100">222 999 22 33 777 8 666 7 444 2 0 6 2 3 66 33 7777 7777</p>',
+                <br><p class="text-zinc-100">DE 3E7 16 21 309 8 29A 7 1BC 2 0 6 2 3 42 21 1E61 1E61</p>',
                 'answer' => 'cybertopia madness',
                 'image' => json_encode(['storage/questions/crypto/set-a.jpg']),
                 'category' => 'crypto_a',

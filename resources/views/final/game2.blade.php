@@ -188,7 +188,7 @@
                             window.location.href = "{{ route('final.game3') }}";
                         });
                     } else {
-                        await displayFeedback("IRGL C:\\Users\\NamaTim> Incorrect answer!");
+                        await displayFeedback("IRGL C:\\Users\\NamaTim> " + response.message);
 
                         disableInputs(index); // Disable the current input row
                         index++;

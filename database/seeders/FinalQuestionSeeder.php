@@ -87,7 +87,7 @@ class FinalQuestionSeeder extends Seeder
             ],
             // 9. Two Bucket
             [
-                'question' => '<p class="text-zinc-100">Diberikan 2 Ember dengan kapasitas berbeda yaitu 7L dan 4L. Hitunglah Total langkah minimum yang diperlukan untuk mendapatkan 2L, 6L, dan 1L di salah satu Ember. Jawablah berurutan untuk 2L, 6L, 1L (Format Jawaban -> 10, 1, 4)</p>
+                'question' => '<p class="text-zinc-100">Diberikan 2 Ember dengan kapasitas berbeda yaitu 7L dan 4L. Hitunglah Total langkah minimum yang diperlukan untuk mendapatkan 2L, 6L, dan 1L di salah satu Ember. Jawablah berurutan untuk 2L, 6L, 1L (Format Jawaban koma tanpa spasi -> 10,1,4)</p>
                 <br><p class="text-zinc-100">Langkah yang Tersedia :</p>
                 <br><p class="text-zinc-100">- Mengisi ember hingga penuh,</p>
                 <br><p class="text-zinc-100">- Mengosongkan ember,</p>

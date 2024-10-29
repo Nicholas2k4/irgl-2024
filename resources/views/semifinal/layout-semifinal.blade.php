@@ -69,7 +69,7 @@
 <body
     class="bg-black items-center justify-center flex h-screen bg-[url('/assets/bg-semi.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden">
     <nav
-        class="bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] py-4 border-gray-200 opacity-85 dark:bg-gray-900 navbar shadow-custom-md font-dm px-5 ">
+        class="bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] py-4 border-gray-200  dark:bg-gray-900 navbar shadow-custom-md font-dm px-5 ">
         <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto 2xl:max-w-[90vw]">
             <a href="#" class=""><span class="text-[#fff] font-bold text-md px-1">SEMIFINAL IRGL
                     2024</span></a>

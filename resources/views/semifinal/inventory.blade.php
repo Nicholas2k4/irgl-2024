@@ -23,7 +23,7 @@
         <div class="w-full flex justify-end items-end px-3">
             <div class="flex items-center space-x-2 text-white text-lg">
                 <img src="{{ asset('assets/point.png') }}" class="w-5 h-5" alt="Coin Icon">
-                <span class=" text-base">999999</span>
+                <span class=" text-base font-dm">999999</span>
             </div>
         </div>
         <div class="content p-10 mx-7 rounded-xl text-white w-full max-w-md mt-4">

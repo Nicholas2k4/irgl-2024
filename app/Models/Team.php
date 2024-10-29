@@ -86,7 +86,7 @@ class Team extends Model implements AuthenticatableContract
     }
     public function finalQuestions()
     {
-        return $this->belongsToMany(FinalQuestion::class, 'final_answers', 'team_id', 'question_id');
+        return $this->belongsToMany(FinalQuestion::class, 'final_answers', 'team_id', 'id')->withPivot('answer', 'question_id', 'is_correct', 'incorrect_at');
     }
     public function unansweredFinalQuestion()
     {
@@ -99,7 +99,8 @@ class Team extends Model implements AuthenticatableContract
                 $query->where('final_answers.is_correct', '!=', 1)
                     ->orWhereNull('final_answers.id');
             })
-            ->select('final_questions.*')
+            ->select('final_questions.*', 'final_answers.is_correct', 'final_answers.incorrect_at')
+            ->inRandomOrder()
             ->get();
 
         return $questions;

@@ -157,11 +157,6 @@
         </video>
         <img src="{{ asset('assets/logo/logo-02-02.png') }}" class="w-[47%] absolute">
     </div>
-    <a href="{{ route('final.game2') }}" class="contents">
-        <button
-            class="fixed top-0 right-0 mt-8 mr-8 z-[100] animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-xl w-fit px-4 py-2 h-fit">
-            Go to Decode</button>
-    </a>
     <div class="main-layer fixed w-screen min-h-screen z-50 top-0 left-0">
     </div>
     <div class="absolute w-screen min-h-screen z-50 top-0 left-0">

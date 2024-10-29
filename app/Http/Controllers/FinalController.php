@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FinalAnswer;
 use App\Models\FinalQuestion;
+use App\Models\FinalState;
+use App\Models\FinalStatistic;
 use App\Models\Team;
 use Google\Service\Dataproc\Session;
 use Illuminate\Http\Request;
@@ -15,9 +18,11 @@ class FinalController extends Controller
 
     public function game1()
     {
+        $decode = FinalStatistic::where('team_id', session('team_id'))->first()->decode_time;
+        if ($decode) return redirect()->route('final.game3');
+
         $data['title'] = "Final Quiz";
         $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
-        // $data['questions'] = FinalQuestion::select('id', 'question', 'image')->get();
         $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
         $data['team_name'] = Team::where('id', session('team_id'))->first()->nama;
         $data['score'] = Team::where('id', session('team_id'))->first()->finalStatistic->score;
@@ -25,8 +30,10 @@ class FinalController extends Controller
     }
     public function game2()
     {
+        $decode = FinalStatistic::where('team_id', session('team_id'))->first()->decode_time;
+        if ($decode) return redirect()->route('final.game3');
+
         $data['title'] = "Final Decode";
-        $data['words'] = env('SECRET_WORDS');
         return view('final.game2', $data);
     }
     public function game3()
@@ -84,16 +91,67 @@ class FinalController extends Controller
                 $stats->score += 25;
                 $stats->save();
             } else if ($question->category == 'crypto_a') {
-                $question->update(['status' => 0]);
-                FinalQuestion::where('category', 'crypto_b')->where('status', 0)->first()->update(['status' => 1]);
-                $stats->update(['crypto_time_1' => now()]);
+                try {
+                    DB::beginTransaction();
+                    $finalState = DB::table('final_states')->lockForUpdate()->first();
+
+                    if (!$finalState->first_place) {
+                        $teamName = Team::where('id', session('team_id'))->first()->nama;
+                        FinalState::where('id', $finalState->id)->update(['first_place' => $teamName]);
+
+                        $question->update(['status' => 0]);
+                        FinalQuestion::where('category', 'crypto_b')->where('status', 0)->first()->update(['status' => 1]);
+                        $stats->update(['crypto_time_1' => now()]);
+                        DB::commit();
+                    } else {
+                        DB::rollBack();
+                        return response()->json(['success' => false, 'message' => 'Question already answered by other team!']);
+                    }
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    return response()->json(['success' => false, 'message' => 'Something went wrong!']);
+                }
             } else if ($question->category == 'crypto_b') {
-                $question->update(['status' => 0]);
-                FinalQuestion::where('category', 'crypto_c')->where('status', 0)->first()->update(['status' => 1]);
-                $stats->update(['crypto_time_2' => now()]);
+                try {
+                    DB::beginTransaction();
+                    $finalState = DB::table('final_states')->lockForUpdate()->first();
+
+                    if (!$finalState->second_place) {
+                        $teamName = Team::where('id', session('team_id'))->first()->nama;
+                        FinalState::where('id', $finalState->id)->update(['second_place' => $teamName]);
+
+                        $question->update(['status' => 0]);
+                        FinalQuestion::where('category', 'crypto_c')->where('status', 0)->first()->update(['status' => 1]);
+                        $stats->update(['crypto_time_2' => now()]);
+                        DB::commit();
+                    } else {
+                        DB::rollBack();
+                        return response()->json(['success' => false, 'message' => 'Question already answered by other team!']);
+                    }
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    return response()->json(['success' => false, 'message' => 'Something went wrong!']);
+                }
             } else if ($question->category == 'crypto_c') {
-                $question->update(['status' => 0]);
-                $stats->update(['crypto_time_3' => now()]);
+                try {
+                    DB::beginTransaction();
+                    $finalState = DB::table('final_states')->lockForUpdate()->first();
+
+                    if (!$finalState->third_place) {
+                        $teamName = Team::where('id', session('team_id'))->first()->nama;
+                        FinalState::where('id', $finalState->id)->update(['third_place' => $teamName]);
+
+                        $question->update(['status' => 0]);
+                        $stats->update(['crypto_time_3' => now()]);
+                        DB::commit();
+                    } else {
+                        DB::rollBack();
+                        return response()->json(['success' => false, 'message' => 'Question already answered by other team!']);
+                    }
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    return response()->json(['success' => false, 'message' => 'Something went wrong!']);
+                }
             }
 
             return response()->json(['success' => true, 'message' => 'Answer Correct!']);
@@ -110,8 +168,6 @@ class FinalController extends Controller
                     'updated_at' => now()
                 ]
             );
-
-            // 5 mins cooldown if answer is incorrect
 
             return response()->json(['success' => false, 'message' => 'Incorrect Answer!']);
         }
@@ -204,7 +260,9 @@ class FinalController extends Controller
         $team = Team::findOrFail(session('team_id'));
 
         if (!$team->finalStatistic->decode_time) {
-            $team->finalStatistic->update(['decode_time', now()]);
+            $team->finalStatistic->update(['decode_time' => now()]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'You have already decoded the secret! Please go to the next section!']);
         }
 
         return response()->json(['success' => true, 'message' => 'You have successfully decoded the secret!']);

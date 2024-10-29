@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FinalAnswer;
 use App\Models\FinalQuestion;
 use App\Models\FinalState;
+use App\Models\FinalStatistic;
 use App\Models\Team;
 use Google\Service\Dataproc\Session;
 use Illuminate\Http\Request;
@@ -17,6 +18,9 @@ class FinalController extends Controller
 
     public function game1()
     {
+        $decode = FinalStatistic::where('team_id', session('team_id'))->first()->decode_time;
+        if ($decode) return redirect()->route('final.game3');
+
         $data['title'] = "Final Quiz";
         $data['answers'] = Team::where('id', session('team_id'))->with('finalQuestions')->first();
         $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredFinalQuestion();
@@ -26,6 +30,9 @@ class FinalController extends Controller
     }
     public function game2()
     {
+        $decode = FinalStatistic::where('team_id', session('team_id'))->first()->decode_time;
+        if ($decode) return redirect()->route('final.game3');
+
         $data['title'] = "Final Decode";
         return view('final.game2', $data);
     }

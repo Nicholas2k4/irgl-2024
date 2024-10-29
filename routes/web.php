@@ -18,6 +18,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\InputScoreTeamController;
 use App\Http\Controllers\LockController;
 use App\Http\Middleware\ClosedMiddleware;
+use App\Http\Middleware\CryptoMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,7 +87,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::prefix('final')->group(function () {
         Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
         Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
-        Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');
+        Route::get('/game3', [FinalController::class, 'game3'])->middleware([CryptoMiddleware::class])->name('final.game3');
 
         Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
         Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');

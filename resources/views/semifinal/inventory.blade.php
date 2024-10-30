@@ -24,6 +24,7 @@
             <div class="flex items-center space-x-2 text-white text-lg">
                 <img src="{{ asset('assets/point.png') }}" class="w-5 h-5" alt="Coin Icon">
                 <span class=" text-base font-dm">999999</span>
+                
             </div>
         </div>
         <div class="content p-10 mx-7 rounded-xl text-white w-full max-w-md mt-4">
@@ -34,6 +35,7 @@
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         2
                     </div>
+                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl2.png') }}" alt="Icon 1" class="w-full h-full">
@@ -41,6 +43,7 @@
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         2
                     </div>
+                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl3.png') }}" alt="Icon 1" class="w-full h-full">
@@ -48,6 +51,7 @@
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         2
                     </div>
+                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl4.png') }}" alt="Icon 1" class="w-full h-full">
@@ -55,6 +59,7 @@
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         2
                     </div>
+                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
                 </div>
                 <div></div>
                 <div class="relative col-span-2">
@@ -63,8 +68,15 @@
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                         2
                     </div>
+                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
                 </div>
             </div>
         </div>
+        <div class="w-full flex justify-center items-center px-3 pt-1">
+            <div class="flex items-center space-x-2 text-white text-sm">
+                <h1> <b>NB: </b> The display price is the current prize</h1>
+            </div>
+        </div>
+        
     </div>
 @endsection

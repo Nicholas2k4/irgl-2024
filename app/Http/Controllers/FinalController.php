@@ -28,6 +28,7 @@ class FinalController extends Controller
         $data['score'] = Team::where('id', session('team_id'))->first()->finalStatistic->score;
         return view('final.game1', $data);
     }
+
     public function game2()
     {
         $decode = FinalStatistic::where('team_id', session('team_id'))->first()->decode_time;
@@ -36,10 +37,12 @@ class FinalController extends Controller
         $data['title'] = "Final Decode";
         return view('final.game2', $data);
     }
+
     public function game3()
     {
         $data['title'] = "Final Cryptography";
-        $data['questions'] = FinalQuestion::where('category', 'like', '%crypto%')->where('status', 1)->get();
+        $data['questions'] = Team::where('id', session('team_id'))->first()->unansweredCryptography();
+        // dd($data['questions']);
         return view('final.game3', $data);
     }
     public function storeLogicAnswer(Request $request, $id)

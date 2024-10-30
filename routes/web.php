@@ -18,6 +18,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\InputScoreTeamController;
 use App\Http\Controllers\LockController;
 use App\Http\Middleware\ClosedMiddleware;
+use App\Http\Middleware\CryptoMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,25 +71,29 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
     Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
     Route::get('/info', [InfoController::class, 'userIndex'])->name('info');
+
+    /**
+     * Routes for semifinal
+     */
+    Route::prefix('semifinal')->group(function () {
+        Route::get('/', [NewsController::class, 'semifinalHome'])->name('semifinal.home');
+        Route::get('/news', [NewsController::class, 'semifinalNews'])->name('semifinal.news');
+        Route::get('/inventory', [NewsController::class, 'semifinalInventory'])->name('semifinal.inventory');
+    });
+
+    /**
+     * Routes for final
+     */
+    Route::prefix('final')->group(function () {
+        Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
+        Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
+        Route::get('/game3', [FinalController::class, 'game3'])->middleware([CryptoMiddleware::class])->name('final.game3');
+
+        Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
+        Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');
+    });
 });
 
-/**
- * Routes for final game
- */
-Route::prefix('final')->group(function () {
-    Route::get('/game1', [FinalController::class, 'game1'])->name('final.game1');
-    Route::get('/game2', [FinalController::class, 'game2'])->name('final.game2');
-    Route::get('/game3', [FinalController::class, 'game3'])->name('final.game3');
-
-    Route::post('/game1/{id}', [FinalController::class, 'storeLogicAnswer'])->name('final.game1.store');
-    Route::post('/game2/store', [FinalController::class, 'storeDecode'])->name('final.game2.store');
-});
-
-Route::prefix('semifinal')->group(function () {
-    Route::get('/', [NewsController::class, 'semifinalHome'])->name('semifinal.home');
-    Route::get('/news', [NewsController::class, 'semifinalNews'])->name('semifinal.news');
-    Route::get('/inventory', [NewsController::class, 'semifinalInventory'])->name('semifinal.inventory');
-});
 
 
 /**

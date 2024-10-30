@@ -34,11 +34,7 @@
         </div>
         <div class="content p-4 rounded-xl contex text-white w-full max-w-md font-dm">
             <p class="text-sm text-justify">
-                Sebuah website perusahaan multinasional yang bertempat di Kota Bytefall telah diretas 2 hari yang lalu.
-                Peretasan ini diduga menggunakan metode SQL Injection. Peretas/hacker, menggunakan celah yang terdapat
-                pada website tersebut untuk mengambil data-data perusahaan mulai dari data transaksi dan juga data
-                pribadi karyawan perusahaan. Pihak Hacker menginginkan uang tebusan sebesar 10 Triliun Rupiah untuk
-                pengembalian data milik perusahaan.
+                {{ $news_content }}
             </p>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ElimStatistics;
+use App\Models\FinalStatistic;
 use App\Models\SemiStatistic;
 use App\Models\Team;
 use Illuminate\Database\Seeder;
@@ -16,7 +17,7 @@ class StatisticTeamSeeder extends Seeder
     public function run(): void
     {
         //
-        $statistic =[
+        // $statistic =[
             // [
             //     'id_team' => Team::where('nama', 'Team 1')->first()->id,
             // ],
@@ -95,11 +96,21 @@ class StatisticTeamSeeder extends Seeder
             // [
             //     'id_team' => Team::where('nama', 'Team Z')->first()->id,
             // ],
-        ];
+        // ];
 
-        foreach($statistic as $stat){
-            ElimStatistics::create($stat);
-            SemiStatistic::create($stat);
+        // foreach($statistic as $stat){
+        //     ElimStatistics::create($stat);
+        //     SemiStatistic::create($stat);
+        // }
+
+        $teams = Team::all();
+        foreach($teams as $team){
+            if(!$team->semiStatistic()->exists()){
+                SemiStatistic::create(['id_team' => $team->id]);
+            }
+            if(!$team->finalStatistic()->exists()){
+                FinalStatistic::create(['team_id' => $team->id]);
+            }
         }
     }
 }

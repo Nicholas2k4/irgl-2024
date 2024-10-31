@@ -21,7 +21,7 @@
             </div>
             <div class="flex items-center space-x-2 text-white text-lg">
                 <img src="{{ asset('assets/point.png') }}" class="w-5 h-5" alt="Coin Icon">
-                <span class=" text-base font-dm">999999</span>
+                <span class=" text-base font-dm">{{ $score }}</span>
             </div>
         </div>
         <div class="content p-8 mx-7 rounded-xl text-white w-full max-w-md mt-4 overflow-y-auto max-h-[400px]">
@@ -30,42 +30,47 @@
                     <img src="{{ asset('assets/irgl1.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        2
+                        {{ $input_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Input Validator</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $input_price }}</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl2.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        2
+                        {{ $email_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Email Filter</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $email_price }}</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl3.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        2
+                        {{ $antivirus_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Antivirus</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $antivirus_price }}</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl4.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        2
+                        {{ $traffic_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Traffic Controller</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $traffic_price }}</h2>
                 </div>
                 <div></div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl5.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        2
+                        {{ $encrypt_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm">Rp. 5000</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Encryption Machine</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $encrypt_price }}</h2>
                 </div>
             </div>
         </div>

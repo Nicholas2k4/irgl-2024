@@ -151,6 +151,9 @@
 @endsection
 
 @section('content')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <div class="main-bg w-screen h-screen flex justify-center items-center fixed top-0 left-0">
         <video src="{{ asset('assets/bg-video.mp4') }}" autoplay loop muted playsinline
             class="w-screen object-cover relative">
@@ -162,9 +165,11 @@
     <div class="absolute w-screen min-h-screen z-50 top-0 left-0">
         <div class="w-full h-full flex items-center flex-col">
             <h1 class="w-full text-center text-4xl text-white font-semibold my-8">Final Cryptography</h1>
+
             @foreach ($questions as $question)
                 <div
-                    class="question-container w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }}">
+                    class="{{ $question->incorrect_at && now()->lessThan(Carbon::parse($question->incorrect_at)->addMinutes(5)) ? 'incorrected' : 'question-container' }} 
+            w-[800px] h-fit p-8 rounded-xl bg-opacity-30 my-8 {{ 'question-' . $question->id }}">
                     <p class="text-zinc-100">{!! $question->question !!}</p>
                     @if ($question->image)
                         @foreach (json_decode($question->image) as $image)
@@ -174,10 +179,29 @@
                     <div class="flex justify-center items-center mt-8 gap-x-8">
                         <input type="text" id="{{ 'answer-' . $question->id }}" placeholder="Answer here"
                             class="input-answer bg-transparent rounded-lg w-full h-[40px] px-4 text-zinc-100">
-                        <button id="{{ 'submit-' . $question->id }}"
-                            class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-lg w-[300px] h-[40px]"
-                            name="{{ $question->id }}" data-te-ripple-init data-te-ripple-color="light">
-                            Submit This Answer</button>
+                        @if ($question->incorrect_at && now()->lessThan(Carbon::parse($question->incorrect_at)->addMinutes(5)))
+                            <button id="{{ 'submit-' . $question->id }}" data-id="{{ $question->id }}"
+                                onclick="submitAnswer(this.getAttribute('data-id'))"
+                                class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-lg w-[300px] h-[40px]"
+                                name="{{ $question->id }}" data-te-ripple-init data-te-ripple-color="light" disabled>
+                                {{-- Put Countdown Here --}}
+                                <span class="countdown" id="countdown-{{ $question->id }}"></span>
+                            </button>
+                            @php
+                                // Calculate remaining seconds
+                                $remainingSeconds = Carbon::parse($question->incorrect_at)
+                                    ->addMinutes(5)
+                                    ->diffInSeconds(now());
+                            @endphp
+                            </button>
+                        @else
+                            <button id="{{ 'submit-' . $question->id }}" data-id="{{ $question->id }}"
+                                onclick="submitAnswer(this.getAttribute('data-id'))"
+                                class="submit-button animate-button bg-[#853987] bg-opacity-70 text-zinc-100 text-sm rounded-lg w-[300px] h-[40px]"
+                                name="{{ $question->id }}" data-te-ripple-init data-te-ripple-color="light">
+                                Submit this Answer
+                            </button>
+                        @endif
                     </div>
                 </div>
             @endforeach
@@ -185,6 +209,32 @@
     </div>
 
     <script>
+        function startCountdown(id, seconds) {
+            const countdownElement = document.getElementById(`countdown-${id}`);
+            const interval = setInterval(() => {
+                if (seconds <= 0) {
+                    document.querySelector(`.question-${id}`).classList.remove('incorrected');
+                    document.querySelector(`.question-${id}`).classList.add('question-container');
+                    countdownElement.innerHTML = "Submit this Answer";
+                    document.getElementById(`submit-${id}`).disabled = false;
+                    clearInterval(interval);
+                } else {
+                    const minutes = Math.floor(seconds / 60);
+                    const remainingSeconds = seconds % 60;
+                    countdownElement.innerHTML =
+                        `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+                    seconds--;
+                }
+            }, 1000);
+        }
+
+        @foreach ($questions as $question)
+            @if ($question->incorrect_at && now()->lessThan(Carbon::parse($question->incorrect_at)->addMinutes(5)))
+                startCountdown("{{ $question->id }}",
+                    {{ Carbon::parse($question->incorrect_at)->addMinutes(5)->diffInSeconds(now()) }});
+            @endif
+        @endforeach
+
         function submitAnswer(id) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -219,9 +269,7 @@
                                     icon: 'error',
                                     confirmButtonText: 'OK'
                                 }).then(() => {
-                                    console.log('.question-' + id);
-                                    document.querySelector('.question-' + id).classList.add(
-                                        'incorrected');
+                                    location.reload();
                                 });
                             }
                         },

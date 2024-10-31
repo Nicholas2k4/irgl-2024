@@ -49,7 +49,7 @@ class NewsController extends Controller
                                 $teamSemiStats->save();
                             }
                         }
-                        
+
                         // brute force attack
                         if($curNews->attack_type == 'brute-force'){
                             if($teamSemiStats->encryption_machine > 0){
@@ -97,7 +97,7 @@ class NewsController extends Controller
                                 $teamSemiStats->save();
                             }
                         }
-                        
+
                         // dystopia attack
                         if($curNews->attack_type == 'dystopia'){
                             if($teamSemiStats->email_filter > 0){
@@ -146,7 +146,7 @@ class NewsController extends Controller
                                 $teamSemiStats->score += $teamSemiStats->traffic_controller * $nextNews->traffic_controller_price;
                                 $teamSemiStats->traffic_controller = 0;
                                 $teamSemiStats->save();
-                            }  
+                            }
 
                             if($teamSemiStats->antivirus > 0){
                                 $teamSemiStats->score += $teamSemiStats->antivirus * $nextNews->antivirus_price;
@@ -179,15 +179,30 @@ class NewsController extends Controller
     }
 
     public function semifinalNews(){
+        $curNews = SemiState::first()->news();
         $data =[
             'title' => 'News',
+            'news_content' => $curNews->content,
         ];
         return view('semifinal.news', $data);
     }
 
     public function semifinalInventory(){
+        $curNews = SemiState::first()->news();
+        $semiStats = Team::where('id', session('team_id'))->firstOrFail()->semiStatistic;
         $data =[
             'title' => 'Inventory',
+            'email_price' => $curNews->email_filter_price,
+            'encrypt_price' => $curNews->encryption_machine_price,
+            'traffic_price' => $curNews->traffic_controller_price,
+            'antivirus_price' => $curNews->antivirus_price,
+            'input_price' => $curNews->input_validator_price,
+            'email_qty' => $semiStats->email_filter,
+            'encrypt_qty' => $semiStats->encryption_machine,
+            'traffic_qty' => $semiStats->traffic_controller,
+            'antivirus_qty' => $semiStats->antivirus,
+            'input_qty' => $semiStats->input_validator,
+            'score' => $semiStats->score,
         ];
         return view('semifinal.inventory', $data);
     }

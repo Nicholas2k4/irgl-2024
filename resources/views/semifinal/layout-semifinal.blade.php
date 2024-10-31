@@ -44,6 +44,23 @@
         @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
         @import url("https://fonts.googleapis.com/css?family=Sacramento&display=swap");
 
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(107, 43, 82, 0.5);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(107, 43, 82, 0.5) 49%, rgba(66, 42, 106, 0.5) 100%);
+            /* background: linear-gradient(180deg, #8C54A2, #F9B63F ); */
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            width: 0;
+            background: rgba(87, 8, 97, 0.5);
+            border-radius: 8px
+        }
+
         .navbar {
             position: fixed;
             top: 0;
@@ -69,7 +86,7 @@
 <body
     class="bg-black items-center justify-center flex h-screen bg-[url('/assets/bg-semi.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden">
     <nav
-        class="bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] py-4 border-gray-200  dark:bg-gray-900 navbar shadow-custom-md font-dm px-5 ">
+        class="bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] py-2 border-gray-200  dark:bg-gray-900 navbar shadow-custom-md font-dm px-5 ">
         <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto 2xl:max-w-[90vw]">
             <a href="#" class=""><span class="text-[#fff] font-bold text-md px-1">SEMIFINAL IRGL
                     2024</span></a>
@@ -91,7 +108,7 @@
                             class="lg:text-lg lg:mx-5 mx-1 block py-2 px-3 text-white rounded hover:bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] nav-custom:hover:bg-transparent nav-custom:border-0 nav-custom:p-0 ">News</a>
                     </li>
                     <li>
-                        <a href="{{route('semifinal.inventory')}}"
+                        <a href="{{ route('semifinal.inventory') }}"
                             class="lg:text-lg lg:mx-5 mx-1 block py-2 px-3 text-white rounded hover:bg-gradient-to-r from-[#6b2b52]  to-[#422a6a] nav-custom:hover:bg-transparent nav-custom:border-0 nav-custom:p-0 ">Inventory</a>
                     </li>
                 </ul>

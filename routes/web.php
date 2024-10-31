@@ -65,11 +65,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/admin', [AuthController::class, 'adminLoginView'])->name('admin.login');
 Route::get('/admin/processLogin', [AuthController::class, 'adminLogin'])->name('admin.processLogin');
-    Route::prefix('semifinal')->group(function () {
-        Route::get('/', [NewsController::class, 'semifinalHome'])->name('semifinal.home');
-        Route::get('/news', [NewsController::class, 'semifinalNews'])->name('semifinal.news');
-        Route::get('/inventory', [NewsController::class, 'semifinalInventory'])->name('semifinal.inventory');
-    });
 Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::post('/jadwal/reschedule', [JadwalController::class, 'reschedule'])->name('jadwal.reschedule');
@@ -79,7 +74,11 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     /**
      * Routes for semifinal
      */
-
+    Route::prefix('semifinal')->group(function () {
+        Route::get('/', [NewsController::class, 'semifinalHome'])->name('semifinal.home');
+        Route::get('/news', [NewsController::class, 'semifinalNews'])->name('semifinal.news');
+        Route::get('/inventory', [NewsController::class, 'semifinalInventory'])->name('semifinal.inventory');
+    });
 
     /**
      * Routes for final

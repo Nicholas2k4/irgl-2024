@@ -83,7 +83,7 @@
 
 @section('script')
     <script>
-        let bold = document.getElementById('market');
+        let bold = document.getElementById('clue');
         bold.className = 'text-[#fff] p-1 px-5 font-bold text-lg w-full h-full';
 
         $(document).ready(function() {

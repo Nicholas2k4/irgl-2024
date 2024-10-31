@@ -71,6 +71,9 @@
                     <li class="flex">
                         <a id="news" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.news') }}">News</a>
                     </li>
+                    <li class="flex">
+                        <a id="clue" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.clue') }}">Clue</a>
+                    </li>
                     {{-- <li class="flex">
                         <a id="news" class="text-[#fff]/60 p-1 px-5 hover:text-[#fff]/80 text-lg w-full h-full" href="{{ route('admin.leaderboards') }}">Leaderboard</a>
                     </li> --}}

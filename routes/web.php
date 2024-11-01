@@ -31,12 +31,16 @@ use App\Http\Middleware\CryptoMiddleware;
 |
 */
 
-Route::get('/', function () {
-    return view('homepage');
+// Route::get('/', function () {
+//     return view('homepage');
+// })->name('homepage');
+// Route::get('/homepage-hp', function () {
+//     return view('homepage-hp');
+// })->name('homepage.hp');
+
+Route::get('/', function(){
+    return redirect()->route('semifinal.inventory');
 })->name('homepage');
-Route::get('/homepage-hp', function () {
-    return view('homepage-hp');
-})->name('homepage.hp');
 
 
 /**

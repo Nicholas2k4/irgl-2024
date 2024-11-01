@@ -45,13 +45,13 @@
                     <h2 class="text-white text-center font-dm">Rp. {{ $email_price }}</h2>
                 </div>
                 <div class="relative col-span-2">
-                    <img src="{{ asset('assets/irgl3.png') }}" alt="Icon 1">
+                    <img src="{{ asset('assets/irgl5.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        {{ $antivirus_qty }}
+                        {{ $encrypt_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm text-sm">Antivirus</h2>
-                    <h2 class="text-white text-center font-dm">Rp. {{ $antivirus_price }}</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Encryption Machine</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $encrypt_price }}</h2>
                 </div>
                 <div class="relative col-span-2">
                     <img src="{{ asset('assets/irgl4.png') }}" alt="Icon 1">
@@ -64,14 +64,15 @@
                 </div>
                 <div></div>
                 <div class="relative col-span-2">
-                    <img src="{{ asset('assets/irgl5.png') }}" alt="Icon 1">
+                    <img src="{{ asset('assets/irgl3.png') }}" alt="Icon 1">
                     <div
                         class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        {{ $encrypt_qty }}
+                        {{ $antivirus_qty }}
                     </div>
-                    <h2 class="text-white text-center font-dm text-sm">Encryption Machine</h2>
-                    <h2 class="text-white text-center font-dm">Rp. {{ $encrypt_price }}</h2>
+                    <h2 class="text-white text-center font-dm text-sm">Antivirus</h2>
+                    <h2 class="text-white text-center font-dm">Rp. {{ $antivirus_price }}</h2>
                 </div>
+                <div></div>
             </div>
         </div>
         <div class="w-full flex justify-center items-center px-3 pt-1">

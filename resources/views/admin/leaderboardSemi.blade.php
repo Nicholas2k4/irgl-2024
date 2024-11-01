@@ -8,14 +8,14 @@
             <table class="justify-center items-center mt-10 mb-1 w-[150vw]" id="teamTable">
                 <thead class=" bg-gray-200">
                     <tr class="min-w-full">
-                        <th class="min-w-[10px] cursor-pointer max-w-[10px]">Rank</th>
-                        <th class="min-w-[40px] cursor-pointer max-w-[40px]">Team</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Score</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Email Filter</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Encryption Machine</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Traffic Controller</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Antivirus</th>
-                        <th class="min-w-[30px] cursor-pointer max-w-[30px]">Input Controller</th>
+                        <th class="min-w-[10px] cursor-pointer max-w-[10px] w-[20px]">Rank</th>
+                        <th class="min-w-[40px] cursor-pointer max-w-[40px] w-[50px]">Team</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Score</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Email Filter</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Encryption Machine</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Traffic Controller</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Antivirus</th>
+                        <th class="min-w-[30px] cursor-pointer max-w-[30px] w-[30px]">Input Controller</th>
                     </tr>
                 </thead>
 

@@ -39,7 +39,7 @@ use App\Http\Middleware\CryptoMiddleware;
 // })->name('homepage.hp');
 
 Route::get('/', function(){
-    return redirect()->route('semifinal.inventory');
+    return redirect()->route('sponsor');
 })->name('homepage');
 
 Route::get('/dummy', function(){

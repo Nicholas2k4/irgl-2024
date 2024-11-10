@@ -42,6 +42,10 @@ Route::get('/', function(){
     return redirect()->route('semifinal.inventory');
 })->name('homepage');
 
+Route::get('/dummy', function(){
+    return view('sponsor');
+})->name('sponsor');
+
 
 /**
  * Routes for registration

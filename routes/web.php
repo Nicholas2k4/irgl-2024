@@ -38,11 +38,11 @@ use App\Http\Middleware\CryptoMiddleware;
 //     return view('homepage-hp');
 // })->name('homepage.hp');
 
-Route::get('/', function(){
-    return redirect()->route('sponsor');
+Route::get('/', function () {
+    return view('sponsor');
 })->name('homepage');
 
-Route::get('/dummy', function(){
+Route::get('/dummy', function () {
     return view('sponsor');
 })->name('sponsor');
 

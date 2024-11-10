@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sponsor Page</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
         @keyframes iterate {
             0% {
                 opacity: 1;
@@ -19,7 +24,7 @@
                 text-shadow: -3px -1px 3px #F946FA, 3px 1px 3px #4087CF, 0px 0px 20px white;
             }
 
-            30%{
+            30% {
                 opacity: 1;
             }
 
@@ -34,10 +39,11 @@
     class="bg-[url('/assets/bg-semi.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden flex items-center justify-center min-h-screen">
     <div class="container mx-auto p-5 bg-transparent shadow-lg rounded-md">
         <h1 id="ty" class="text-white text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12">Thank you for participating IRGL 2024!</h1>
-        <p id="sponsor" class="text-white text-md sm:text-xl text-center mb-6" style="text-shadow: 2px 1px 3px #4087CF">Sponsored by:</p>
+        <p id="sponsor" class="text-white text-md sm:text-xl text-center mb-6"
+            style="text-shadow: 2px 1px 3px #4087CF">Sponsored by:</p>
         <div class="flex flex-wrap justify-center gap-10">
-            <img src="{{ asset('assets/amigo.png') }}" alt="Sponsor 1 Logo" class="w-32 h-auto object-contain">
-            <img src="{{ asset('assets/dnet.png') }}" alt="Sponsor 2 Logo" class="w-32 h-auto object-contain">
+            <img src="{{ asset('assets/amigo.png') }}" alt="Sponsor 1 Logo" class="w-32 sm:w-48 md:w-64 h-auto object-contain">
+            <img src="{{ asset('assets/dnet.png') }}" alt="Sponsor 2 Logo" class="w-32 sm:w-48 md:w-64 h-auto object-contain">
         </div>
     </div>
 </body>
